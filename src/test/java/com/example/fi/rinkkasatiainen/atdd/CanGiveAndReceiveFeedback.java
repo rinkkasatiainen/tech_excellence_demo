@@ -2,6 +2,7 @@ package com.example.fi.rinkkasatiainen.atdd;
 
 
 import com.example.fi.rinkkasatiainen.Stars;
+import com.example.fi.rinkkasatiainen.web.ParticipantsRoute;
 import com.example.fi.rinkkasatiainen.web.SessionsRoute;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +37,29 @@ public class CanGiveAndReceiveFeedback {
 
 
     private Participant and_I_have_registered_as_participant() {
-        return new Participant();
+        ResponseEntity<Void> responseEntity = new ParticipantsRoute().create();
+        String uuid = getUUIDFromLocationHeader(responseEntity);
+        return new Participant(UUID.fromString(uuid));
     }
 
 
     private SessionUUID given_a_session_exists_with_name() {
         ResponseEntity<Void> sessionResponseEntity= new SessionsRoute().create();
-        String uuid = sessionResponseEntity.getHeaders().get("location")
-                .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
-        System.out.println(uuid);
+        String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return new SessionUUID(UUID.fromString(uuid));
     }
 
+    private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {
+        return sessionResponseEntity.getHeaders().get("location")
+                    .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
+    }
+
     private class Participant {
+        public final UUID uuid;
+
+        public Participant(UUID uuid) {
+            this.uuid = uuid;
+        }
     }
 
 }
