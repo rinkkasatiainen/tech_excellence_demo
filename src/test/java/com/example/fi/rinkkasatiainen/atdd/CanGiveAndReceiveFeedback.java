@@ -3,6 +3,8 @@ package com.example.fi.rinkkasatiainen.atdd;
 
 import com.example.fi.rinkkasatiainen.Stars;
 import com.example.fi.rinkkasatiainen.web.ParticipantsRoute;
+import com.example.fi.rinkkasatiainen.web.SessionFeedback;
+import com.example.fi.rinkkasatiainen.web.SessionRoute;
 import com.example.fi.rinkkasatiainen.web.SessionsRoute;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ public class CanGiveAndReceiveFeedback {
     @Test
     public void can_create_user_and_give_feedback_to_session() throws Exception {
         SessionUUID session = given_a_session_exists_with_name();
-        Participant participant = and_I_have_registered_as_participant();
+        ParticipantUUID participant = and_I_have_registered_as_participant();
 
         when_I(participant).rates_session(session).as( Stars.FIVE );
 
@@ -28,18 +30,19 @@ public class CanGiveAndReceiveFeedback {
         assertThat(true, equalTo(false));
     }
 
-    private RateSession when_I(Participant participant) {
+    private RateSession when_I(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
-            System.out.println("rate sessionUUID based on");
+            new SessionRoute().register( sessionUUID.uuid.toString() , new com.example.fi.rinkkasatiainen.web.Participant(participant.uuid));
+            new SessionRoute().rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
         };
         return rateSession;
     }
 
 
-    private Participant and_I_have_registered_as_participant() {
+    private ParticipantUUID and_I_have_registered_as_participant() {
         ResponseEntity<Void> responseEntity = new ParticipantsRoute().create();
         String uuid = getUUIDFromLocationHeader(responseEntity);
-        return new Participant(UUID.fromString(uuid));
+        return new ParticipantUUID(UUID.fromString(uuid));
     }
 
 
@@ -54,10 +57,10 @@ public class CanGiveAndReceiveFeedback {
                     .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
     }
 
-    private class Participant {
+    private class ParticipantUUID {
         public final UUID uuid;
 
-        public Participant(UUID uuid) {
+        public ParticipantUUID(UUID uuid) {
             this.uuid = uuid;
         }
     }

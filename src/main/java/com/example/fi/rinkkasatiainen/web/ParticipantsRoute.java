@@ -15,9 +15,9 @@ import java.net.URISyntaxException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(ParticipantsRoute.V1_SESSIONS)
+@RequestMapping(ParticipantsRoute.V1_PARTICIPANTS)
 public class ParticipantsRoute {
-    public static final String V1_SESSIONS = "/v1/participants";
+    public static final String V1_PARTICIPANTS = "/v1/participants";
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 
@@ -29,7 +29,7 @@ public class ParticipantsRoute {
         UUID uuid = UUID.randomUUID();
         URI uri;
         try {
-            uri = new URI(V1_SESSIONS + "/" + uuid.toString() );
+            uri = new URI(V1_PARTICIPANTS + "/" + uuid.toString() );
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
