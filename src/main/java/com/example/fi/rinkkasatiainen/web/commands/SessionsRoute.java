@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web;
+package com.example.fi.rinkkasatiainen.web.commands;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Locale;
 import java.util.UUID;
 
 @RestController

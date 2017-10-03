@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web;
+package com.example.fi.rinkkasatiainen.web.commands;
 
 public class SessionFeedback {
 

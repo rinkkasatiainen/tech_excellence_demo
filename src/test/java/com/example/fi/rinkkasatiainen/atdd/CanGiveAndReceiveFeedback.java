@@ -2,10 +2,9 @@ package com.example.fi.rinkkasatiainen.atdd;
 
 
 import com.example.fi.rinkkasatiainen.Stars;
-import com.example.fi.rinkkasatiainen.web.ParticipantsRoute;
-import com.example.fi.rinkkasatiainen.web.SessionFeedback;
-import com.example.fi.rinkkasatiainen.web.SessionRoute;
-import com.example.fi.rinkkasatiainen.web.SessionsRoute;
+import com.example.fi.rinkkasatiainen.web.commands.*;
+import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackResult;
+import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackRoute;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -23,16 +22,24 @@ public class CanGiveAndReceiveFeedback {
 
         when_I(participant).rates_session(session).as( Stars.FIVE );
 
-        then_session_should_have_average_rating_of( 5 );
+        then_session(session).should_have_average_rating_of( 5.0 );
     }
 
     private void then_session_should_have_average_rating_of(int expectedRating) {
         assertThat(true, equalTo(false));
     }
 
+    private SessionResponse then_session(SessionUUID session) {
+        return ( rating ) -> {
+            ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute().getSession(session.uuid.toString());
+            SessionFeedbackResult body = feedbackResult.getBody();
+            assertThat(body.averageRating, equalTo(rating));
+        };
+    }
+
     private RateSession when_I(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
-            new SessionRoute().register( sessionUUID.uuid.toString() , new com.example.fi.rinkkasatiainen.web.Participant(participant.uuid));
+            new SessionRoute().register( sessionUUID.uuid.toString() , new Participant(participant.uuid));
             new SessionRoute().rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
         };
         return rateSession;
@@ -54,7 +61,7 @@ public class CanGiveAndReceiveFeedback {
 
     private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {
         return sessionResponseEntity.getHeaders().get("location")
-                    .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
+                .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
     }
 
     private class ParticipantUUID {
