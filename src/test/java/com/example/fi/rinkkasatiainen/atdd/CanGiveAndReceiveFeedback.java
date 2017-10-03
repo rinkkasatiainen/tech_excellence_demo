@@ -36,9 +36,6 @@ public class CanGiveAndReceiveFeedback {
         then_session(session).should_have_average_rating_of( 0.0 );
     }
 
-
-
-
     private SessionResponse then_session(SessionUUID session) {
         return ( rating ) -> {
             ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute().getSession(session.uuid.toString());
@@ -64,9 +61,13 @@ public class CanGiveAndReceiveFeedback {
 
 
     private SessionUUID given_a_session() {
-        ResponseEntity<Void> sessionResponseEntity= new SessionsRoute().create();
+        ResponseEntity<Void> sessionResponseEntity= getSessionsRoute().create();
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return new SessionUUID(UUID.fromString(uuid));
+    }
+
+    private SessionsRoute getSessionsRoute() {
+        return new SessionsRoute(null);
     }
 
     private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {

@@ -20,15 +20,22 @@ public class SessionsRoute {
     public static final String V1_SESSIONS = "/v1/sessions";
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
+    private final AddSessionCommandHandler commandHandler;
+
+    public SessionsRoute(AddSessionCommandHandler commandHandler) {
+        this.commandHandler = commandHandler;
+    }
 
     @RequestMapping(value = "/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Void> create() {
         log.debug("POST /v1/sessions");
 
+        UUID uuid = commandHandler.handles(new AddSessionCommand());
+
         URI uri;
         try {
-            uri = new URI(V1_SESSIONS + "/" + UUID.randomUUID().toString() );
+            uri = new URI(V1_SESSIONS + "/" + uuid.toString() );
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
