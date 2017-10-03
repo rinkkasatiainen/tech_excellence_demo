@@ -61,7 +61,7 @@ public class CanGiveAndReceiveFeedback {
 
 
     private SessionUUID given_a_session() {
-        ResponseEntity<Void> sessionResponseEntity= getSessionsRoute().create();
+        ResponseEntity<Void> sessionResponseEntity= getSessionsRoute().create(new NewSession("title"));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return new SessionUUID(UUID.fromString(uuid));
     }

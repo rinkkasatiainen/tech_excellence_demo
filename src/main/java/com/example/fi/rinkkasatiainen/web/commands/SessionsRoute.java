@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +29,10 @@ public class SessionsRoute {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<Void> create() {
+    public ResponseEntity<Void> create(@RequestBody NewSession newSession) {
         log.debug("POST /v1/sessions");
 
-        UUID uuid = commandHandler.handles(new AddSessionCommand());
+        UUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title));
 
         URI uri;
         try {

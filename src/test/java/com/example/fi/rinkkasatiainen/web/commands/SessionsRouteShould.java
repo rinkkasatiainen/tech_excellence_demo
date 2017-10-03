@@ -21,14 +21,10 @@ public class SessionsRouteShould {
 
         when( commandHandler.handles( any(AddSessionCommand.class) )).thenReturn( uuid );
 
-        ResponseEntity<Void> responseEntity = route.create();
+        ResponseEntity<Void> responseEntity = route.create(new NewSession("title"));
 
         assertThat( responseEntity.getHeaders().getLocation(), equalTo( new URI("/v1/sessions/" + uuid)));
     }
 
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
-    public static final String TWEET_ID = UUID.randomUUID().toString();
     private static final UUID uuid = UUID.randomUUID();
-
 }
