@@ -25,6 +25,17 @@ public class CanGiveAndReceiveFeedback {
         then_session(session).should_have_average_rating_of( 5.0 );
     }
 
+    @Test
+    public void can_reset_rating_by_giving_0() throws Exception {
+        SessionUUID session = given_a_session_exists_with_name();
+        ParticipantUUID participant = and_I_have_registered_as_participant();
+
+        when_I(participant).rates_session(session).as( Stars.FIVE );
+        when_I(participant).rates_session(session).as( Stars.ZERO );
+
+        then_session(session).should_have_average_rating_of( 0.0 );
+    }
+
     private void then_session_should_have_average_rating_of(int expectedRating) {
         assertThat(true, equalTo(false));
     }
