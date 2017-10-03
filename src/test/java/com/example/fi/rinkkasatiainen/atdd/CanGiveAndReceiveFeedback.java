@@ -17,28 +17,27 @@ public class CanGiveAndReceiveFeedback {
 
     @Test
     public void can_create_user_and_give_feedback_to_session() throws Exception {
-        SessionUUID session = given_a_session_exists_with_name();
+        SessionUUID session = given_a_session();
         ParticipantUUID participant = and_I_have_registered_as_participant();
 
-        when_I(participant).rates_session(session).as( Stars.FIVE );
+        when(participant).rates(session).as( Stars.FIVE );
 
         then_session(session).should_have_average_rating_of( 5.0 );
     }
 
     @Test
     public void can_reset_rating_by_giving_0() throws Exception {
-        SessionUUID session = given_a_session_exists_with_name();
+        SessionUUID session = given_a_session();
         ParticipantUUID participant = and_I_have_registered_as_participant();
 
-        when_I(participant).rates_session(session).as( Stars.FIVE );
-        when_I(participant).rates_session(session).as( Stars.ZERO );
+        when(participant).rates(session).as( Stars.FIVE );
+        when(participant).rates(session).as( Stars.ZERO );
 
         then_session(session).should_have_average_rating_of( 0.0 );
     }
 
-    private void then_session_should_have_average_rating_of(int expectedRating) {
-        assertThat(true, equalTo(false));
-    }
+
+
 
     private SessionResponse then_session(SessionUUID session) {
         return ( rating ) -> {
@@ -48,7 +47,7 @@ public class CanGiveAndReceiveFeedback {
         };
     }
 
-    private RateSession when_I(ParticipantUUID participant) {
+    private RateSession when(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
             new SessionRoute().register( sessionUUID.uuid.toString() , new Participant(participant.uuid));
             new SessionRoute().rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
@@ -64,7 +63,7 @@ public class CanGiveAndReceiveFeedback {
     }
 
 
-    private SessionUUID given_a_session_exists_with_name() {
+    private SessionUUID given_a_session() {
         ResponseEntity<Void> sessionResponseEntity= new SessionsRoute().create();
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return new SessionUUID(UUID.fromString(uuid));
@@ -83,4 +82,19 @@ public class CanGiveAndReceiveFeedback {
         }
     }
 
+    @FunctionalInterface
+    public interface Rate {
+        void as(Stars stars);
+    }
+
+    @FunctionalInterface
+    public static interface RateSession {
+        Rate rates(SessionUUID sessionUUID);
+    }
+
+    @FunctionalInterface
+    public static interface SessionResponse {
+
+        void should_have_average_rating_of(Double rating);
+    }
 }
