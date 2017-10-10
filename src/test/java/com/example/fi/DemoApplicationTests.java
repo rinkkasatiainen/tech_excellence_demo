@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen;
+package com.example.fi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

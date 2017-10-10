@@ -21,6 +21,9 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.UUID;
+import java.util.function.Supplier;
+
 
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
@@ -67,9 +70,13 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
 
 
+    private Supplier<UUID> uuidSupplier(){
+        return () -> UUID.randomUUID();
+    }
+
     @Bean
     public Schedule schedule() {
-        return new Schedule();
+        return new Schedule(uuidSupplier());
     }
     @Bean
     public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule) {

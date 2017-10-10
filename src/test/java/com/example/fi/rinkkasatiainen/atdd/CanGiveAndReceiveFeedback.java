@@ -2,9 +2,12 @@ package com.example.fi.rinkkasatiainen.atdd;
 
 
 import com.example.fi.rinkkasatiainen.Stars;
+import com.example.fi.rinkkasatiainen.application.config.WebConfiguration;
+import com.example.fi.rinkkasatiainen.model.Schedule;
 import com.example.fi.rinkkasatiainen.web.commands.*;
 import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackRoute;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -14,6 +17,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CanGiveAndReceiveFeedback {
+
+    private WebConfiguration webConfiguration;
+
+    @Before
+    public void setUp() throws Exception {
+        webConfiguration = new WebConfiguration();
+    }
 
     @Test
     public void can_create_user_and_give_feedback_to_session() throws Exception {
@@ -67,7 +77,12 @@ public class CanGiveAndReceiveFeedback {
     }
 
     private SessionsRoute getSessionsRoute() {
-        return new SessionsRoute(null);
+
+        return new SessionsRoute(webConfiguration.addSessionCommandHandler(getSchedule()));
+    }
+
+    private Schedule getSchedule() {
+        return webConfiguration.schedule();
     }
 
     private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {
