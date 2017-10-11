@@ -1,8 +1,11 @@
 package com.example.fi.rinkkasatiainen.model;
 
+import com.example.fi.rinkkasatiainen.Stars;
 import com.example.fi.rinkkasatiainen.web.model.Session;
+import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackResult;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.security.web.authentication.session.SessionFixationProtectionEvent;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -42,5 +45,15 @@ public class ScheduleShould {
 
         Session s = schedule.findSession(random);
         assertThat(s.version, equalTo(1));
+    }
+
+    @Test
+    public void find_session_feedback() throws Exception {
+        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE), new SessionRated(Stars.FIVE)));
+
+        SessionFeedbackResult result = schedule.findSessionFeeback(random);
+        assertThat(result.version, equalTo(2));
+        assertThat(result.averageRating, equalTo(5.0));
+
     }
 }

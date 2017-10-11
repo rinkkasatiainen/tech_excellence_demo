@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.model;
 
 import com.example.fi.rinkkasatiainen.web.model.Session;
+import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackResult;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,5 +24,10 @@ public class Schedule {
     public Session findSession(UUID uuid) {
         List<Event> events = eventStore.findByUuid(uuid);
         return Session.load(events);
+    }
+
+    public SessionFeedbackResult findSessionFeeback(UUID uuid) {
+        List<Event> events = eventStore.findByUuid(uuid);
+        return SessionFeedbackResult.load(events);
     }
 }

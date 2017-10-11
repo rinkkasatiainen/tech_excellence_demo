@@ -21,10 +21,10 @@ public class SessionFeedbackRouteShould {
         schedule = mock(Schedule.class);
         SessionFeedbackRoute sessionFeedbackRoute = new SessionFeedbackRoute(schedule);
 
-        Session session = new Session(UUID);
-        when(schedule.findSession(UUID)).thenReturn( session );
+        SessionFeedbackResult feedback = mock(SessionFeedbackResult.class );
+        when(schedule.findSessionFeeback(UUID)).thenReturn( feedback  );
 
         SessionFeedbackResult sessionFeedback = sessionFeedbackRoute.getSession(UUID.toString()).getBody();
-        assertThat(sessionFeedback.uuid, equalTo( UUID ));
+        assertThat(sessionFeedback, equalTo( feedback ));
     }
 }

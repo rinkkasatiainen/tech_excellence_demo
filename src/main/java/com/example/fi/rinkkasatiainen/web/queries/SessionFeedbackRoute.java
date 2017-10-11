@@ -2,7 +2,6 @@ package com.example.fi.rinkkasatiainen.web.queries;
 
 import com.example.fi.rinkkasatiainen.model.Schedule;
 import com.example.fi.rinkkasatiainen.web.commands.SessionRoute;
-import com.example.fi.rinkkasatiainen.web.model.Session;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.queries;
 
 import com.example.fi.rinkkasatiainen.model.Schedule;
+import com.example.fi.rinkkasatiainen.web.commands.SessionFeedback;
 import com.example.fi.rinkkasatiainen.web.model.Session;
 
 import java.util.UUID;
@@ -15,7 +16,8 @@ public class SessionFeedbackQueryHandler implements QueryHandler<SessionFeedback
     @Override
     public SessionFeedbackResult handles(SessionFeedbackQuery feedbackQuery) {
         Session session = schedule.findSession(UUID.fromString(feedbackQuery.sessionId));
+        SessionFeedbackResult feedback = schedule.findSessionFeeback(UUID.fromString(feedbackQuery.sessionId));
 
-        return new SessionFeedbackResult(session.getAverageRating(), session.getUUID());
+        return feedback;
     }
 }
