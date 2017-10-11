@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
+import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.Schedule;
 import com.example.fi.rinkkasatiainen.web.commands.AddSessionCommandHandler;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -8,19 +9,17 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -75,9 +74,15 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return () -> UUID.randomUUID();
     }
 
+
     @Bean
-    public Schedule schedule() {
-        return new Schedule(uuidSupplier());
+    public EventStore getEventStore(){
+        return (uuid) -> new ArrayList<>();
+    }
+
+    @Bean
+    public Schedule schedule(EventStore eventStore) {
+        return new Schedule(uuidSupplier(), eventStore);
     }
     @Bean
     public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule) {

@@ -82,7 +82,7 @@ public class CanGiveAndReceiveFeedback {
     }
 
     private Schedule getSchedule() {
-        return webConfiguration.schedule();
+        return webConfiguration.schedule( webConfiguration.getEventStore() );
     }
 
     private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {
