@@ -71,6 +71,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
 
     private Supplier<UUID> uuidSupplier(){
+        // TODO AkS: The supplier could be one using DB unique constraint.
         return () -> UUID.randomUUID();
     }
 

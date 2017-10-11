@@ -15,4 +15,8 @@ public class Schedule {
     public Session newSession() {
         return new Session(supplier.get());
     }
+
+    public Session findSession(UUID uuid) {
+        return null;
+    }
 }

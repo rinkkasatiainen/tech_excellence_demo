@@ -18,4 +18,9 @@ public class Session {
     public void addTitle(String title) {
 
     }
+
+    // Primitive Obsession -> could do a thing here.
+    public double getAverageRating() {
+        return 0.0;
+    }
 }

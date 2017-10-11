@@ -48,7 +48,7 @@ public class CanGiveAndReceiveFeedback {
 
     private SessionResponse then_session(SessionUUID session) {
         return ( rating ) -> {
-            ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute().getSession(session.uuid.toString());
+            ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute(getSchedule()).getSession(session.uuid.toString());
             SessionFeedbackResult body = feedbackResult.getBody();
             assertThat(body.averageRating, equalTo(rating));
         };
