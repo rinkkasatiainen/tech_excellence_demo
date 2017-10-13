@@ -2,7 +2,9 @@ package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventLoader;
+import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
 import java.util.*;
 
@@ -39,10 +41,6 @@ public class Session {
         publisher.markChangesAsCommitted();
     }
 
-    public String getTitle() {
-        return eventSourceEntity.getTitle();
-    }
-
     public static Session create(String title, UUID uuid) {
         Session session = new Session();
         session.createSession(title, uuid);
@@ -59,6 +57,10 @@ public class Session {
 
     public static Session load(Event... events) {
         return new Session(Arrays.asList(events));
+    }
+
+    public void rate(Stars stars) {
+        publisher.publish(new SessionRated(this.getUUID(), stars));
     }
 
     private class EventPublisher{
@@ -89,8 +91,10 @@ public class Session {
         private java.util.UUID uuid;
         private String title;
         private final EventLoader loader;
+        private List<Stars> ratings;
 
         public EventSourceEntity(List<Event> history) {
+            this.ratings = new ArrayList<>();
             loader = new EventLoader();
             loader.register(SessionCreated.class, this::apply);
 
@@ -100,7 +104,10 @@ public class Session {
         private void apply(SessionCreated sessionCreated) {
             this.uuid = sessionCreated.uuid;
             this.title = sessionCreated.title;
+        }
 
+        private void apply(SessionRated sessionRated){
+            this.ratings.add(sessionRated.stars);
         }
 
         public UUID getUUID() {

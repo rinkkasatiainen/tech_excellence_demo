@@ -77,10 +77,14 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return () -> UUID.randomUUID();
     }
 
+    static FakeEventStore fakeEventStore;
 
     @Bean
     public EventStore getEventStore(){
-        return new FakeEventStore();
+        if( null == fakeEventStore){
+            fakeEventStore = new FakeEventStore();
+        }
+        return fakeEventStore;
     }
 
     @Bean

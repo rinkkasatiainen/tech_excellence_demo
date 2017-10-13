@@ -1,6 +1,8 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
+import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,10 +29,10 @@ public class SessionShould {
         assertThat(session.getVersion(), equalTo(1));
     }
 
-
     @Test
-    public void create_a_new_session_with_title() throws Exception {
-        assertThat(session.getTitle(), equalTo(TITLE));
+    public void should_rate() throws Exception {
+        session.rate(Stars.FOUR);
+        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(UUID, Stars.FOUR)));
     }
 
     @Test

@@ -52,7 +52,7 @@ public class ScheduleShould {
 
     @Test
     public void find_session_feedback() throws Exception {
-        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE, random), new SessionRated(Stars.FIVE)));
+        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE, random), new SessionRated(random, Stars.FIVE)));
 
         SessionFeedbackResult result = schedule.findSessionFeeback(random);
         assertThat(result.getVersion(), equalTo(2));

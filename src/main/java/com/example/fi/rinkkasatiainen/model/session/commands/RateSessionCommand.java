@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class RateSessionCommand implements Command {
 
-    private final UUID uuid;
-    private final Stars stars;
+    public final UUID uuid;
+    public final Stars stars;
 
     public RateSessionCommand(UUID uuid, Stars stars) {
         this.uuid = uuid;

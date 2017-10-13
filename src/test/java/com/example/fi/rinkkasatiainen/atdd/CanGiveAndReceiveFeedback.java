@@ -31,7 +31,6 @@ public class CanGiveAndReceiveFeedback {
         webConfiguration = new WebConfiguration();
     }
 
-    @Ignore
     @Test
     public void can_create_user_and_give_feedback_to_session() throws Exception {
         SessionUUID session = given_a_session();
