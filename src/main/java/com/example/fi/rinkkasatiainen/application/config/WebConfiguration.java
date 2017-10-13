@@ -4,6 +4,7 @@ import com.example.fi.rinkkasatiainen.model.Audience;
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -98,6 +99,11 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public RegisterParticipantCommandHandler registerParticipantCommandHandler() {
         return new RegisterParticipantCommandHandler(schedule(getEventStore()), audience(getEventStore()));
+    }
+
+    @Bean
+    public RateSessionCommandHandler rateSessionCommandHandler() {
+        return new RateSessionCommandHandler(schedule(getEventStore()));
     }
 
     private class FakeEventStore implements EventStore {

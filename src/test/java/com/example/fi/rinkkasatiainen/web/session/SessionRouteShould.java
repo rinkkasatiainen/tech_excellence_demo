@@ -1,8 +1,12 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.web.participants.Participant;
+import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
@@ -21,11 +25,13 @@ public class SessionRouteShould {
     private SessionRoute sessionRoute;
     private Participant participant;
     private RegisterParticipantCommandHandler registerParticipantCommandHandler;
+    private RateSessionCommandHandler rateSessionCommandHandler;
 
     @Before
     public void setUp() throws Exception {
         registerParticipantCommandHandler = mock(RegisterParticipantCommandHandler.class);
-        sessionRoute = new SessionRoute( registerParticipantCommandHandler );
+        rateSessionCommandHandler = mock(RateSessionCommandHandler.class);
+        sessionRoute = new SessionRoute( registerParticipantCommandHandler, rateSessionCommandHandler );
         participant = new Participant(UUID.randomUUID());
     }
 
@@ -34,6 +40,13 @@ public class SessionRouteShould {
         sessionRoute.register(UUID.toString(), participant);
 
         verify(registerParticipantCommandHandler).handles( argThat(matchesToCommand( new RegisterParticipantCommand(participant.uuid, UUID))));
+    }
+
+    @Test
+    public void rate_session() throws Exception {
+        sessionRoute.rate(UUID.toString(), new SessionFeedback(5));
+
+        verify(rateSessionCommandHandler).handles( new RateSessionCommand(UUID, Stars.FIVE));
     }
 
     public static class MatchingCommand extends TypeSafeMatcher<RegisterParticipantCommand>{

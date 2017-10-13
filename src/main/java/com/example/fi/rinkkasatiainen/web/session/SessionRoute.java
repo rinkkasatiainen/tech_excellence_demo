@@ -1,5 +1,8 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.web.participants.Participant;
@@ -20,9 +23,12 @@ public class SessionRoute {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final RegisterParticipantCommandHandler registerParticipantCommandHandler;
+    private final RateSessionCommandHandler rateSessionCommandHandler;
+    private Stars stars;
 
-    public SessionRoute(RegisterParticipantCommandHandler registerParticipantCommandHandler) {
+    public SessionRoute(RegisterParticipantCommandHandler registerParticipantCommandHandler, RateSessionCommandHandler rateSessionCommandHandler) {
         this.registerParticipantCommandHandler = registerParticipantCommandHandler;
+        this.rateSessionCommandHandler = rateSessionCommandHandler;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,7 +39,13 @@ public class SessionRoute {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback participant) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Transactional
+    public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback rating) {
+        UUID uuid = UUID.fromString(sessionId);
+        stars = Stars.from(rating.rating);
+        rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars));
+
         return ResponseEntity.ok().build();
     }
 }
