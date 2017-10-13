@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
 import com.example.fi.rinkkasatiainen.model.Audience;
+import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
@@ -21,8 +22,7 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Supplier;
 
 
@@ -79,7 +79,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public EventStore getEventStore(){
-        return (uuid) -> new ArrayList<>();
+        return new FakeEventStore();
     }
 
     @Bean
@@ -98,5 +98,26 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public RegisterParticipantCommandHandler registerParticipantCommandHandler() {
         return new RegisterParticipantCommandHandler(schedule(getEventStore()), audience(getEventStore()));
+    }
+
+    private class FakeEventStore implements EventStore {
+
+        Map<UUID, List<Event>> events;
+
+        public FakeEventStore() {
+            this.events = new HashMap<>();
+        }
+
+        @Override
+        public List<Event> findByUuid(UUID random) {
+            return events.getOrDefault(random, new ArrayList<>());
+        }
+
+        @Override
+        public void saveEvents(UUID random, List<Event> uncommittedChanges, Integer lastVersion) {
+            List<Event> eventList = findByUuid(random);
+            eventList.addAll(uncommittedChanges);
+            events.put(random, eventList);
+        }
     }
 }

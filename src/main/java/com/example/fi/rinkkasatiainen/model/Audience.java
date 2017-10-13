@@ -10,7 +10,7 @@ public class Audience {
     }
 
     public Participant findParticipant(UUID uuid) {
-        return null;
+        return new Participant(uuid);
     }
 
     public void save(UUID sessionUUID, Participant participant, Integer expectedVersion) {

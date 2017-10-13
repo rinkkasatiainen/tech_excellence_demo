@@ -19,8 +19,8 @@ public class Schedule {
     }
 
 
-    public Session newSession() {
-        return new Session(supplier.get());
+    public UUID newSessionUUID() {
+        return supplier.get();
     }
 
     public Session findSession(UUID uuid) {
@@ -35,5 +35,9 @@ public class Schedule {
     }
 
     public void save(UUID sessionUUID, Session session, Integer expectedVersion) {
+        List<Event> uncommittedChanges = session.getUncommittedChanges();
+        eventStore.saveEvents(sessionUUID, uncommittedChanges, expectedVersion);
+        session.markChangesAsCommitted();
+
     }
 }

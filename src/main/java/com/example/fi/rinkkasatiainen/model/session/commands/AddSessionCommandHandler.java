@@ -15,8 +15,10 @@ public class AddSessionCommandHandler implements CreateEntityCommandHandler<AddS
 
     @Override
     public UUID handles(AddSessionCommand addSessionCommand) {
-        Session session = schedule.newSession();
-        session.addTitle( addSessionCommand.title );
+        UUID sessionUUID = schedule.newSessionUUID();
+        Session session = Session.create(addSessionCommand.title, sessionUUID);
+
+        schedule.save(sessionUUID, session, 0);
 
         return session.getUUID();
     }
