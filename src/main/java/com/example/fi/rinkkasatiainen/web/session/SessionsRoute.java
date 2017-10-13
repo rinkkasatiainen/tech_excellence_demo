@@ -33,7 +33,7 @@ public class SessionsRoute {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<Void> create(@RequestBody NewSession newSession) {
+    public ResponseEntity<NewSessionResponse> create(@RequestBody NewSession newSession) {
         log.debug("POST /v1/sessions");
 
         SessionUUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title));
@@ -44,7 +44,16 @@ public class SessionsRoute {
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.created( uri ).build();
+        return ResponseEntity.created( uri ).body(new NewSessionResponse(uuid, newSession));
     }
 
+    public class NewSessionResponse {
+        public final UUID sessionId;
+        public final String title;
+
+        public NewSessionResponse(SessionUUID uuid, NewSession newSession) {
+            this.sessionId = uuid.getId();
+            this.title = newSession.title;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.participants;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,25 @@ public class ParticipantsRoute {
 
     @RequestMapping(value = "/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<Void> create() {
+    public ResponseEntity<ParticipantDTO> create() {
         log.debug("POST /v1/participants");
 
-        UUID uuid = UUID.randomUUID();
+        ParticipantUUID uuid = ParticipantUUID.generate();
         URI uri;
         try {
             uri = new URI(V1_PARTICIPANTS + "/" + uuid.toString() );
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.created( uri ).build();
+        return ResponseEntity.created( uri ).body(new ParticipantDTO(uuid));
     }
 
+
+    public class ParticipantDTO{
+        public final UUID participantId;
+
+        public ParticipantDTO(ParticipantUUID uuid) {
+            participantId = uuid.getId();
+        }
+    }
 }

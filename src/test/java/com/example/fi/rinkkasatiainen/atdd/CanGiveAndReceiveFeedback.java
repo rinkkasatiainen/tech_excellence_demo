@@ -7,9 +7,9 @@ import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.application.config.WebConfiguration;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
-import com.example.fi.rinkkasatiainen.web.participants.Participant;
 import com.example.fi.rinkkasatiainen.web.participants.ParticipantsRoute;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
+import com.example.fi.rinkkasatiainen.web.session.commands.ParticipantDto;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
 import com.example.fi.rinkkasatiainen.web.session.SessionRoute;
@@ -17,8 +17,6 @@ import com.example.fi.rinkkasatiainen.web.session.SessionsRoute;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
-
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -63,7 +61,7 @@ public class CanGiveAndReceiveFeedback {
 
     private RateSession when(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
-            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).register( sessionUUID.getId().toString() , new Participant(participant));
+            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).register( sessionUUID.getId().toString() , new ParticipantDto(participant.toString()));
             new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).rate( sessionUUID.getId().toString(), new SessionFeedback(stars.ordinal(), participant));
         };
         return rateSession;
@@ -71,14 +69,14 @@ public class CanGiveAndReceiveFeedback {
 
 
     private ParticipantUUID and_I_have_registered_as_participant() {
-        ResponseEntity<Void> responseEntity = new ParticipantsRoute().create();
+        ResponseEntity<ParticipantsRoute.ParticipantDTO> responseEntity = new ParticipantsRoute().create();
         String uuid = getUUIDFromLocationHeader(responseEntity);
         return ParticipantUUID.from(uuid);
     }
 
 
     private SessionUUID given_a_session() {
-        ResponseEntity<Void> sessionResponseEntity= getSessionsRoute().create(new NewSession("title"));
+        ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity= getSessionsRoute().create(new NewSession("title"));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return SessionUUID.from(uuid);
     }
@@ -92,7 +90,7 @@ public class CanGiveAndReceiveFeedback {
         return webConfiguration.schedule( webConfiguration.getEventStore() );
     }
 
-    private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {
+    private <T> String getUUIDFromLocationHeader(ResponseEntity<T> sessionResponseEntity) {
         return sessionResponseEntity.getHeaders().get("location")
                 .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
     }

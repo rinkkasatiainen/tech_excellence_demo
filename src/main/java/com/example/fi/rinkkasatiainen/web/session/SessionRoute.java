@@ -1,13 +1,12 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
-import com.example.fi.rinkkasatiainen.web.participants.Participant;
+import com.example.fi.rinkkasatiainen.web.session.commands.ParticipantDto;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +32,13 @@ public class SessionRoute {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<Void> register(@PathVariable(value = "sessionId") String sessionId, @RequestBody Participant participant) {
+    public ResponseEntity<Void> register(@PathVariable(value = "sessionId") String sessionId, @RequestBody ParticipantDto participant) {
         registerParticipantCommandHandler.handles( new RegisterParticipantCommand(participant.uuid, SessionUUID.from(sessionId)));
 
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/rate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback rating) {
         SessionUUID uuid = SessionUUID.from(sessionId);
@@ -48,4 +47,6 @@ public class SessionRoute {
 
         return ResponseEntity.ok().build();
     }
+
+
 }

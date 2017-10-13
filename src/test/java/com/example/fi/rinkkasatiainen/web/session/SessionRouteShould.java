@@ -7,7 +7,7 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
-import com.example.fi.rinkkasatiainen.web.participants.Participant;
+import com.example.fi.rinkkasatiainen.web.session.commands.ParticipantDto;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -23,7 +23,7 @@ public class SessionRouteShould {
 
     public static final SessionUUID UUID = SessionUUID.generate();
     private SessionRoute sessionRoute;
-    private Participant participant;
+    private ParticipantDto participant;
     private RegisterParticipantCommandHandler registerParticipantCommandHandler;
     private RateSessionCommandHandler rateSessionCommandHandler;
     private ParticipantUUID participantUUID;
@@ -34,7 +34,7 @@ public class SessionRouteShould {
         rateSessionCommandHandler = mock(RateSessionCommandHandler.class);
         sessionRoute = new SessionRoute( registerParticipantCommandHandler, rateSessionCommandHandler );
         participantUUID = ParticipantUUID.generate();
-        participant = new Participant(participantUUID);
+        participant = new ParticipantDto(participantUUID.toString());
     }
 
     @Test
