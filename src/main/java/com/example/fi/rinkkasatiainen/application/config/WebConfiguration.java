@@ -1,8 +1,8 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
 import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.Schedule;
-import com.example.fi.rinkkasatiainen.web.commands.AddSessionCommandHandler;
+import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

@@ -1,11 +1,12 @@
 package com.example.fi.rinkkasatiainen.model;
 
 import com.example.fi.rinkkasatiainen.Stars;
-import com.example.fi.rinkkasatiainen.web.model.Session;
-import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackResult;
+import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import com.example.fi.rinkkasatiainen.model.session.Session;
+import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.security.web.authentication.session.SessionFixationProtectionEvent;
 
 import java.util.Arrays;
 import java.util.UUID;

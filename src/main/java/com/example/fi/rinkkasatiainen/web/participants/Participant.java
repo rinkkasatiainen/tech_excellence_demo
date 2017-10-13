@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web.commands;
+package com.example.fi.rinkkasatiainen.web.participants;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

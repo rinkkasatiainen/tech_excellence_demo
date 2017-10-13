@@ -1,4 +1,6 @@
-package com.example.fi.rinkkasatiainen.web.commands;
+package com.example.fi.rinkkasatiainen.web.session.commands;
+
+import com.example.fi.rinkkasatiainen.web.Command;
 
 public class AddSessionCommand implements Command {
     public final String title;

@@ -1,5 +1,8 @@
-package com.example.fi.rinkkasatiainen.web.commands;
+package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommand;
+import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
+import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 

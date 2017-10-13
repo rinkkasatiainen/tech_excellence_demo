@@ -1,7 +1,9 @@
-package com.example.fi.rinkkasatiainen.web.commands;
+package com.example.fi.rinkkasatiainen.web.session;
 
-import com.example.fi.rinkkasatiainen.model.Schedule;
-import com.example.fi.rinkkasatiainen.web.model.Session;
+import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommand;
+import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
+import com.example.fi.rinkkasatiainen.model.session.Session;
 import org.junit.Test;
 
 import java.util.UUID;

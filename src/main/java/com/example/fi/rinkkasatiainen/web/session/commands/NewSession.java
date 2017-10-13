@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web.commands;
+package com.example.fi.rinkkasatiainen.web.session.commands;
 
 public class NewSession {
     public final String title;

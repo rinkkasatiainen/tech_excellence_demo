@@ -1,7 +1,10 @@
-package com.example.fi.rinkkasatiainen.web.queries;
+package com.example.fi.rinkkasatiainen.web.session.queries;
 
-import com.example.fi.rinkkasatiainen.model.Schedule;
-import com.example.fi.rinkkasatiainen.web.commands.SessionRoute;
+import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
+import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQuery;
+import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQueryHandler;
+import com.example.fi.rinkkasatiainen.web.session.SessionRoute;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

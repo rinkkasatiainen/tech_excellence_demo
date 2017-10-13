@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web.queries;
+package com.example.fi.rinkkasatiainen.model.session.projections;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 

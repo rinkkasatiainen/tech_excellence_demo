@@ -1,7 +1,8 @@
-package com.example.fi.rinkkasatiainen.web.commands;
+package com.example.fi.rinkkasatiainen.web.session.commands;
 
-import com.example.fi.rinkkasatiainen.model.Schedule;
-import com.example.fi.rinkkasatiainen.web.model.Session;
+import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.Session;
+import com.example.fi.rinkkasatiainen.web.CreateEntityCommandHandler;
 
 import java.util.UUID;
 

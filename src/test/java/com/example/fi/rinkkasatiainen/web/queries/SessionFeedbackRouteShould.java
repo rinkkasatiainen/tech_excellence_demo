@@ -1,7 +1,8 @@
 package com.example.fi.rinkkasatiainen.web.queries;
 
-import com.example.fi.rinkkasatiainen.model.Schedule;
-import com.example.fi.rinkkasatiainen.web.model.Session;
+import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
+import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
 import org.junit.Test;
 
 import java.util.UUID;

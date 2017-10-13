@@ -1,5 +1,6 @@
-package com.example.fi.rinkkasatiainen.model;
+package com.example.fi.rinkkasatiainen.model.session.events;
 
+import com.example.fi.rinkkasatiainen.model.Event;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
