@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
@@ -35,7 +36,7 @@ public class SessionsRoute {
     public ResponseEntity<Void> create(@RequestBody NewSession newSession) {
         log.debug("POST /v1/sessions");
 
-        UUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title));
+        SessionUUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title));
 
         URI uri;
         try {

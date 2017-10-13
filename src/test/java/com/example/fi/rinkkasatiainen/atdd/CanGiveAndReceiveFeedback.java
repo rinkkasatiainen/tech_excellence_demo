@@ -2,6 +2,7 @@ package com.example.fi.rinkkasatiainen.atdd;
 
 
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.application.config.WebConfiguration;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
@@ -54,7 +55,7 @@ public class CanGiveAndReceiveFeedback {
 
     private SessionResponse then_session(SessionUUID session) {
         return ( rating ) -> {
-            ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute(getSchedule()).getSession(session.uuid.toString());
+            ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute(getSchedule()).getSession(session.getId().toString());
             SessionFeedbackResult body = feedbackResult.getBody();
             assertThat(body.getAverageRating(), equalTo(rating));
         };
@@ -62,8 +63,8 @@ public class CanGiveAndReceiveFeedback {
 
     private RateSession when(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
-            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).register( sessionUUID.uuid.toString() , new Participant(participant));
-            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
+            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).register( sessionUUID.getId().toString() , new Participant(participant));
+            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).rate( sessionUUID.getId().toString() , new SessionFeedback(stars.ordinal()));
         };
         return rateSession;
     }
@@ -79,7 +80,7 @@ public class CanGiveAndReceiveFeedback {
     private SessionUUID given_a_session() {
         ResponseEntity<Void> sessionResponseEntity= getSessionsRoute().create(new NewSession("title"));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
-        return new SessionUUID(UUID.fromString(uuid));
+        return SessionUUID.from(uuid);
     }
 
     private SessionsRoute getSessionsRoute() {

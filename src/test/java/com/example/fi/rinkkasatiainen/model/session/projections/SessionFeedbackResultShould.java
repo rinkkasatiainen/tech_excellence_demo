@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session.projections;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class SessionFeedbackResultShould {
 
 
-    public static final UUID UUID = java.util.UUID.randomUUID();
+    public static final SessionUUID UUID = SessionUUID.generate();
 
     @Test
     public void load_from_event_created() throws Exception {

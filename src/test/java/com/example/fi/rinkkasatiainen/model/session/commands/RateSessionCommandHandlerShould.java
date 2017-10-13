@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class RateSessionCommandHandlerShould {
 
-    public static final UUID UUID = java.util.UUID.randomUUID();
+    public static final SessionUUID UUID = SessionUUID.generate();
     private RateSessionCommandHandler commandHandler;
     private Schedule schedule;
 

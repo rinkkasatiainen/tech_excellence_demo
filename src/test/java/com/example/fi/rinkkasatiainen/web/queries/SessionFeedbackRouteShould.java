@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.queries;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class SessionFeedbackRouteShould {
 
-    public static final UUID UUID = java.util.UUID.randomUUID();
+    public static final SessionUUID UUID = SessionUUID.generate();
     private Schedule schedule;
 
     @Test

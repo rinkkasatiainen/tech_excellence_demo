@@ -3,6 +3,7 @@ package com.example.fi.rinkkasatiainen.application.config;
 import com.example.fi.rinkkasatiainen.model.Audience;
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
@@ -72,9 +73,9 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
 
 
-    private Supplier<UUID> uuidSupplier(){
+    private Supplier<SessionUUID> uuidSupplier(){
         // TODO AkS: The supplier could be one using DB unique constraint.
-        return () -> UUID.randomUUID();
+        return () -> SessionUUID.generate();
     }
 
     static FakeEventStore fakeEventStore;

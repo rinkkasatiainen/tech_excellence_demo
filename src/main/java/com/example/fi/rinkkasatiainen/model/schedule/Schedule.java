@@ -2,6 +2,7 @@ package com.example.fi.rinkkasatiainen.model.schedule;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
@@ -10,33 +11,33 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class Schedule {
-    private final Supplier<UUID> supplier;
+    private final Supplier<SessionUUID> supplier;
     private final EventStore eventStore;
 
-    public Schedule(Supplier<UUID> supplier, EventStore eventStore) {
+    public Schedule(Supplier<SessionUUID> supplier, EventStore eventStore) {
         this.supplier = supplier;
         this.eventStore = eventStore;
     }
 
 
-    public UUID newSessionUUID() {
+    public SessionUUID newSessionUUID() {
         return supplier.get();
     }
 
-    public Session findSession(UUID uuid) {
+    public Session findSession(SessionUUID uuid) {
         // TODO AkS: COULD BE NO_EVENTS!
-        List<Event> events = eventStore.findByUuid(uuid);
+        List<Event> events = eventStore.findByUuid(uuid.getId());
         return Session.load(events);
     }
 
-    public SessionFeedbackResult findSessionFeeback(UUID uuid) {
-        List<Event> events = eventStore.findByUuid(uuid);
+    public SessionFeedbackResult findSessionFeeback(SessionUUID uuid) {
+        List<Event> events = eventStore.findByUuid(uuid.getId());
         return SessionFeedbackResult.load(events);
     }
 
-    public void save(UUID sessionUUID, Session session, Integer expectedVersion) {
+    public void save(SessionUUID sessionUUID, Session session, Integer expectedVersion) {
         List<Event> uncommittedChanges = session.getUncommittedChanges();
-        eventStore.saveEvents(sessionUUID, uncommittedChanges, expectedVersion);
+        eventStore.saveEvents(sessionUUID.getId(), uncommittedChanges, expectedVersion);
         session.markChangesAsCommitted();
 
     }

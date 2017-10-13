@@ -1,9 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventLoader;
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
@@ -17,7 +14,7 @@ public class Session {
         this(new ArrayList<>());
     }
 
-    public UUID getUUID() {
+    public SessionUUID getUUID() {
         return eventSourceEntity.getUUID();
     }
 
@@ -42,13 +39,13 @@ public class Session {
         publisher.markChangesAsCommitted();
     }
 
-    public static Session create(String title, UUID uuid) {
+    public static Session create(String title, SessionUUID uuid) {
         Session session = new Session();
         session.createSession(title, uuid);
         return session;
     }
 
-    private void createSession(String title, UUID uuid) {
+    private void createSession(String title, SessionUUID uuid) {
         publisher.publish(new SessionCreated(title, uuid));
     }
 
@@ -89,7 +86,7 @@ public class Session {
     }
 
     private class EventSourceEntity{
-        private java.util.UUID uuid;
+        private SessionUUID uuid;
         private String title;
         private final EventLoader loader;
         private List<Stars> ratings;
@@ -111,7 +108,7 @@ public class Session {
             this.ratings.add(sessionRated.stars);
         }
 
-        public UUID getUUID() {
+        public SessionUUID getUUID() {
             return uuid;
         }
 

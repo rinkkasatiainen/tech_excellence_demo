@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.model.session.events;
 
 import com.example.fi.rinkkasatiainen.model.Event;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.util.Struct;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,10 +10,10 @@ import java.util.UUID;
 
 public class SessionCreated implements Event {
     public final String title;
-    public final UUID uuid;
+    public final SessionUUID uuid;
 
     @JsonCreator
-    public SessionCreated(@JsonProperty("title") String title, @JsonProperty("uuid") UUID uuid) {
+    public SessionCreated(@JsonProperty("title") String title, @JsonProperty("uuid") SessionUUID uuid) {
         this.title = title;
         this.uuid = uuid;
     }

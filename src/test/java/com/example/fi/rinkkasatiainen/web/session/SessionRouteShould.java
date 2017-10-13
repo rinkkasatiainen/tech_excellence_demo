@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.verify;
 
 public class SessionRouteShould {
 
-    public static final UUID UUID = java.util.UUID.randomUUID();
+    public static final SessionUUID UUID = SessionUUID.generate();
     private SessionRoute sessionRoute;
     private Participant participant;
     private RegisterParticipantCommandHandler registerParticipantCommandHandler;

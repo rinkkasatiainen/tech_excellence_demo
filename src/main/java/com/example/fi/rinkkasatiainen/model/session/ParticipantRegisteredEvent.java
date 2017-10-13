@@ -2,14 +2,13 @@ package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-
-import java.util.UUID;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 
 public class ParticipantRegisteredEvent implements Event {
-    private final UUID sessionUuid;
+    private final SessionUUID sessionUuid;
     private final ParticipantUUID participantUUid;
 
-    public ParticipantRegisteredEvent(UUID sessionUuid, ParticipantUUID participantUUid) {
+    public ParticipantRegisteredEvent(SessionUUID sessionUuid, ParticipantUUID participantUUid) {
         this.sessionUuid = sessionUuid;
         this.participantUUid = participantUUid;
     }

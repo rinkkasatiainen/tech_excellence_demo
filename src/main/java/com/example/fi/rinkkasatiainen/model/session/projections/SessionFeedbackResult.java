@@ -2,6 +2,7 @@ package com.example.fi.rinkkasatiainen.model.session.projections;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventLoader;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
@@ -20,7 +21,7 @@ public class SessionFeedbackResult {
         return eventSourceEntity.getAverageRating();
     }
 
-    public UUID getUuid() {
+    public SessionUUID getUuid() {
         return eventSourceEntity.getUuid();
     }
 
@@ -38,7 +39,7 @@ public class SessionFeedbackResult {
 
     private class EventSourceEntity{
         private List<Integer> ratings = new ArrayList<>();
-        private UUID uuid;
+        private SessionUUID uuid;
         private final EventLoader loader;
 
         double getAverageRating() {
@@ -47,7 +48,7 @@ public class SessionFeedbackResult {
             return ratings.stream().reduce(0, (a, b) -> a+b) / ratings.size();
         }
 
-        UUID getUuid() {
+        SessionUUID getUuid() {
             return uuid;
         }
 

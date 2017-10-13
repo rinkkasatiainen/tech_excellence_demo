@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class SessionShould {
 
-    public static final UUID UUID = java.util.UUID.randomUUID();
+    public static final SessionUUID UUID = SessionUUID.generate();
     public static final String TITLE = "TITLE";
     private Session session;
 

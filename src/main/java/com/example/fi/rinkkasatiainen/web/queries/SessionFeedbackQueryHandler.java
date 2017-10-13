@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.queries;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
@@ -16,8 +17,7 @@ public class SessionFeedbackQueryHandler implements QueryHandler<SessionFeedback
 
     @Override
     public SessionFeedbackResult handles(SessionFeedbackQuery feedbackQuery) {
-        Session session = schedule.findSession(UUID.fromString(feedbackQuery.sessionId));
-        SessionFeedbackResult feedback = schedule.findSessionFeeback(UUID.fromString(feedbackQuery.sessionId));
+        SessionFeedbackResult feedback = schedule.findSessionFeeback(SessionUUID.from(feedbackQuery.sessionId));
 
         return feedback;
     }

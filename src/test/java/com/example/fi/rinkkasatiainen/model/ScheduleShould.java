@@ -23,8 +23,8 @@ public class ScheduleShould {
 
 
     public static final String TITLE = "Title";
-    private UUID random = UUID.randomUUID();
-    private Supplier<UUID> randomUUIDSupplier = () -> random;
+    public static final SessionUUID UUID = SessionUUID.generate();
+    private Supplier<SessionUUID> randomUUIDSupplier = () -> UUID;
     private Schedule schedule;
     private EventStore eventStore;
 
@@ -37,24 +37,24 @@ public class ScheduleShould {
 
     @Test
     public void create_new_session() throws Exception {
-        UUID session = schedule.newSessionUUID();
+        SessionUUID session = schedule.newSessionUUID();
 
-        assertThat( session, equalTo(random));
+        assertThat( session, equalTo(UUID));
     }
 
     @Test
     public void find_session() throws Exception {
-        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE, random) ));
+        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID) ));
 
-        Session s = schedule.findSession(random);
+        Session s = schedule.findSession(UUID);
         assertThat(s.getVersion(), equalTo(1));
     }
 
     @Test
     public void find_session_feedback() throws Exception {
-        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE, random), new SessionRated(random, Stars.FIVE)));
+        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID), new SessionRated(UUID, Stars.FIVE)));
 
-        SessionFeedbackResult result = schedule.findSessionFeeback(random);
+        SessionFeedbackResult result = schedule.findSessionFeeback(UUID);
         assertThat(result.getVersion(), equalTo(2));
         assertThat(result.getAverageRating(), equalTo(5.0));
     }
@@ -62,12 +62,12 @@ public class ScheduleShould {
 
     @Test
     public void save_session_to_event_store() throws Exception {
-        Session session = Session.create(TITLE, random);
-        schedule.save( random, session, 0);
+        Session session = Session.create(TITLE, UUID);
+        schedule.save(UUID, session, 0);
 
 //        void saveEvents(UUID uuid, List<Event> uncommittedChanges, int expectedVersion);
         ArgumentCaptor<List> listArgumentCaptor = ArgumentCaptor.forClass(List.class);
-        verify(eventStore).saveEvents(argThat(equalTo(random)), listArgumentCaptor.capture(), argThat(equalTo(0)));
+        verify(eventStore).saveEvents(argThat(equalTo(UUID.getId())), listArgumentCaptor.capture(), argThat(equalTo(0)));
 
         List value = listArgumentCaptor.getValue();
         SessionCreated sessionCreated = (SessionCreated) value.get(0);

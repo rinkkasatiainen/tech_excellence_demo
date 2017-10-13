@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.participants;
 
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ public class Participant {
         this.uuid = uuid;
     }
 
-    public void registerToEvent(UUID sessionId) {
+    public void registerToEvent(SessionUUID sessionId) {
 
     }
 

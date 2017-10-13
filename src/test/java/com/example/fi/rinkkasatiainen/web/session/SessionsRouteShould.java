@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
@@ -29,5 +30,5 @@ public class SessionsRouteShould {
         assertThat( responseEntity.getHeaders().getLocation(), equalTo( new URI("/v1/sessions/" + uuid)));
     }
 
-    private static final UUID uuid = UUID.randomUUID();
+    public static final SessionUUID uuid = SessionUUID.generate();
 }
