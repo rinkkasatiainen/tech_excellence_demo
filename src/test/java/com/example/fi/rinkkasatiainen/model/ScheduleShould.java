@@ -1,9 +1,9 @@
 package com.example.fi.rinkkasatiainen.model;
 
-import com.example.fi.rinkkasatiainen.Stars;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.Session;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class ScheduleShould {
 
     @Test
     public void find_session() throws Exception {
-        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE) ));
+        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE, random) ));
 
         Session s = schedule.findSession(random);
         assertThat(s.version, equalTo(1));
@@ -50,11 +50,11 @@ public class ScheduleShould {
 
     @Test
     public void find_session_feedback() throws Exception {
-        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE), new SessionRated(Stars.FIVE)));
+        when(eventStore.findByUuid(random)).thenReturn(Arrays.asList(new SessionCreated(TITLE, random), new SessionRated(Stars.FIVE)));
 
         SessionFeedbackResult result = schedule.findSessionFeeback(random);
-        assertThat(result.version, equalTo(2));
-        assertThat(result.averageRating, equalTo(5.0));
+        assertThat(result.getVersion(), equalTo(2));
+        assertThat(result.getAverageRating(), equalTo(5.0));
 
     }
 }

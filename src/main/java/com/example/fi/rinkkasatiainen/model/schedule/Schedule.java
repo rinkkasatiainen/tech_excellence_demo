@@ -24,6 +24,7 @@ public class Schedule {
     }
 
     public Session findSession(UUID uuid) {
+        // TODO AkS: COULD BE NO_EVENTS!
         List<Event> events = eventStore.findByUuid(uuid);
         return Session.load(events);
     }

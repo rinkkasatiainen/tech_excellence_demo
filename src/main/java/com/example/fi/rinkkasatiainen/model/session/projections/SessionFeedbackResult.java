@@ -1,28 +1,82 @@
 package com.example.fi.rinkkasatiainen.model.session.projections;
 
 import com.example.fi.rinkkasatiainen.model.Event;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class SessionFeedbackResult {
-    public static final Double NO_FEEDBACK = 0.0d;
-    public final double averageRating;
-    public final UUID uuid;
-    public Integer version;
+    private final EventSourceEntity eventSourceEntity;
 
-    public SessionFeedbackResult(double averageRating, UUID uuid) {
-        this.averageRating = averageRating;
-        this.uuid = uuid;
+    private SessionFeedbackResult(List<Event> events) {
+
+        eventSourceEntity = new EventSourceEntity(events);
+    }
+    public double getAverageRating() {
+        return eventSourceEntity.getAverageRating();
     }
 
-    private SessionFeedbackResult() {
-        averageRating = 5.0;
-        uuid = UUID.randomUUID();
-        version = 2;
+    public UUID getUuid() {
+        return eventSourceEntity.getUuid();
     }
+
+    public Integer getVersion() {
+        return eventSourceEntity.getVersion();
+    }
+
 
     public static SessionFeedbackResult load(List<Event> events) {
-        return new SessionFeedbackResult();
+        SessionFeedbackResult result = new SessionFeedbackResult(events);
+
+        return result;
+    }
+
+
+    private class EventSourceEntity{
+        private List<Integer> ratings = new ArrayList<>();
+        private UUID uuid;
+
+        public double getAverageRating() {
+            if(ratings.size() == 0)
+                return 0;
+            return ratings.stream().reduce(0, (a, b) -> a+b) / ratings.size();
+        }
+
+        public UUID getUuid() {
+            return uuid;
+        }
+
+        public EventSourceEntity(List<Event> events) {
+            register(SessionCreated.class, this::apply);
+            register(SessionRated.class, this::apply);
+            //register
+
+            events.forEach(this::apply);
+        }
+
+        protected int version;
+        private Map<Class, Consumer> appliers = new HashMap<>();
+        private <T extends Event> void register(Class<T> event, Consumer<T> consumer) {
+            appliers.put(event, consumer);
+        }
+
+        private void apply(Event event) {
+            Consumer applier = appliers.getOrDefault(event.getClass(), (e) -> { });
+            applier.accept(event);
+            version++;
+        }
+
+        private void apply(SessionCreated event) {
+            this.uuid = event.uuid;
+        }
+        private void apply(SessionRated event) {
+            this.ratings.add( event.stars.ordinal() );
+        }
+
+        public int getVersion() {
+            return version;
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.fi.rinkkasatiainen.atdd;
 
 
-import com.example.fi.rinkkasatiainen.Stars;
+import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.application.config.WebConfiguration;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
@@ -55,7 +55,7 @@ public class CanGiveAndReceiveFeedback {
         return ( rating ) -> {
             ResponseEntity<SessionFeedbackResult> feedbackResult = new SessionFeedbackRoute(getSchedule()).getSession(session.uuid.toString());
             SessionFeedbackResult body = feedbackResult.getBody();
-            assertThat(body.averageRating, equalTo(rating));
+            assertThat(body.getAverageRating(), equalTo(rating));
         };
     }
 
