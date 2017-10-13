@@ -2,6 +2,7 @@ package com.example.fi.rinkkasatiainen.application.config;
 
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.web.session.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -87,5 +88,9 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule) {
         return new AddSessionCommandHandler( schedule );
+    }
+    @Bean
+    public RegisterParticipantCommandHandler registerParticipantCommandHandler() {
+        return new RegisterParticipantCommandHandler();
     }
 }

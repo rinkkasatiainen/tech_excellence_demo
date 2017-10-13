@@ -9,16 +9,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(SessionRoute.V1_SESSION)
 public class SessionRoute {
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     public static final String V1_SESSION = "/v1/session/{sessionId}";
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final RegisterParticipantCommandHandler registerParticipantCommandHandler;
+
+    public SessionRoute(RegisterParticipantCommandHandler registerParticipantCommandHandler) {
+        this.registerParticipantCommandHandler = registerParticipantCommandHandler;
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Void> register(@PathVariable(value = "sessionId") String sessionId, @RequestBody Participant participant) {
+        registerParticipantCommandHandler.handles( new RegisterParticipantCommand(participant.uuid, UUID.fromString(sessionId)));
+
         return ResponseEntity.ok().build();
     }
 

@@ -61,8 +61,8 @@ public class CanGiveAndReceiveFeedback {
 
     private RateSession when(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
-            new SessionRoute().register( sessionUUID.uuid.toString() , new Participant(participant.uuid));
-            new SessionRoute().rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
+            new SessionRoute(webConfiguration.registerParticipantCommandHandler()).register( sessionUUID.uuid.toString() , new Participant(participant.uuid));
+            new SessionRoute(webConfiguration.registerParticipantCommandHandler()).rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
         };
         return rateSession;
     }
