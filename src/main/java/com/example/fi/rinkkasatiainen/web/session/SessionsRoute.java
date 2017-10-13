@@ -1,7 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
-import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommand;
-import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
+import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
+import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

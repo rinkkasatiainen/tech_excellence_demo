@@ -1,5 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
+import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.web.participants.Participant;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import org.slf4j.Logger;

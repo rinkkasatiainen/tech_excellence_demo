@@ -1,9 +1,10 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
+import com.example.fi.rinkkasatiainen.model.Audience;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
-import com.example.fi.rinkkasatiainen.web.session.RegisterParticipantCommandHandler;
-import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
+import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
+import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -82,6 +83,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public Audience audience(EventStore eventStore) {
+        return new Audience(eventStore);
+    }
+    @Bean
     public Schedule schedule(EventStore eventStore) {
         return new Schedule(uuidSupplier(), eventStore);
     }
@@ -89,8 +94,9 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule) {
         return new AddSessionCommandHandler( schedule );
     }
+
     @Bean
     public RegisterParticipantCommandHandler registerParticipantCommandHandler() {
-        return new RegisterParticipantCommandHandler();
+        return new RegisterParticipantCommandHandler(schedule(getEventStore()), audience(getEventStore()));
     }
 }

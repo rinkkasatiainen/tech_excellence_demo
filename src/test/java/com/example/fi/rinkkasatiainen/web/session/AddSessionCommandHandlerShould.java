@@ -1,8 +1,8 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
-import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommand;
-import com.example.fi.rinkkasatiainen.web.session.commands.AddSessionCommandHandler;
+import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
+import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import org.junit.Test;
 

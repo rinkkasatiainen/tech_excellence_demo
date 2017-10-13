@@ -33,4 +33,7 @@ public class Schedule {
         List<Event> events = eventStore.findByUuid(uuid);
         return SessionFeedbackResult.load(events);
     }
+
+    public void save(UUID sessionUUID, Session session, Integer expectedVersion) {
+    }
 }

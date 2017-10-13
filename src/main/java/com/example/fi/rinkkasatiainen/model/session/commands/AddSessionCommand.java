@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web.session.commands;
+package com.example.fi.rinkkasatiainen.model.session.commands;
 
 import com.example.fi.rinkkasatiainen.web.Command;
 

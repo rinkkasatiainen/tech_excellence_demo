@@ -27,13 +27,21 @@ public class Session {
 
     }
 
+    public void registerParticipant(UUID uuid) {
+        version++;
+    }
     // Primitive Obsession -> could do a thing here.
+
     public double getAverageRating() {
         return 0.0;
     }
-
     // TODO AkS: does actually nothing now.
+
     public static Session load(List<Event> events) {
         return new Session();
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 }

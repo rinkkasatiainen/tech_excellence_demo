@@ -14,4 +14,12 @@ public class Participant {
     public Participant(UUID uuid){
         this.uuid = uuid;
     }
+
+    public void registerToEvent(UUID sessionId) {
+
+    }
+
+    public Integer getVersion() {
+        return 1;
+    }
 }
