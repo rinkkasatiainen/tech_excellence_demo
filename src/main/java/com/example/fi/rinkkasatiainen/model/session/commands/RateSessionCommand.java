@@ -1,20 +1,21 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.util.Struct;
 import com.example.fi.rinkkasatiainen.web.Command;
 
-import java.util.UUID;
-
 public class RateSessionCommand implements Command {
 
     public final SessionUUID uuid;
     public final Stars stars;
+    public final ParticipantUUID participantUUID;
 
-    public RateSessionCommand(SessionUUID uuid, Stars stars) {
+    public RateSessionCommand(SessionUUID uuid, Stars stars, ParticipantUUID participantUUID) {
         this.uuid = uuid;
         this.stars = stars;
+        this.participantUUID = participantUUID;
     }
 
     @Override

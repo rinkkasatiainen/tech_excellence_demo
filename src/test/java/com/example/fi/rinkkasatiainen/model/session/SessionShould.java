@@ -1,13 +1,13 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
@@ -32,8 +32,9 @@ public class SessionShould {
 
     @Test
     public void should_rate() throws Exception {
-        session.rate(Stars.FOUR);
-        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(UUID, Stars.FOUR)));
+        ParticipantUUID participantUUID = ParticipantUUID.generate();
+        session.rate(new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
+        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(UUID, Stars.FOUR, participantUUID)));
     }
 
     @Test

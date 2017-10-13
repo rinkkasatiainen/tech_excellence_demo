@@ -18,7 +18,7 @@ public class RateSessionCommandHandler implements CommandHandler<RateSessionComm
         SessionUUID uuid = command.uuid;
         Session session = schedule.findSession(uuid);
         Integer version = session.getVersion();
-        session.rate( command.stars );
+        session.rate( command );
 
         schedule.save( uuid, session, version);
         return null;

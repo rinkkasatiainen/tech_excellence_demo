@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
@@ -8,10 +9,7 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.mock;
@@ -32,11 +30,12 @@ public class RateSessionCommandHandlerShould {
 
     @Test
     public void save_session() throws Exception {
+        ParticipantUUID participantUUID = ParticipantUUID.generate();
         Session session = Session.load(new SessionCreated("LIVE CQRS+ES", UUID));
         int expectedVersion = session.getVersion();
         when(schedule.findSession(UUID)).thenReturn(session);
 
-        commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR));
+        commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
         verify(schedule).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
     }

@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
@@ -14,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping(SessionRoute.V1_SESSION)
@@ -45,7 +44,7 @@ public class SessionRoute {
     public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback rating) {
         SessionUUID uuid = SessionUUID.from(sessionId);
         stars = Stars.from(rating.rating);
-        rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars));
+        rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars, rating.participant));
 
         return ResponseEntity.ok().build();
     }

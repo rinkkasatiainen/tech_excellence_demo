@@ -14,8 +14,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 import static com.example.fi.rinkkasatiainen.web.session.SessionRouteShould.MatchingCommand.matchesToCommand;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.mock;
@@ -28,13 +26,15 @@ public class SessionRouteShould {
     private Participant participant;
     private RegisterParticipantCommandHandler registerParticipantCommandHandler;
     private RateSessionCommandHandler rateSessionCommandHandler;
+    private ParticipantUUID participantUUID;
 
     @Before
     public void setUp() throws Exception {
         registerParticipantCommandHandler = mock(RegisterParticipantCommandHandler.class);
         rateSessionCommandHandler = mock(RateSessionCommandHandler.class);
         sessionRoute = new SessionRoute( registerParticipantCommandHandler, rateSessionCommandHandler );
-        participant = new Participant(ParticipantUUID.generate());
+        participantUUID = ParticipantUUID.generate();
+        participant = new Participant(participantUUID);
     }
 
     @Test
@@ -46,9 +46,9 @@ public class SessionRouteShould {
 
     @Test
     public void rate_session() throws Exception {
-        sessionRoute.rate(UUID.toString(), new SessionFeedback(5));
+        sessionRoute.rate(UUID.toString(), new SessionFeedback(5, participantUUID));
 
-        verify(rateSessionCommandHandler).handles( new RateSessionCommand(UUID, Stars.FIVE));
+        verify(rateSessionCommandHandler).handles( new RateSessionCommand(UUID, Stars.FIVE, participantUUID));
     }
 
     public static class MatchingCommand extends TypeSafeMatcher<RegisterParticipantCommand>{

@@ -11,7 +11,6 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Supplier;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,7 +51,8 @@ public class ScheduleShould {
 
     @Test
     public void find_session_feedback() throws Exception {
-        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID), new SessionRated(UUID, Stars.FIVE)));
+        ParticipantUUID participantUUID = ParticipantUUID.generate();
+        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID), new SessionRated(UUID, Stars.FIVE, participantUUID)));
 
         SessionFeedbackResult result = schedule.findSessionFeeback(UUID);
         assertThat(result.getVersion(), equalTo(2));

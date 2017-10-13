@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.*;
+import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
@@ -57,8 +58,8 @@ public class Session {
         return new Session(Arrays.asList(events));
     }
 
-    public void rate(Stars stars) {
-        publisher.publish(new SessionRated(this.getUUID(), stars));
+    public void rate(RateSessionCommand command) {
+        publisher.publish(new SessionRated(this.getUUID(), command.stars, command.participantUUID));
     }
 
     private class EventPublisher{
@@ -95,6 +96,7 @@ public class Session {
             this.ratings = new ArrayList<>();
             loader = new EventLoader();
             loader.register(SessionCreated.class, this::apply);
+            loader.register(SessionRated.class, this::apply);
 
             history.forEach(loader::apply);
         }

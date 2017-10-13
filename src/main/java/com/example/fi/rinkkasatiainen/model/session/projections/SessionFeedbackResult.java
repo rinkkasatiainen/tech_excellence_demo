@@ -1,14 +1,10 @@
 package com.example.fi.rinkkasatiainen.model.session.projections;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventLoader;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class SessionFeedbackResult {
     private final EventSourceEntity eventSourceEntity;
@@ -38,14 +34,14 @@ public class SessionFeedbackResult {
 
 
     private class EventSourceEntity{
-        private List<Integer> ratings = new ArrayList<>();
+        private Map<ParticipantUUID, Integer> ratings = new HashMap<>();
         private SessionUUID uuid;
         private final EventLoader loader;
 
         double getAverageRating() {
             if(ratings.size() == 0)
                 return 0;
-            return ratings.stream().reduce(0, (a, b) -> a+b) / ratings.size();
+            return ((double)ratings.values().stream().reduce(0, (a, b) -> a+b)) / ratings.size();
         }
 
         SessionUUID getUuid() {
@@ -69,7 +65,10 @@ public class SessionFeedbackResult {
         }
 
         private void apply(SessionRated event) {
-            this.ratings.add( event.stars.ordinal() );
+            if( Stars.ZERO.equals(event.stars)){
+                ratings.remove(event.participantUUID);
+            }
+            this.ratings.put(event.participantUUID, event.stars.ordinal() );
         }
     }
 }
