@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.atdd;
 
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.application.config.WebConfiguration;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
@@ -13,7 +14,6 @@ import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
 import com.example.fi.rinkkasatiainen.web.session.SessionRoute;
 import com.example.fi.rinkkasatiainen.web.session.SessionsRoute;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -62,7 +62,7 @@ public class CanGiveAndReceiveFeedback {
 
     private RateSession when(ParticipantUUID participant) {
         RateSession rateSession = sessionUUID -> stars -> {
-            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).register( sessionUUID.uuid.toString() , new Participant(participant.uuid));
+            new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).register( sessionUUID.uuid.toString() , new Participant(participant));
             new SessionRoute(webConfiguration.registerParticipantCommandHandler(), webConfiguration.rateSessionCommandHandler()).rate( sessionUUID.uuid.toString() , new SessionFeedback(stars.ordinal()));
         };
         return rateSession;
@@ -72,7 +72,7 @@ public class CanGiveAndReceiveFeedback {
     private ParticipantUUID and_I_have_registered_as_participant() {
         ResponseEntity<Void> responseEntity = new ParticipantsRoute().create();
         String uuid = getUUIDFromLocationHeader(responseEntity);
-        return new ParticipantUUID(UUID.fromString(uuid));
+        return ParticipantUUID.from(uuid);
     }
 
 
@@ -94,14 +94,6 @@ public class CanGiveAndReceiveFeedback {
     private String getUUIDFromLocationHeader(ResponseEntity<Void> sessionResponseEntity) {
         return sessionResponseEntity.getHeaders().get("location")
                 .stream().map( str -> str.replaceAll(".*/", "") ).findFirst().get();
-    }
-
-    private class ParticipantUUID {
-        public final UUID uuid;
-
-        public ParticipantUUID(UUID uuid) {
-            this.uuid = uuid;
-        }
     }
 
     @FunctionalInterface

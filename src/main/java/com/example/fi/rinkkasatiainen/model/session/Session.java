@@ -2,6 +2,7 @@ package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventLoader;
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
@@ -25,7 +26,7 @@ public class Session {
         publisher = new EventPublisher(eventSourceEntity);
     }
 
-    public void registerParticipant(UUID participantUUid) {
+    public void registerParticipant(ParticipantUUID participantUUid) {
         publisher.publish(new ParticipantRegisteredEvent(eventSourceEntity.uuid, participantUUid));
     }
 

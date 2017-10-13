@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.participants;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.validation.constraints.NotNull;
@@ -9,9 +10,9 @@ import java.util.UUID;
 public class Participant {
 
     @NotNull
-    public final UUID uuid;
+    public final ParticipantUUID uuid;
 
-    public Participant(UUID uuid){
+    public Participant(ParticipantUUID uuid){
         this.uuid = uuid;
     }
 

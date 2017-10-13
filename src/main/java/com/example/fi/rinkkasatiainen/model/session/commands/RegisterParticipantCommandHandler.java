@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
 import com.example.fi.rinkkasatiainen.model.Audience;
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.web.Handler;
@@ -23,7 +24,7 @@ public class RegisterParticipantCommandHandler implements Handler<RegisterPartic
         Session session = schedule.findSession(sessionId);
         Integer sessionVersion = session.getVersion();
 
-        UUID participantId = command.participantId;
+        ParticipantUUID participantId = command.participantId;
         session.registerParticipant(participantId);
 
         Participant participant = audience.findParticipant(participantId);
@@ -31,7 +32,7 @@ public class RegisterParticipantCommandHandler implements Handler<RegisterPartic
         participant.registerToEvent(sessionId);
 
         schedule.save(sessionId, session, sessionVersion);
-        audience.save(participantId, participant, participantVersion);
+        audience.save(participantId.getId(), participant, participantVersion);
         return null;
     }
 }

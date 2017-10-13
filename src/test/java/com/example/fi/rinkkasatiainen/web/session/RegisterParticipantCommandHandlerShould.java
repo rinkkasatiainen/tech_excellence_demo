@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
 import com.example.fi.rinkkasatiainen.model.Audience;
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.*;
 public class RegisterParticipantCommandHandlerShould {
 
     public static final UUID sessionUUID = UUID.randomUUID();
-    public static final UUID participantUUID = UUID.randomUUID();
+    public static final ParticipantUUID participantUUID = ParticipantUUID.generate();
     public static final String TITLE = "TITLE";
     private RegisterParticipantCommandHandler commandHandler;
     private Audience audience;
@@ -62,6 +63,6 @@ public class RegisterParticipantCommandHandlerShould {
         assertThat(session.getVersion(), equalTo(1));
         commandHandler.handles( new RegisterParticipantCommand(participantUUID, sessionUUID));
 
-        verify(audience).save(participantUUID, participant, 1);
+        verify(audience).save(participantUUID.getId(), participant, 1);
     }
 }

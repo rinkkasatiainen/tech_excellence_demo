@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
+import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
@@ -32,7 +33,7 @@ public class SessionRouteShould {
         registerParticipantCommandHandler = mock(RegisterParticipantCommandHandler.class);
         rateSessionCommandHandler = mock(RateSessionCommandHandler.class);
         sessionRoute = new SessionRoute( registerParticipantCommandHandler, rateSessionCommandHandler );
-        participant = new Participant(UUID.randomUUID());
+        participant = new Participant(ParticipantUUID.generate());
     }
 
     @Test

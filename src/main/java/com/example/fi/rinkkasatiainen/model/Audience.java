@@ -9,7 +9,7 @@ public class Audience {
 
     }
 
-    public Participant findParticipant(UUID uuid) {
+    public Participant findParticipant(ParticipantUUID uuid) {
         return new Participant(uuid);
     }
 
