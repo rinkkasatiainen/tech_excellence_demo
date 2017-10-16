@@ -41,12 +41,12 @@ public class SessionRouteShould {
     public void register_participant_to_session() throws Exception {
         sessionRoute.register(UUID.toString(), participant);
 
-        verify(registerParticipantCommandHandler).handles( argThat(matchesToCommand( new RegisterParticipantCommand(participant.uuid, UUID))));
+        verify(registerParticipantCommandHandler).handles( argThat(matchesToCommand( new RegisterParticipantCommand(ParticipantDto.getUuid(participant), UUID))));
     }
 
     @Test
     public void rate_session() throws Exception {
-        sessionRoute.rate(UUID.toString(), new SessionFeedback(5, participantUUID));
+        sessionRoute.rate(UUID.toString(), new SessionFeedback(5, participantUUID.toString()));
 
         verify(rateSessionCommandHandler).handles( new RateSessionCommand(UUID, Stars.FIVE, participantUUID));
     }
