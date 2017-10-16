@@ -111,8 +111,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return new RateSessionCommandHandler(schedule(getEventStore()), getEventPublisher());
     }
 
-    private EventStore getEventPublisher() {
-        return getEventStore();
+    private EventStore.EventPublisher getEventPublisher() {
+        return new EventStore.EventPublisher(getEventStore());
     }
 
     private class FakeEventStore implements EventStore {

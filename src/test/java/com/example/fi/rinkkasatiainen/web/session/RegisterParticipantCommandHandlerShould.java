@@ -31,17 +31,17 @@ public class RegisterParticipantCommandHandlerShould {
     private Schedule schedule;
     private Session session;
     private Participant participant;
-    private EventStore eventStore;
+    private EventStore.EventPublisher eventPublisher;
     @Before
     public void setUp() throws Exception {
         audience = mock(Audience.class);
-        eventStore = mock(EventStore.class);
+        eventPublisher = mock(EventStore.EventPublisher.class);
         participant = new Participant(participantUUID);
         when(audience.findParticipant(participantUUID)).thenReturn(participant);
         schedule = mock(Schedule.class);
         session = Session.load(Arrays.asList(new SessionCreated(TITLE, sessionUUID)));
         when( schedule.findSession(sessionUUID)).thenReturn(session);
-        commandHandler = new RegisterParticipantCommandHandler(schedule, audience, eventStore);
+        commandHandler = new RegisterParticipantCommandHandler(schedule, audience, eventPublisher);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class RegisterParticipantCommandHandlerShould {
 
         ArgumentCaptor<Session> sessionArgumentCaptor = ArgumentCaptor.forClass(Session.class);
 
-        verify(eventStore).save(argThat(equalTo(sessionUUID)), sessionArgumentCaptor.capture(), argThat(equalTo(1)));
+        verify(eventPublisher).save(argThat(equalTo(sessionUUID)), sessionArgumentCaptor.capture(), argThat(equalTo(1)));
 
         Session modifiedSession = sessionArgumentCaptor.getValue();
         assertThat(modifiedSession.getVersion(), equalTo(2));

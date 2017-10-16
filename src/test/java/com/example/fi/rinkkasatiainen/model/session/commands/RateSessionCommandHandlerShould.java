@@ -22,13 +22,13 @@ public class RateSessionCommandHandlerShould {
     public static final SessionUUID UUID = SessionUUID.generate();
     private RateSessionCommandHandler commandHandler;
     private Schedule schedule;
-    private EventStore eventStore;
+    private EventStore.EventPublisher eventPublisher;
 
     @Before
     public void setUp() throws Exception {
         schedule = mock(Schedule.class);
-        eventStore = mock(EventStore.class);
-        commandHandler = new RateSessionCommandHandler(schedule, eventStore);
+        eventPublisher = mock(EventStore.EventPublisher.class);
+        commandHandler = new RateSessionCommandHandler(schedule, eventPublisher);
     }
 
     @Test
@@ -40,6 +40,6 @@ public class RateSessionCommandHandlerShould {
 
         commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
-        verify(eventStore).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
+        verify(eventPublisher).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
     }
 }

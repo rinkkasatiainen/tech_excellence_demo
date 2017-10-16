@@ -8,11 +8,11 @@ import com.example.fi.rinkkasatiainen.web.CommandHandler;
 
 public class RateSessionCommandHandler implements CommandHandler<RateSessionCommand>{
     private final Schedule schedule;
-    private final EventStore eventStore;
+    private final EventStore.EventPublisher eventPublisher;
 
-    public RateSessionCommandHandler(Schedule schedule, EventStore eventStore) {
+    public RateSessionCommandHandler(Schedule schedule, EventStore.EventPublisher eventPublisher) {
         this.schedule = schedule;
-        this.eventStore = eventStore;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class RateSessionCommandHandler implements CommandHandler<RateSessionComm
         Integer version = session.getVersion();
         session.rate( command );
 
-        eventStore.save( uuid, session, version);
+        eventPublisher.save( uuid, session, version);
         return null;
     }
 }

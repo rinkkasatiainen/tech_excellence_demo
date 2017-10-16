@@ -15,9 +15,6 @@ public interface EventStore {
 
     default void save(FeedbackerUUID feedbackerUUID, AggregateRoot session, Integer expectedVersion) {
         new EventPublisher(this).save(feedbackerUUID, session, expectedVersion);
-//        List<Event> uncommittedChanges = session.getUncommittedChanges();
-//        saveEvents(feedbackerUUID.getId(), uncommittedChanges, expectedVersion);
-//        session.markChangesAsCommitted();
 
     }
 
@@ -28,7 +25,7 @@ public interface EventStore {
             this.eventStore = eventStore;
         }
 
-        void save(FeedbackerUUID feedbackerUUID, AggregateRoot session, Integer expectedVersion) {
+        public void save(FeedbackerUUID feedbackerUUID, AggregateRoot session, Integer expectedVersion) {
             List<Event> uncommittedChanges = session.getUncommittedChanges();
             eventStore.saveEvents(feedbackerUUID.getId(), uncommittedChanges, expectedVersion);
             session.markChangesAsCommitted();

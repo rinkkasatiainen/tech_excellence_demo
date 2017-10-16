@@ -12,12 +12,12 @@ import com.example.fi.rinkkasatiainen.web.participants.Participant;
 public class RegisterParticipantCommandHandler implements Handler<RegisterParticipantCommand, Void >{
     private Schedule schedule;
     private final Audience audience;
-    private final EventStore eventStore;
+    private final EventStore.EventPublisher eventPublisher;
 
-    public RegisterParticipantCommandHandler(Schedule schedule, Audience audience, EventStore eventStore) {
+    public RegisterParticipantCommandHandler(Schedule schedule, Audience audience, EventStore.EventPublisher eventPublisher) {
         this.schedule = schedule;
         this.audience = audience;
-        this.eventStore = eventStore;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class RegisterParticipantCommandHandler implements Handler<RegisterPartic
         Integer participantVersion = participant.getVersion();
         participant.registerToEvent(sessionId);
 
-        eventStore.save(sessionId, session, sessionVersion);
+        eventPublisher.save(sessionId, session, sessionVersion);
         audience.save(participantId, participant, participantVersion);
         return null;
     }

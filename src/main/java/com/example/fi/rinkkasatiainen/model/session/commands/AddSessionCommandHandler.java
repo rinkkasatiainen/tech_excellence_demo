@@ -8,11 +8,11 @@ import com.example.fi.rinkkasatiainen.web.Handler;
 
 public class AddSessionCommandHandler implements Handler<AddSessionCommand, SessionUUID> {
     private final Schedule schedule;
-    private final EventStore eventStore;
+    private final EventStore.EventPublisher eventPublisher;
 
-    public AddSessionCommandHandler(Schedule schedule, EventStore eventStore) {
+    public AddSessionCommandHandler(Schedule schedule, EventStore.EventPublisher eventPublisher) {
         this.schedule = schedule;
-        this.eventStore = eventStore;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class AddSessionCommandHandler implements Handler<AddSessionCommand, Sess
         SessionUUID sessionUUID = schedule.newSessionUUID();
         Session session = Session.create(addSessionCommand.title, sessionUUID);
 
-        eventStore.save(sessionUUID, session, 0);
+        eventPublisher.save(sessionUUID, session, 0);
 
         return session.getUUID();
     }

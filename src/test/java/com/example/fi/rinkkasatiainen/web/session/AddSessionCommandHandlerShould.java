@@ -22,15 +22,15 @@ public class AddSessionCommandHandlerShould {
 
     public static final SessionUUID UUID = SessionUUID.generate();
     public static final String TITLE = "LIVE Coding: CQRS + ES";
-    private EventStore eventStore;
+    private EventStore.EventPublisher eventPublisher;
 
     @Test
     public void create_a_new_entity_and_return_uuid() throws Exception {
         Schedule schedule = mock(Schedule.class);
-        eventStore = mock(EventStore.class);
+        eventPublisher = mock(EventStore.EventPublisher.class);
 
         when(schedule.newSessionUUID()).thenReturn(UUID);
-        AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventStore);
+        AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventPublisher);
 
         SessionUUID uuid = commandHandler.handles(new AddSessionCommand(TITLE));
 
@@ -40,15 +40,15 @@ public class AddSessionCommandHandlerShould {
     @Test
     public void saves_session() throws Exception {
         Schedule schedule = mock(Schedule.class);
-        eventStore = mock(EventStore.class);
+        eventPublisher = mock(EventStore.EventPublisher.class);
 
         when(schedule.newSessionUUID()).thenReturn(UUID);
-        AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventStore);
+        AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventPublisher);
 
         commandHandler.handles(new AddSessionCommand(TITLE));
 
         ArgumentCaptor<Session> sessionArgumentCaptor = ArgumentCaptor.forClass(Session.class);
-        verify(eventStore).save( argThat(equalTo(UUID)), sessionArgumentCaptor.capture(), argThat(equalTo(0)));
+        verify(eventPublisher).save( argThat(equalTo(UUID)), sessionArgumentCaptor.capture(), argThat(equalTo(0)));
 
         Session value = sessionArgumentCaptor.getValue();
         assertThat(value.getUncommittedChanges().get(0), equalTo(new SessionCreated(TITLE, UUID)));
