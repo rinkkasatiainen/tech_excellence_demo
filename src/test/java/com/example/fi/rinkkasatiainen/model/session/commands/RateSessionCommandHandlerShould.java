@@ -17,6 +17,8 @@ import static org.mockito.Mockito.when;
 public class RateSessionCommandHandlerShould {
 
     public static final SessionUUID UUID = SessionUUID.generate();
+    public static final String TITLE = "LIVE CODING: CQRS+ES";
+
     private RateSessionCommandHandler commandHandler;
     private Schedule schedule;
     private EventPublisher eventPublisher;
@@ -30,8 +32,9 @@ public class RateSessionCommandHandlerShould {
 
     @Test
     public void save_session() throws Exception {
+        // TODO Step 3.1: describe how to store events to EventStore
         ParticipantUUID participantUUID = ParticipantUUID.generate();
-        Session session = Session.load(new SessionCreated("LIVE CQRS+ES", UUID));
+        Session session = Session.load(new SessionCreated(TITLE, UUID));
         int expectedVersion = session.getVersion();
         when(schedule.findSession(UUID)).thenReturn(session);
 

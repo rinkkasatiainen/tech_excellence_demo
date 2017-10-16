@@ -43,6 +43,7 @@ public class SessionRoute {
     public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback rating) {
         SessionUUID uuid = SessionUUID.from(sessionId);
         stars = Stars.from(rating.rating);
+
         rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars, SessionFeedback.asUUID(rating)));
 
         return ResponseEntity.ok().build();
