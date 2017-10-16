@@ -20,16 +20,24 @@ public class RegisterParticipantCommandHandler implements Handler<RegisterPartic
     @Override
     public Void handles(RegisterParticipantCommand command) {
         SessionUUID sessionId = command.sessionId;
+        ParticipantUUID participantId = command.participantId;
+
+        // Find Session from Schedule
         Session session = schedule.findSession(sessionId);
         Integer sessionVersion = session.getVersion();
-
-        ParticipantUUID participantId = command.participantId;
-        session.registerParticipant(participantId);
-
+        // Find Participant from Audience
         Participant participant = audience.findParticipant(participantId);
         Integer participantVersion = participant.getVersion();
+
+        // Send messages to both Session and Participant objects
+        session.registerParticipant(participantId);
         participant.registerToEvent(sessionId);
 
+        // Save entities.
+        // Note: instead of saving, it would be interesting to
+        //    'register a eventPublisher' to AggregateRoot methods above -> saving events directly when
+        //    events are dispatched / published
+        // And I added eventPublisher that could be doing just that.
         eventPublisher.save(sessionId, session, sessionVersion);
         audience.save(participantId, participant, participantVersion);
         return null;
