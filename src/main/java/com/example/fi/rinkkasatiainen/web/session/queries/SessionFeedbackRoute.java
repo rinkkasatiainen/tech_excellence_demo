@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session.queries;
 
+import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQuery;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(SessionRoute.V1_SESSION)
 public class SessionFeedbackRoute {
@@ -24,8 +28,14 @@ public class SessionFeedbackRoute {
     @RequestMapping(value = "/feedback", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<SessionFeedbackResult> getSession(@PathVariable(value = "sessionId") String sessionId) {
-        SessionFeedbackResult session = queryHandler.handles(new SessionFeedbackQuery(sessionId));
+
+        SessionFeedbackResult session = createFake();
+//        SessionFeedbackResult session = queryHandler.handles(new SessionFeedbackQuery(sessionId));
 
         return ResponseEntity.ok(session);
+    }
+
+    private SessionFeedbackResult createFake() {
+        return SessionFeedbackResult.load(new ArrayList<>());
     }
 }

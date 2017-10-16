@@ -6,6 +6,7 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -49,10 +50,15 @@ public class ScheduleShould {
         assertThat(s.getVersion(), equalTo(1));
     }
 
+    @Ignore
     @Test
     public void find_session_feedback() throws Exception {
+        // TODO Step 3.1 - find session feedback.
         ParticipantUUID participantUUID = ParticipantUUID.generate();
-        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID), new SessionRated(UUID, Stars.FIVE, participantUUID)));
+        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(
+                new SessionCreated(TITLE, UUID),
+                new SessionRated(UUID, Stars.FIVE, participantUUID)
+        ));
 
         SessionFeedbackResult result = schedule.findSessionFeeback(UUID);
         assertThat(result.getVersion(), equalTo(2));

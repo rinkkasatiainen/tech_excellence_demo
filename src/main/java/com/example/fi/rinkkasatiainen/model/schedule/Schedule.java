@@ -6,6 +6,7 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -30,7 +31,9 @@ public class Schedule {
     }
 
     public SessionFeedbackResult findSessionFeeback(SessionUUID uuid) {
-        List<Event> events = eventStore.findByUuid(uuid.getId());
+//        List<Event> events = eventStore.findByUuid(uuid.getId());
+//        return SessionFeedbackResult.load(events);
+        List<Event> events = new ArrayList<>();
         return SessionFeedbackResult.load(events);
     }
 

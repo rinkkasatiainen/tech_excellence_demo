@@ -7,6 +7,7 @@ import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -24,6 +25,7 @@ public class AddSessionCommandHandlerShould {
     public static final String TITLE = "LIVE Coding: CQRS + ES";
     private EventPublisher eventPublisher;
 
+    @Ignore
     @Test
     public void create_a_new_entity_and_return_uuid() throws Exception {
         // TODO Step 2.1: Command Handler returns a newly created Session UUID
@@ -38,6 +40,7 @@ public class AddSessionCommandHandlerShould {
         assertThat( uuid, equalTo(UUID));
     }
 
+    @Ignore
     @Test
     public void saves_session() throws Exception {
         // TODO Step XXX: Command Handler stores session to Event Store.  --> IMPLEMENT WHEN?

@@ -32,7 +32,6 @@ public class SessionFeedbackResult {
         return result;
     }
 
-
     private class EventSourceEntity{
         private Map<ParticipantUUID, Integer> ratings = new HashMap<>();
         private SessionUUID uuid;

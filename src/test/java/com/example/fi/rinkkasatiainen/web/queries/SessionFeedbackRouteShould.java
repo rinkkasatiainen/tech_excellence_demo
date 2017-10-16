@@ -4,6 +4,7 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -18,9 +19,11 @@ public class SessionFeedbackRouteShould {
     public static final SessionUUID UUID = SessionUUID.generate();
     private Schedule schedule;
 
+    @Ignore
     @Test
     public void create_feedback_with_no_feedback() throws Exception {
-        schedule = mock(Schedule.class);
+        // TODO Step 3: organisers and speaker getting feedback for the session. Lists average rating (for now)
+        schedule = mock(Schedule.class);  // Schedule is session Repository
         SessionFeedbackRoute sessionFeedbackRoute = new SessionFeedbackRoute(schedule);
 
         SessionFeedbackResult feedback = mock(SessionFeedbackResult.class );

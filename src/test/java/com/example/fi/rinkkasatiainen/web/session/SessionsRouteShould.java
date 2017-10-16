@@ -4,6 +4,7 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
@@ -21,6 +22,7 @@ public class SessionsRouteShould {
     public static final String TITLE = "LIVE CODING: CQRS + ES";
     private ResponseEntity<SessionsRoute.NewSessionResponse> responseEntity;
 
+    @Ignore
     @Test
     public void return_201_Created_for_creating_new_user_with_nonexisting_username() throws Exception {
         AddSessionCommandHandler commandHandler = mock(AddSessionCommandHandler.class);
