@@ -17,11 +17,12 @@ public class AddSessionCommandHandler implements Handler<AddSessionCommand, Sess
 
     @Override
     public SessionUUID handles(AddSessionCommand addSessionCommand) {
-        SessionUUID sessionUUID = schedule.newSessionUUID();
-        Session session = Session.create(addSessionCommand.title, sessionUUID);
-
-        eventPublisher.save(sessionUUID, session, 0);
-
-        return session.getUUID();
+        return SessionUUID.generate();
+//        SessionUUID sessionUUID = schedule.newSessionUUID();
+//        Session session = Session.create(addSessionCommand.title, sessionUUID);
+//
+//        eventPublisher.save(sessionUUID, session, 0);
+//
+//        return session.getUUID();
     }
 }

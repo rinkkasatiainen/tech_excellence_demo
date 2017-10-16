@@ -26,6 +26,7 @@ public class AddSessionCommandHandlerShould {
 
     @Test
     public void create_a_new_entity_and_return_uuid() throws Exception {
+        // TODO Step 2.1: Command Handler returns a newly created Session UUID
         Schedule schedule = mock(Schedule.class);
         eventPublisher = mock(EventPublisher.class);
 
@@ -39,6 +40,7 @@ public class AddSessionCommandHandlerShould {
 
     @Test
     public void saves_session() throws Exception {
+        // TODO Step XXX: Command Handler stores session to Event Store.  --> IMPLEMENT WHEN?
         Schedule schedule = mock(Schedule.class);
         eventPublisher = mock(EventPublisher.class);
 
