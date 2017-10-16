@@ -22,7 +22,7 @@ public class SessionFeedbackRouteShould {
     @Ignore
     @Test
     public void create_feedback_with_no_feedback() throws Exception {
-        // TODO Step 3: organisers and speaker getting feedback for the session. Lists average rating (for now)
+        // TODO Step 2.1: organisers and speaker getting feedback for the session. Lists average rating (for now)
         schedule = mock(Schedule.class);  // Schedule is session Repository
         SessionFeedbackRoute sessionFeedbackRoute = new SessionFeedbackRoute(schedule);
 

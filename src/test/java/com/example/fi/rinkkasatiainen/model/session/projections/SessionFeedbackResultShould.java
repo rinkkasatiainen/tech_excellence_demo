@@ -23,7 +23,7 @@ public class SessionFeedbackResultShould {
     @Ignore
     @Test
     public void load_from_event_created() throws Exception {
-        //TODO Step 3.2 / load Feedback from event stream, gets UUID from SessionCreated Event
+        //TODO Step 2.3 / load Feedback from event stream, gets UUID from SessionCreated Event
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(new SessionCreated("TITLE", UUID)));
 
         assertThat(result.getUuid(), equalTo(UUID));

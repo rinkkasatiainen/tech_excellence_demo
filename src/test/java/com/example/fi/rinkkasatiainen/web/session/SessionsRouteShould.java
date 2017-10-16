@@ -30,7 +30,7 @@ public class SessionsRouteShould {
 
         when( commandHandler.handles( any(AddSessionCommand.class) )).thenReturn( uuid );
 
-//      TODO Step 1: Conf organiser sends a POST request to create new session with TITLE.
+//      TODO Step 1.1: Conf organiser sends a POST request to create new session with TITLE.
         responseEntity = route.create(new NewSession(TITLE));
 
         assertThat( responseEntity.getHeaders().getLocation(), equalTo( new URI("/v1/sessions/" + uuid)));

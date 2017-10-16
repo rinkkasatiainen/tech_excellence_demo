@@ -53,7 +53,7 @@ public class ScheduleShould {
     @Ignore
     @Test
     public void find_session_feedback() throws Exception {
-        // TODO Step 3.1 - find session feedback.
+        // TODO Step 2.2 - find session feedback.
         ParticipantUUID participantUUID = ParticipantUUID.generate();
         when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(
                 new SessionCreated(TITLE, UUID),
