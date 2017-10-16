@@ -34,11 +34,14 @@ public class AcceptanceTest_CanGiveAndReceiveFeedback {
 
     @Test
     public void can_create_user_and_give_feedback_to_session() throws Exception {
+        //STEP 1
         SessionUUID session = given_a_session();
         ParticipantUUID participant = and_I_have_registered_as_participant();
 
+        //STEP 3 + 4
         when(participant).rates(session).as( Stars.FIVE );
 
+        //STEP 2
         then_session(session).should_have_average_rating_of( 5.0 );
     }
 
@@ -78,12 +81,12 @@ public class AcceptanceTest_CanGiveAndReceiveFeedback {
 
 
     private SessionUUID given_a_session() {
-        sessionResponseEntity = getSessionsRoute().create(new NewSession("title"));
+        sessionResponseEntity = sessionsRoute().create(new NewSession("title"));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return SessionUUID.from(uuid);
     }
 
-    private SessionsRoute getSessionsRoute() {
+    private SessionsRoute sessionsRoute() {
         return new SessionsRoute(webConfiguration.addSessionCommandHandler(getSchedule()));
     }
 
