@@ -1,18 +1,18 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
+import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
-import com.example.fi.rinkkasatiainen.web.CreateEntityCommandHandler;
 import com.example.fi.rinkkasatiainen.web.Handler;
-
-import java.util.UUID;
 
 public class AddSessionCommandHandler implements Handler<AddSessionCommand, SessionUUID> {
     private final Schedule schedule;
+    private final EventStore eventStore;
 
-    public AddSessionCommandHandler(Schedule schedule) {
+    public AddSessionCommandHandler(Schedule schedule, EventStore eventStore) {
         this.schedule = schedule;
+        this.eventStore = eventStore;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class AddSessionCommandHandler implements Handler<AddSessionCommand, Sess
         SessionUUID sessionUUID = schedule.newSessionUUID();
         Session session = Session.create(addSessionCommand.title, sessionUUID);
 
-        schedule.save(sessionUUID, session, 0);
+        eventStore.save(sessionUUID, session, 0);
 
         return session.getUUID();
     }

@@ -5,7 +5,7 @@ import com.example.fi.rinkkasatiainen.util.Struct;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-public class SessionUUID {
+public class SessionUUID implements FeedbackerUUID {
     private final UUID uuid;
 
     private SessionUUID(@NotNull UUID uuid) {
@@ -16,6 +16,7 @@ public class SessionUUID {
         return new SessionUUID(UUID.fromString(uuid));
     }
 
+    @Override
     public UUID getId() {
         return uuid;
     }

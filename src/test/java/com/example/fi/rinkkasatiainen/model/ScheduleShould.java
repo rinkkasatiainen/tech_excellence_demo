@@ -58,21 +58,4 @@ public class ScheduleShould {
         assertThat(result.getVersion(), equalTo(2));
         assertThat(result.getAverageRating(), equalTo(5.0));
     }
-
-
-    @Test
-    public void save_session_to_event_store() throws Exception {
-        Session session = Session.create(TITLE, UUID);
-        schedule.save(UUID, session, 0);
-
-//        void saveEvents(UUID uuid, List<Event> uncommittedChanges, int expectedVersion);
-        ArgumentCaptor<List> listArgumentCaptor = ArgumentCaptor.forClass(List.class);
-        verify(eventStore).saveEvents(argThat(equalTo(UUID.getId())), listArgumentCaptor.capture(), argThat(equalTo(0)));
-
-        List value = listArgumentCaptor.getValue();
-        SessionCreated sessionCreated = (SessionCreated) value.get(0);
-
-        assertThat(sessionCreated.title, equalTo(TITLE));
-    }
-
 }

@@ -7,12 +7,11 @@ import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.function.Supplier;
 
 public class Schedule {
     private final Supplier<SessionUUID> supplier;
-    private final EventStore eventStore;
+    public final EventStore eventStore;
 
     public Schedule(Supplier<SessionUUID> supplier, EventStore eventStore) {
         this.supplier = supplier;
@@ -35,10 +34,4 @@ public class Schedule {
         return SessionFeedbackResult.load(events);
     }
 
-    public void save(SessionUUID sessionUUID, Session session, Integer expectedVersion) {
-        List<Event> uncommittedChanges = session.getUncommittedChanges();
-        eventStore.saveEvents(sessionUUID.getId(), uncommittedChanges, expectedVersion);
-        session.markChangesAsCommitted();
-
-    }
 }

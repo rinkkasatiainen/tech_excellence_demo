@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
 import com.example.fi.rinkkasatiainen.model.Audience;
+import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
@@ -14,7 +15,6 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,16 +31,17 @@ public class RegisterParticipantCommandHandlerShould {
     private Schedule schedule;
     private Session session;
     private Participant participant;
-
+    private EventStore eventStore;
     @Before
     public void setUp() throws Exception {
         audience = mock(Audience.class);
+        eventStore = mock(EventStore.class);
         participant = new Participant(participantUUID);
         when(audience.findParticipant(participantUUID)).thenReturn(participant);
         schedule = mock(Schedule.class);
         session = Session.load(Arrays.asList(new SessionCreated(TITLE, sessionUUID)));
         when( schedule.findSession(sessionUUID)).thenReturn(session);
-        commandHandler = new RegisterParticipantCommandHandler(schedule, audience);
+        commandHandler = new RegisterParticipantCommandHandler(schedule, audience, eventStore);
     }
 
     @Test
@@ -52,7 +53,7 @@ public class RegisterParticipantCommandHandlerShould {
 
         ArgumentCaptor<Session> sessionArgumentCaptor = ArgumentCaptor.forClass(Session.class);
 
-        verify(schedule).save(argThat(equalTo(sessionUUID)), sessionArgumentCaptor.capture(), argThat(equalTo(1)));
+        verify(eventStore).save(argThat(equalTo(sessionUUID)), sessionArgumentCaptor.capture(), argThat(equalTo(1)));
 
         Session modifiedSession = sessionArgumentCaptor.getValue();
         assertThat(modifiedSession.getVersion(), equalTo(2));

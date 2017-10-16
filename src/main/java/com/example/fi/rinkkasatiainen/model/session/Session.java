@@ -7,16 +7,12 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
 import java.util.*;
 
-public class Session {
+public class Session implements AggregateRoot<SessionUUID> {
     private final EventSourceEntity eventSourceEntity;
     private final EventPublisher publisher;
 
     private Session() {
         this(new ArrayList<>());
-    }
-
-    public SessionUUID getUUID() {
-        return eventSourceEntity.getUUID();
     }
 
     private Session(List<Event> history) {
@@ -28,14 +24,22 @@ public class Session {
         publisher.publish(new ParticipantRegisteredEvent(eventSourceEntity.uuid, participantUUid));
     }
 
+    @Override
+    public SessionUUID getUUID() {
+        return eventSourceEntity.getUUID();
+    }
+
+    @Override
     public Integer getVersion() {
         return eventSourceEntity.getVersion();
     }
 
+    @Override
     public List<Event> getUncommittedChanges() {
         return publisher.getUncommittedChanges();
     }
 
+    @Override
     public void markChangesAsCommitted() {
         publisher.markChangesAsCommitted();
     }

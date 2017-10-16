@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
+import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
@@ -21,11 +22,13 @@ public class RateSessionCommandHandlerShould {
     public static final SessionUUID UUID = SessionUUID.generate();
     private RateSessionCommandHandler commandHandler;
     private Schedule schedule;
+    private EventStore eventStore;
 
     @Before
     public void setUp() throws Exception {
         schedule = mock(Schedule.class);
-        commandHandler = new RateSessionCommandHandler(schedule);
+        eventStore = mock(EventStore.class);
+        commandHandler = new RateSessionCommandHandler(schedule, eventStore);
     }
 
     @Test
@@ -37,6 +40,6 @@ public class RateSessionCommandHandlerShould {
 
         commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
-        verify(schedule).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
+        verify(eventStore).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
     }
 }

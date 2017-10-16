@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
+import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
@@ -7,9 +8,11 @@ import com.example.fi.rinkkasatiainen.web.CommandHandler;
 
 public class RateSessionCommandHandler implements CommandHandler<RateSessionCommand>{
     private final Schedule schedule;
+    private final EventStore eventStore;
 
-    public RateSessionCommandHandler(Schedule schedule) {
+    public RateSessionCommandHandler(Schedule schedule, EventStore eventStore) {
         this.schedule = schedule;
+        this.eventStore = eventStore;
     }
 
     @Override
@@ -20,7 +23,7 @@ public class RateSessionCommandHandler implements CommandHandler<RateSessionComm
         Integer version = session.getVersion();
         session.rate( command );
 
-        schedule.save( uuid, session, version);
+        eventStore.save( uuid, session, version);
         return null;
     }
 }

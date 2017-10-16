@@ -98,17 +98,21 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
     @Bean
     public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule) {
-        return new AddSessionCommandHandler( schedule );
+        return new AddSessionCommandHandler( schedule, getEventPublisher());
     }
 
     @Bean
     public RegisterParticipantCommandHandler registerParticipantCommandHandler() {
-        return new RegisterParticipantCommandHandler(schedule(getEventStore()), audience(getEventStore()));
+        return new RegisterParticipantCommandHandler(schedule(getEventStore()), audience(getEventStore()), getEventPublisher());
     }
 
     @Bean
     public RateSessionCommandHandler rateSessionCommandHandler() {
-        return new RateSessionCommandHandler(schedule(getEventStore()));
+        return new RateSessionCommandHandler(schedule(getEventStore()), getEventPublisher());
+    }
+
+    private EventStore getEventPublisher() {
+        return getEventStore();
     }
 
     private class FakeEventStore implements EventStore {
