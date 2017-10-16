@@ -21,9 +21,11 @@ import org.springframework.http.ResponseEntity;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class CanGiveAndReceiveFeedback {
+public class AcceptanceTest_CanGiveAndReceiveFeedback {
 
     private WebConfiguration webConfiguration;
+    private ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity;
+    private ResponseEntity<ParticipantsRoute.ParticipantDTO> responseEntity;
 
     @Before
     public void setUp() throws Exception {
@@ -69,20 +71,19 @@ public class CanGiveAndReceiveFeedback {
 
 
     private ParticipantUUID and_I_have_registered_as_participant() {
-        ResponseEntity<ParticipantsRoute.ParticipantDTO> responseEntity = new ParticipantsRoute().create();
+        responseEntity = new ParticipantsRoute().create();
         String uuid = getUUIDFromLocationHeader(responseEntity);
         return ParticipantUUID.from(uuid);
     }
 
 
     private SessionUUID given_a_session() {
-        ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity= getSessionsRoute().create(new NewSession("title"));
+        sessionResponseEntity = getSessionsRoute().create(new NewSession("title"));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return SessionUUID.from(uuid);
     }
 
     private SessionsRoute getSessionsRoute() {
-
         return new SessionsRoute(webConfiguration.addSessionCommandHandler(getSchedule()));
     }
 
