@@ -17,12 +17,15 @@ public class RateSessionCommandHandler implements CommandHandler<RateSessionComm
 
     @Override
     public Void handles(RateSessionCommand command) {
-
+        //Create input from Command
         SessionUUID uuid = command.uuid;
+
         Session session = schedule.findSession(uuid);
         Integer version = session.getVersion();
+        //Call a domain entity method.
         session.rate( command );
 
+        //publish events
         eventPublisher.save( uuid, session, version);
         return null;
     }

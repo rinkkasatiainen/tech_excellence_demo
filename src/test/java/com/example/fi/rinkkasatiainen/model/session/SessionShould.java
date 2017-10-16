@@ -27,18 +27,21 @@ public class SessionShould {
 
     @Test
     public void create_a_new_session_with_version_1() throws Exception {
+        //TODO Step 4.1 - creating event sourced entity creates with version 1
         assertThat(session.getVersion(), equalTo(1));
     }
 
     @Test
-    public void should_rate() throws Exception {
-        ParticipantUUID participantUUID = ParticipantUUID.generate();
-        session.rate(new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
-        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(UUID, Stars.FOUR, participantUUID)));
+    public void get_uncommitted_changes() throws Exception {
+        //TODO Step 4.2 creating an event publishes events.
+        assertThat(session.getUncommittedChanges(), hasItem( new SessionCreated(TITLE, UUID)));
     }
 
     @Test
-    public void get_uncommitted_changes() throws Exception {
-        assertThat(session.getUncommittedChanges(), hasItem( new SessionCreated(TITLE, UUID)));
+    public void should_rate() throws Exception {
+        //TODO Step 4.3 - rating creates a uncommitted change - an event.
+        ParticipantUUID participantUUID = ParticipantUUID.generate();
+        session.rate(new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
+        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(UUID, Stars.FOUR, participantUUID)));
     }
 }
