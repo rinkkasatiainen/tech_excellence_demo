@@ -33,7 +33,7 @@ public class SessionRoute {
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Void> register(@PathVariable(value = "sessionId") String sessionId, @RequestBody ParticipantDto participant) {
-        registerParticipantCommandHandler.handles( new RegisterParticipantCommand(participant.uuid, SessionUUID.from(sessionId)));
+        registerParticipantCommandHandler.handles( new RegisterParticipantCommand(ParticipantDto.getUuid(participant), SessionUUID.from(sessionId)));
 
         return ResponseEntity.ok().build();
     }
@@ -43,7 +43,7 @@ public class SessionRoute {
     public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback rating) {
         SessionUUID uuid = SessionUUID.from(sessionId);
         stars = Stars.from(rating.rating);
-        rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars, rating.participant));
+        rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars, SessionFeedback.asUUID(rating)));
 
         return ResponseEntity.ok().build();
     }

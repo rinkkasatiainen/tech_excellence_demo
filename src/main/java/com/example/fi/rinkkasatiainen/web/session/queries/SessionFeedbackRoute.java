@@ -23,7 +23,7 @@ public class SessionFeedbackRoute {
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<SessionFeedbackResult> getSession(@PathVariable(value = "session_id") String sessionId) {
+    public ResponseEntity<SessionFeedbackResult> getSession(@PathVariable(value = "sessionId") String sessionId) {
         SessionFeedbackResult session = queryHandler.handles(new SessionFeedbackQuery(sessionId));
 
         return ResponseEntity.ok(session);
