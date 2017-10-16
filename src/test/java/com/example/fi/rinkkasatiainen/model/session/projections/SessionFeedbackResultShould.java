@@ -32,6 +32,7 @@ public class SessionFeedbackResultShould {
     @Ignore
     @Test
     public void empty_rating_for_participant_if_set_to_ZERO() throws Exception {
+        // TODO Step XXYY / user can zero-out a feedback > shows how current state is calculcated from the stream.
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
                 new SessionCreated("TITLE", UUID),
                 new SessionRated(UUID, Stars.FIVE, participantUUID),
@@ -44,6 +45,7 @@ public class SessionFeedbackResultShould {
     @Ignore
     @Test
     public void can_rate_as_often_as_one_wants_and_only_last_one_counts() throws Exception {
+        // TODO Step XXYY / user can vote many times, but only the last one counts.
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
                 new SessionCreated("TITLE", UUID),
                 new SessionRated(UUID, Stars.FIVE, participantUUID),
@@ -56,6 +58,7 @@ public class SessionFeedbackResultShould {
     @Ignore
     @Test
     public void calculates_multiple_participants() throws Exception {
+        // TODO Step XXYY / can have multiple users
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
                 new SessionCreated("TITLE", UUID),
                 new SessionRated(UUID, Stars.FIVE, participantUUID),

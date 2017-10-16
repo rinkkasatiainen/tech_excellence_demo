@@ -66,9 +66,6 @@ public class SessionFeedbackResult {
         }
 
         private void apply(SessionRated event) {
-            if( Stars.ZERO.equals(event.stars)){
-                ratings.remove(event.participantUUID);
-            }
             this.ratings.put(event.participantUUID, event.stars.ordinal() );
         }
     }
