@@ -44,22 +44,9 @@ public class Session implements AggregateRoot<SessionUUID> {
         publisher.markChangesAsCommitted();
     }
 
-    public static Session create(String title, SessionUUID uuid) {
-        Session session = new Session();
-        session.createSession(title, uuid);
-        return session;
-    }
 
     private void createSession(String title, SessionUUID uuid) {
         publisher.publish(new SessionCreated(title, uuid));
-    }
-
-    public static Session load(List<Event> events) {
-        return new Session(events);
-    }
-
-    public static Session load(Event... events) {
-        return new Session(Arrays.asList(events));
     }
 
     public void rate(RateSessionCommand command) {
@@ -67,9 +54,9 @@ public class Session implements AggregateRoot<SessionUUID> {
     }
 
     private class EventPublisher{
+
         private List<Event> uncommittedChanges;
         private final EventSourceEntity eventSourceEntity;
-
         public EventPublisher(EventSourceEntity eventSourceEntity) {
             this.eventSourceEntity = eventSourceEntity;
             this.uncommittedChanges = new ArrayList<>();
@@ -88,19 +75,19 @@ public class Session implements AggregateRoot<SessionUUID> {
         public List<Event> getUncommittedChanges() {
             return new ArrayList<>(Collections.unmodifiableList( uncommittedChanges ));
         }
-    }
 
+    }
     private class EventSourceEntity{
+
         private SessionUUID uuid;
         private String title;
         private final EventLoader loader;
         private List<Stars> ratings;
-
         public EventSourceEntity(List<Event> history) {
             this.ratings = new ArrayList<>();
             loader = new EventLoader();
-            loader.register(SessionCreated.class, this::apply);
-            loader.register(SessionRated.class, this::apply);
+//            loader.register(SessionCreated.class, this::apply);
+//            loader.register(SessionRated.class, this::apply);
 
             history.forEach(loader::apply);
         }
@@ -129,6 +116,20 @@ public class Session implements AggregateRoot<SessionUUID> {
         protected void apply(Event event) {
             loader.apply(event);
         }
+
+    }
+    public static Session create(String title, SessionUUID uuid) {
+        Session session = new Session();
+//        session.createSession(title, uuid);
+        return session;
+    }
+
+    public static Session load(List<Event> events) {
+        return new Session(events);
+    }
+
+    public static Session load(Event... events) {
+        return new Session(Arrays.asList(events));
     }
 
 }

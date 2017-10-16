@@ -7,6 +7,7 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -25,18 +26,21 @@ public class SessionShould {
         session = Session.create(TITLE, UUID);
     }
 
+    @Ignore
     @Test
     public void create_a_new_session_with_version_1() throws Exception {
         //TODO Step 4.1 - creating event sourced entity creates with version 1
         assertThat(session.getVersion(), equalTo(1));
     }
 
+    @Ignore
     @Test
     public void get_uncommitted_changes() throws Exception {
         //TODO Step 4.2 creating an event publishes events.
         assertThat(session.getUncommittedChanges(), hasItem( new SessionCreated(TITLE, UUID)));
     }
 
+    @Ignore
     @Test
     public void should_rate() throws Exception {
         //TODO Step 4.3 - rating creates a uncommitted change - an event.
