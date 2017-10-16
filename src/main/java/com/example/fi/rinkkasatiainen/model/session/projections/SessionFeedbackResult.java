@@ -10,19 +10,21 @@ public class SessionFeedbackResult {
     private final EventSourceEntity eventSourceEntity;
 
     private SessionFeedbackResult(List<Event> events) {
-
         eventSourceEntity = new EventSourceEntity(events);
     }
     public double getAverageRating() {
-        return eventSourceEntity.getAverageRating();
+        return -0.4;
+//        return eventSourceEntity.getAverageRating();
     }
 
     public SessionUUID getUuid() {
-        return eventSourceEntity.getUuid();
+        return SessionUUID.generate();
+//        return eventSourceEntity.getUuid();
     }
 
     public Integer getVersion() {
-        return eventSourceEntity.getVersion();
+        return -1;
+//        return eventSourceEntity.getVersion();
     }
 
 

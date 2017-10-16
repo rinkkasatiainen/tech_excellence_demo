@@ -5,6 +5,7 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -16,18 +17,19 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class SessionFeedbackResultShould {
 
-
     public static final SessionUUID UUID = SessionUUID.generate();
     public static final ParticipantUUID participantUUId = ParticipantUUID.generate();
 
+    @Ignore
     @Test
     public void load_from_event_created() throws Exception {
-
+        //TODO Step 3.2 / load Feedback from event stream, gets UUID from SessionCreated Event
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(new SessionCreated("TITLE", UUID)));
 
         assertThat(result.getUuid(), equalTo(UUID));
     }
 
+    @Ignore
     @Test
     public void empty_rating_for_participant_if_set_to_ZERO() throws Exception {
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
@@ -39,6 +41,7 @@ public class SessionFeedbackResultShould {
         assertThat(result.getAverageRating(), equalTo(0.0));
     }
 
+    @Ignore
     @Test
     public void can_rate_as_often_as_one_wants_and_only_last_one_counts() throws Exception {
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
@@ -50,6 +53,7 @@ public class SessionFeedbackResultShould {
         assertThat(result.getAverageRating(), equalTo(1.0));
     }
 
+    @Ignore
     @Test
     public void calculates_multiple_participants() throws Exception {
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
