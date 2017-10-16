@@ -18,6 +18,9 @@ import static org.mockito.Mockito.when;
 
 public class SessionsRouteShould {
 
+    public static final String TITLE = "LIVE CODING: CQRS + ES";
+    private ResponseEntity<SessionsRoute.NewSessionResponse> responseEntity;
+
     @Test
     public void return_201_Created_for_creating_new_user_with_nonexisting_username() throws Exception {
         AddSessionCommandHandler commandHandler = mock(AddSessionCommandHandler.class);
@@ -25,7 +28,8 @@ public class SessionsRouteShould {
 
         when( commandHandler.handles( any(AddSessionCommand.class) )).thenReturn( uuid );
 
-        ResponseEntity<SessionsRoute.NewSessionResponse> responseEntity = route.create(new NewSession("title"));
+//      TODO Step 1: Conf organiser sends a POST request to create new session with TITLE.
+        responseEntity = route.create(new NewSession(TITLE));
 
         assertThat( responseEntity.getHeaders().getLocation(), equalTo( new URI("/v1/sessions/" + uuid)));
     }
