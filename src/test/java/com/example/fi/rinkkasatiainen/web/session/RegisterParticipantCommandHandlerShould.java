@@ -1,9 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
-import com.example.fi.rinkkasatiainen.model.Audience;
-import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
@@ -31,11 +28,11 @@ public class RegisterParticipantCommandHandlerShould {
     private Schedule schedule;
     private Session session;
     private Participant participant;
-    private EventStore.EventPublisher eventPublisher;
+    private EventPublisher eventPublisher;
     @Before
     public void setUp() throws Exception {
         audience = mock(Audience.class);
-        eventPublisher = mock(EventStore.EventPublisher.class);
+        eventPublisher = mock(EventPublisher.class);
         participant = new Participant(participantUUID);
         when(audience.findParticipant(participantUUID)).thenReturn(participant);
         schedule = mock(Schedule.class);

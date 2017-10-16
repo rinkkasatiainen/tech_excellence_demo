@@ -1,6 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
-import com.example.fi.rinkkasatiainen.model.EventStore;
+import com.example.fi.rinkkasatiainen.model.EventPublisher;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
@@ -22,12 +22,12 @@ public class AddSessionCommandHandlerShould {
 
     public static final SessionUUID UUID = SessionUUID.generate();
     public static final String TITLE = "LIVE Coding: CQRS + ES";
-    private EventStore.EventPublisher eventPublisher;
+    private EventPublisher eventPublisher;
 
     @Test
     public void create_a_new_entity_and_return_uuid() throws Exception {
         Schedule schedule = mock(Schedule.class);
-        eventPublisher = mock(EventStore.EventPublisher.class);
+        eventPublisher = mock(EventPublisher.class);
 
         when(schedule.newSessionUUID()).thenReturn(UUID);
         AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventPublisher);
@@ -40,7 +40,7 @@ public class AddSessionCommandHandlerShould {
     @Test
     public void saves_session() throws Exception {
         Schedule schedule = mock(Schedule.class);
-        eventPublisher = mock(EventStore.EventPublisher.class);
+        eventPublisher = mock(EventPublisher.class);
 
         when(schedule.newSessionUUID()).thenReturn(UUID);
         AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventPublisher);

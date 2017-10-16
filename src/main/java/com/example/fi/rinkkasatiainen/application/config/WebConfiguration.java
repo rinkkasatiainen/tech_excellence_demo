@@ -1,9 +1,6 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
-import com.example.fi.rinkkasatiainen.model.Audience;
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
@@ -111,8 +108,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return new RateSessionCommandHandler(schedule(getEventStore()), getEventPublisher());
     }
 
-    private EventStore.EventPublisher getEventPublisher() {
-        return new EventStore.EventPublisher(getEventStore());
+    private EventPublisher getEventPublisher() {
+        return new EventPublisher(getEventStore());
     }
 
     private class FakeEventStore implements EventStore {

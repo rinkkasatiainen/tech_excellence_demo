@@ -1,9 +1,6 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
-import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
@@ -22,12 +19,12 @@ public class RateSessionCommandHandlerShould {
     public static final SessionUUID UUID = SessionUUID.generate();
     private RateSessionCommandHandler commandHandler;
     private Schedule schedule;
-    private EventStore.EventPublisher eventPublisher;
+    private EventPublisher eventPublisher;
 
     @Before
     public void setUp() throws Exception {
         schedule = mock(Schedule.class);
-        eventPublisher = mock(EventStore.EventPublisher.class);
+        eventPublisher = mock(EventPublisher.class);
         commandHandler = new RateSessionCommandHandler(schedule, eventPublisher);
     }
 
