@@ -37,7 +37,6 @@ public class SessionsRoute {
         log.debug("POST /v1/sessions");
 
         SessionUUID uuid = SessionUUID.generate();
-//        SessionUUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title));
 
         URI uri;
         try {

@@ -35,16 +35,6 @@ public class SessionUUID implements FeedbackerUUID {
         return new Struct.ForClass(this).hashCode();
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        return uuid.equals( o );
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return uuid.hashCode();
-//    }
-
     @Override
     public String toString() {
         return uuid.toString();

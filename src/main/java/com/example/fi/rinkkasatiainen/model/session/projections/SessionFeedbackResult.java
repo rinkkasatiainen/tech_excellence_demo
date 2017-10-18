@@ -14,17 +14,14 @@ public class SessionFeedbackResult {
     }
     public double getAverageRating() {
         return -0.4;
-//        return eventSourceEntity.getAverageRating();
     }
 
     public SessionUUID getUuid() {
         return SessionUUID.generate();
-//        return eventSourceEntity.getUuid();
     }
 
     public Integer getVersion() {
         return -1;
-//        return eventSourceEntity.getVersion();
     }
 
 

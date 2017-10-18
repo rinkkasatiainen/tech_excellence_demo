@@ -25,14 +25,11 @@ public class Schedule {
     }
 
     public Session findSession(SessionUUID uuid) {
-        // TODO AkS: COULD BE NO_EVENTS!
         List<Event> events = eventStore.findByUuid(uuid.getId());
         return Session.load(events);
     }
 
     public SessionFeedbackResult findSessionFeeback(SessionUUID uuid) {
-//        List<Event> events = eventStore.findByUuid(uuid.getId());
-//        return SessionFeedbackResult.load(events);
         List<Event> events = new ArrayList<>();
         return SessionFeedbackResult.load(events);
     }

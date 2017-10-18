@@ -86,8 +86,6 @@ public class Session implements AggregateRoot<SessionUUID> {
         public EventSourceEntity(List<Event> history) {
             this.ratings = new ArrayList<>();
             loader = new EventLoader();
-//            loader.register(SessionCreated.class, this::apply);
-//            loader.register(SessionRated.class, this::apply);
 
             history.forEach(loader::apply);
         }
@@ -120,7 +118,6 @@ public class Session implements AggregateRoot<SessionUUID> {
     }
     public static Session create(String title, SessionUUID uuid) {
         Session session = new Session();
-//        session.createSession(title, uuid);
         return session;
     }
 

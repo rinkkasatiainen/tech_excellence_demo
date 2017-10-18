@@ -30,7 +30,6 @@ public class SessionFeedbackRoute {
     public ResponseEntity<SessionFeedbackResult> getSession(@PathVariable(value = "sessionId") String sessionId) {
 
         SessionFeedbackResult session = createFake();
-//        SessionFeedbackResult session = queryHandler.handles(new SessionFeedbackQuery(sessionId));
 
         return ResponseEntity.ok(session);
     }
