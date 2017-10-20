@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.eventstore;
 
+import com.example.fi.rinkkasatiainen.util.Struct;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -105,4 +106,18 @@ public class StoredEvent implements Serializable, Comparable {
         return  this.id.compareTo( ((StoredEvent) o).id );
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return new Struct.ForClass(this).equals( o );
+    }
+
+    @Override
+    public int hashCode() {
+        return new Struct.ForClass(this).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new Struct.ForClass(this).toString();
+    }
 }

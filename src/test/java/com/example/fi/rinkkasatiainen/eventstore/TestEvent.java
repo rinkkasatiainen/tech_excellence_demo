@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TestEvent extends Struct implements Event {
-    private final String title;
+    public final String title;
 
     @JsonCreator
     public TestEvent(@JsonProperty("title") String title) {

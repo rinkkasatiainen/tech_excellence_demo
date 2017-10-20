@@ -34,8 +34,13 @@ public class PersistentEventStore implements EventStore {
     }
 
     @Override
-    public void saveEvents(UUID random, List<Event> uncommittedChanges, Integer lastVersion) {
+    public void saveEvents(UUID streamUUID, List<Event> uncommittedChanges, Integer lastVersion) {
+        final Integer[] nextVersion = {lastVersion + 1};
+        List<StoredEvent> storedEvents = uncommittedChanges.stream().map(
+                event -> new StoredEvent(streamUUID, serialize(getMetadata(event)), serialize(event), nextVersion[0]++)
+        ).collect(Collectors.toList());
 
+        wrappedEventStore.save( storedEvents );
     }
 
     private Event deserialize(String dataJson, String metadataJson) {

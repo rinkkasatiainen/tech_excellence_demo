@@ -27,6 +27,10 @@ public class PersistentEventStoreShould {
     private ObjectMapper objectMapper;
     private PersistentEventStore eventStore;
 
+    public static final String METADATA = "{\"type\":\"" + TestEvent.class.getCanonicalName() + "\"}";
+    public static final String DATA = "{\"title\":\"" + TITLE + "\"}";
+    public static final StoredEvent STORED_EVENT = new StoredEvent(UUID, METADATA, DATA, 1);
+
     @Before
     public void setUp() throws Exception {
         wrappedEventStore = mock(JpaEventStore.class);
@@ -51,19 +55,22 @@ public class PersistentEventStoreShould {
 
     @Test
     public void should_return_an_event() throws Exception {
-        String metadata = "{\"type\":\"" + TestEvent.class.getCanonicalName() + "\"}";
-        String data = "{\"title\":\"" + TITLE + "\"}";
         when(wrappedEventStore.findAllByLeastSignificantBitsAndMostSignificantBitsOrderByVersionAsc(
                 UUID.getLeastSignificantBits(),
                 UUID.getMostSignificantBits()
         )).thenReturn(Arrays.asList(
-                new StoredEvent(UUID, metadata, data, 0)
+                STORED_EVENT
         ));
 
         List<Event> events = eventStore.findByUuid(UUID);
 
         assertThat( events, hasItem(new TestEvent(TITLE)));
-
     }
 
+    @Test
+    public void should_save_a_stored_event() throws Exception {
+        eventStore.saveEvents(UUID, Arrays.asList( new TestEvent(TITLE)), 0);
+
+        verify(wrappedEventStore).save( Arrays.asList(STORED_EVENT) );
+    }
 }
