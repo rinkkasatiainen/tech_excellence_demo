@@ -19,17 +19,17 @@ public class StoredEvent implements Serializable, Comparable {
     private Long id;
 
     @NotNull
-    @Column(name = "leastSignificantBits")
+    @Column(name = "least_significant_bits")
     private Long leastSignificantBits;
 
     @NotNull
-    @Column(name = "mostSignificantBits")
+    @Column(name = "most_significant_bits")
     private Long mostSignificantBits;
 
     @NotNull
     @Column(name = "metadata")
     @Size(max = 255)
-    private String metaData;
+    private String metadata;
 
     @NotNull
     @Column(name = "data")
@@ -49,10 +49,10 @@ public class StoredEvent implements Serializable, Comparable {
     public StoredEvent() {
     }
 
-    public StoredEvent(UUID uuid, String metaData, String data, long version) {
+    public StoredEvent(UUID uuid, String metadata, String data, long version) {
         this.leastSignificantBits = uuid.getLeastSignificantBits();
         this.mostSignificantBits = uuid.getMostSignificantBits();
-        this.metaData = metaData;
+        this.metadata = metadata;
         this.data = data;
         this.version = version;
     }
@@ -77,12 +77,12 @@ public class StoredEvent implements Serializable, Comparable {
         this.mostSignificantBits = mostSignificantBits;
     }
 
-    public String getMetaData() {
-        return metaData;
+    public String getMetadata() {
+        return metadata;
     }
 
-    public void setMetaData(String metaData) {
-        this.metaData = metaData;
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
     }
 
     public String getData() {

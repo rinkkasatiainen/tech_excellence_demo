@@ -5,14 +5,17 @@ import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.util.Struct;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SessionRated implements Event {
-    private final SessionUUID uuid;
     public final Stars stars;
     public final ParticipantUUID participantUUID;
 
-    public SessionRated(SessionUUID sessionUUID, Stars stars, ParticipantUUID participantUUID) {
-        this.uuid = sessionUUID;
+    @JsonCreator
+    public SessionRated(
+            @JsonProperty("stars") Stars stars,
+            @JsonProperty("participantUuid") ParticipantUUID participantUUID) {
         this.stars = stars;
         this.participantUUID = participantUUID;
     }

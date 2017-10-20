@@ -14,12 +14,17 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: leastSignificantBits
+                  name: version
                   type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: mostSignificantBits
+                  name: least_significant_bits
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: most_significant_bits
                   type: bigint
                   constraints:
                     nullable: false
@@ -39,3 +44,8 @@ databaseChangeLog:
                   defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
+        - addUniqueConstraint:
+            columnNames: least_significant_bits, most_significant_bits, version
+            constraintName: UNIQUE_UUID_TO_VERSION
+            tableName: eventstore
+

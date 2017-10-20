@@ -1,6 +1,8 @@
 package com.example.fi.rinkkasatiainen.model;
 
 import com.example.fi.rinkkasatiainen.util.Struct;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
@@ -8,7 +10,8 @@ public class ParticipantUUID {
 
     private final UUID uuid;
 
-    private ParticipantUUID(UUID uuid) {
+    @JsonCreator
+    private ParticipantUUID(@JsonProperty("id") UUID uuid) {
         this.uuid = uuid;
     }
 

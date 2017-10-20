@@ -1,5 +1,6 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
+import com.example.fi.rinkkasatiainen.eventstore.JpaEventStore;
 import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
@@ -7,6 +8,7 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipant
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -23,6 +25,8 @@ import java.util.function.Supplier;
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private final Logger log = LoggerFactory.getLogger(WebConfiguration.class);
+
+
 
     @Override
     public void configurePathMatch(PathMatchConfigurer matcher) {

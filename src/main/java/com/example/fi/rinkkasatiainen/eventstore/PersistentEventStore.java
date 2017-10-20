@@ -4,9 +4,7 @@ import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +14,7 @@ public class PersistentEventStore implements EventStore {
     private final ObjectMapper objectMapper;
     private final JpaEventStore wrappedEventStore;
 
-    public PersistentEventStore(@Autowired ObjectMapper objectMapper, JpaEventStore wrappedEventStore) {
+    public PersistentEventStore(ObjectMapper objectMapper, JpaEventStore wrappedEventStore) {
         this.objectMapper = objectMapper;
         this.wrappedEventStore = wrappedEventStore;
     }
@@ -29,7 +27,7 @@ public class PersistentEventStore implements EventStore {
         );
 
         return events.stream().map(
-                storedEvent -> deserialize(storedEvent.getData(), storedEvent.getMetaData())
+                storedEvent -> deserialize(storedEvent.getData(), storedEvent.getMetadata())
         ).collect(Collectors.toList());
     }
 

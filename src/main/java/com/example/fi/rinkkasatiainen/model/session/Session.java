@@ -63,7 +63,7 @@ public class Session implements AggregateRoot<SessionUUID> {
     }
 
     public void rate(RateSessionCommand command) {
-        publisher.publish(new SessionRated(this.getUUID(), command.stars, command.participantUUID));
+        publisher.publish(new SessionRated(command.stars, command.participantUUID));
     }
 
     private class EventPublisher{
