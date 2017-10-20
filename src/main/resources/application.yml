@@ -4,3 +4,15 @@ spring:
 logging:
   level:
     root: INFO
+
+---
+
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://localhost/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PWD}
+
+---

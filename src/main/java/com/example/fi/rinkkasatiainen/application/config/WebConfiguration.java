@@ -5,15 +5,10 @@ import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,7 +16,6 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.*;
 import java.util.function.Supplier;
 
 
@@ -33,16 +27,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void configurePathMatch(PathMatchConfigurer matcher) {
         matcher.setUseRegisteredSuffixPatternMatch(true);
-    }
-
-    @Bean
-    @Primary
-    public ObjectMapper objectMapper() {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return objectMapper;
     }
 
     @Bean
@@ -75,16 +59,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return () -> SessionUUID.generate();
     }
 
-    static FakeEventStore fakeEventStore;
-
-    @Bean
-    public EventStore getEventStore(){
-        if( null == fakeEventStore){
-            fakeEventStore = new FakeEventStore();
-        }
-        return fakeEventStore;
-    }
-
     @Bean
     public Audience audience(EventStore eventStore) {
         return new Audience(eventStore);
@@ -94,42 +68,23 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return new Schedule(uuidSupplier(), eventStore);
     }
     @Bean
-    public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule) {
-        return new AddSessionCommandHandler( schedule, getEventPublisher());
+    public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule, EventPublisher eventPublisher) {
+        return new AddSessionCommandHandler( schedule, eventPublisher);
     }
 
     @Bean
-    public RegisterParticipantCommandHandler registerParticipantCommandHandler() {
-        return new RegisterParticipantCommandHandler(schedule(getEventStore()), audience(getEventStore()), getEventPublisher());
+    public RegisterParticipantCommandHandler registerParticipantCommandHandler(Schedule schedule, Audience audience, EventPublisher eventPublisher) {
+        return new RegisterParticipantCommandHandler(schedule, audience, eventPublisher);
     }
 
     @Bean
-    public RateSessionCommandHandler rateSessionCommandHandler() {
-        return new RateSessionCommandHandler(schedule(getEventStore()), getEventPublisher());
+    public RateSessionCommandHandler rateSessionCommandHandler(Schedule schedule, EventPublisher eventPublisher) {
+        return new RateSessionCommandHandler(schedule, eventPublisher);
     }
 
-    private EventPublisher getEventPublisher() {
-        return new EventPublisher(getEventStore());
+    @Bean
+    public EventPublisher getEventPublisher(EventStore eventStore) {
+        return new EventPublisher(eventStore);
     }
 
-    private class FakeEventStore implements EventStore {
-
-        Map<UUID, List<Event>> events;
-
-        public FakeEventStore() {
-            this.events = new HashMap<>();
-        }
-
-        @Override
-        public List<Event> findByUuid(UUID random) {
-            return events.getOrDefault(random, new ArrayList<>());
-        }
-
-        @Override
-        public void saveEvents(UUID random, List<Event> uncommittedChanges, Integer lastVersion) {
-            List<Event> eventList = findByUuid(random);
-            eventList.addAll(uncommittedChanges);
-            events.put(random, eventList);
-        }
-    }
 }

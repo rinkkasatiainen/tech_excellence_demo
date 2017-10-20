@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: rinkkasatiainen
+      changes:
+        - createTable:
+            tableName: eventstore
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: leastSignificantBits
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mostSignificantBits
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data
+                  type: longtext
+                  constraints:
+                    nullable: false
+              - column:
+                  name: metadata
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: datetime
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
