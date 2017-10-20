@@ -34,7 +34,7 @@ public class SessionShould {
     public void should_rate() throws Exception {
         ParticipantUUID participantUUID = ParticipantUUID.generate();
         session.rate(new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
-        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(UUID, Stars.FOUR, participantUUID)));
+        assertThat(session.getUncommittedChanges(), hasItem(new SessionRated(Stars.FOUR, participantUUID)));
     }
 
     @Test

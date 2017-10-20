@@ -4,6 +4,7 @@ import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
+import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
 import java.util.List;
@@ -11,13 +12,12 @@ import java.util.function.Supplier;
 
 public class Schedule {
     private final Supplier<SessionUUID> supplier;
-    public final EventStore eventStore;
+    private final EventStore eventStore;
 
     public Schedule(Supplier<SessionUUID> supplier, EventStore eventStore) {
         this.supplier = supplier;
         this.eventStore = eventStore;
     }
-
 
     public SessionUUID newSessionUUID() {
         return supplier.get();
@@ -34,4 +34,8 @@ public class Schedule {
         return SessionFeedbackResult.load(events);
     }
 
+    public List<SessionDetails> findAllSessions() {
+        // This would be a perfect place to build a reactive stream.
+        return null;
+    }
 }

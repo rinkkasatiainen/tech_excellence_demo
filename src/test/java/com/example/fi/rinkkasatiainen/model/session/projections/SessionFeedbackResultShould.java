@@ -32,8 +32,8 @@ public class SessionFeedbackResultShould {
     public void empty_rating_for_participant_if_set_to_ZERO() throws Exception {
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
                 new SessionCreated("TITLE", UUID),
-                new SessionRated(UUID, Stars.FIVE, participantUUID),
-                new SessionRated(UUID, Stars.ZERO, participantUUID)
+                new SessionRated(Stars.FIVE, participantUUID),
+                new SessionRated(Stars.ZERO, participantUUID)
                 ));
 
         assertThat(result.getAverageRating(), equalTo(0.0));
@@ -43,8 +43,8 @@ public class SessionFeedbackResultShould {
     public void can_rate_as_often_as_one_wants_and_only_last_one_counts() throws Exception {
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
                 new SessionCreated("TITLE", UUID),
-                new SessionRated(UUID, Stars.FIVE, participantUUID),
-                new SessionRated(UUID, Stars.ONE, participantUUID)
+                new SessionRated(Stars.FIVE, participantUUID),
+                new SessionRated(Stars.ONE, participantUUID)
                 ));
 
         assertThat(result.getAverageRating(), equalTo(1.0));
@@ -54,10 +54,10 @@ public class SessionFeedbackResultShould {
     public void calculates_multiple_participants() throws Exception {
         SessionFeedbackResult result = SessionFeedbackResult.load(Arrays.asList(
                 new SessionCreated("TITLE", UUID),
-                new SessionRated(UUID, Stars.FIVE, participantUUID),
-                new SessionRated(UUID, Stars.ONE, ParticipantUUID.generate()),
-                new SessionRated(UUID, Stars.FOUR, ParticipantUUID.generate()),
-                new SessionRated(UUID, Stars.ONE, ParticipantUUID.generate())
+                new SessionRated(Stars.FIVE, participantUUID),
+                new SessionRated(Stars.ONE, ParticipantUUID.generate()),
+                new SessionRated(Stars.FOUR, ParticipantUUID.generate()),
+                new SessionRated(Stars.ONE, ParticipantUUID.generate())
                 ));
 
         assertThat(result.getAverageRating(), equalTo(2.75));

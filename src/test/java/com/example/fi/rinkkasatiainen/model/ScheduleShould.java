@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
 
@@ -52,10 +53,15 @@ public class ScheduleShould {
     @Test
     public void find_session_feedback() throws Exception {
         ParticipantUUID participantUUID = ParticipantUUID.generate();
-        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID), new SessionRated(UUID, Stars.FIVE, participantUUID)));
+        when(eventStore.findByUuid(UUID.getId())).thenReturn(Arrays.asList(new SessionCreated(TITLE, UUID), new SessionRated(Stars.FIVE, participantUUID)));
 
         SessionFeedbackResult result = schedule.findSessionFeeback(UUID);
         assertThat(result.getVersion(), equalTo(2));
         assertThat(result.getAverageRating(), equalTo(5.0));
+    }
+
+    @Test
+    public void find_session_details() throws Exception {
+        fail("SHould be implemented");
     }
 }
