@@ -67,10 +67,12 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public Audience audience(EventStore eventStore) {
         return new Audience(eventStore);
     }
+
     @Bean
     public Schedule schedule(EventStore eventStore) {
         return new Schedule(uuidSupplier(), eventStore);
     }
+
     @Bean
     public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule, EventPublisher eventPublisher) {
         return new AddSessionCommandHandler( schedule, eventPublisher);
