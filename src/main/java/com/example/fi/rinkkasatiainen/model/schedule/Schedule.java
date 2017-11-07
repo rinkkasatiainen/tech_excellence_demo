@@ -7,6 +7,7 @@ import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -24,7 +25,6 @@ public class Schedule {
     }
 
     public Session findSession(SessionUUID uuid) {
-        // TODO AkS: COULD BE NO_EVENTS!
         List<Event> events = eventStore.findByUuid(uuid.getId());
         return Session.load(events);
     }

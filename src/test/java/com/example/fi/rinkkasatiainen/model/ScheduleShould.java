@@ -6,6 +6,7 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -21,13 +22,11 @@ import static org.mockito.Mockito.*;
 
 public class ScheduleShould {
 
-
     public static final String TITLE = "Title";
     public static final SessionUUID UUID = SessionUUID.generate();
     private Supplier<SessionUUID> randomUUIDSupplier = () -> UUID;
     private Schedule schedule;
     private EventStore eventStore;
-
 
     @Before
     public void setUp() throws Exception {
@@ -60,6 +59,7 @@ public class ScheduleShould {
         assertThat(result.getAverageRating(), equalTo(5.0));
     }
 
+    @Ignore
     @Test
     public void find_session_details() throws Exception {
         fail("SHould be implemented");
