@@ -4,11 +4,11 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
+import com.example.fi.rinkkasatiainen.web.session.commands.SessionsRoute;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
-import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;

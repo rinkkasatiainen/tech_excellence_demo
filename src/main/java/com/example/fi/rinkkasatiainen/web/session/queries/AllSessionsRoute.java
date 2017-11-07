@@ -2,10 +2,7 @@ package com.example.fi.rinkkasatiainen.web.session.queries;
 
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
-import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
-import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQuery;
-import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQueryHandler;
-import com.example.fi.rinkkasatiainen.web.session.SessionsRoute;
+import com.example.fi.rinkkasatiainen.web.session.SessionRouteConstants;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(SessionsRoute.V1_SESSIONS)
+@RequestMapping(SessionRouteConstants.V1_SESSIONS)
 public class AllSessionsRoute {
 
     private final Schedule schedule;

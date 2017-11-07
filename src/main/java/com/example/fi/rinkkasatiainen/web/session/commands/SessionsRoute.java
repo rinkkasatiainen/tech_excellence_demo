@@ -1,9 +1,9 @@
-package com.example.fi.rinkkasatiainen.web.session;
+package com.example.fi.rinkkasatiainen.web.session.commands;
 
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
-import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
+import com.example.fi.rinkkasatiainen.web.session.SessionRouteConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,9 +20,8 @@ import java.net.URISyntaxException;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(SessionsRoute.V1_SESSIONS)
+@RequestMapping(SessionRouteConstants.V1_SESSIONS)
 public class SessionsRoute {
-    public static final String V1_SESSIONS = "/v1/sessions";
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     private final AddSessionCommandHandler commandHandler;
@@ -40,7 +39,7 @@ public class SessionsRoute {
 
         URI uri;
         try {
-            uri = new URI(V1_SESSIONS + "/" + uuid.toString() );
+            uri = new URI(SessionRouteConstants.V1_SESSIONS + "/" + uuid.toString() );
         } catch (URISyntaxException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

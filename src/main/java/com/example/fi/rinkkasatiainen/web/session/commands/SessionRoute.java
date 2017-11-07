@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.web.session;
+package com.example.fi.rinkkasatiainen.web.session.commands;
 
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.Stars;
@@ -6,8 +6,7 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
-import com.example.fi.rinkkasatiainen.web.session.commands.ParticipantDto;
-import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
+import com.example.fi.rinkkasatiainen.web.session.SessionRouteConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -16,9 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(SessionRoute.V1_SESSION)
+@RequestMapping(SessionRouteConstants.V1_SESSION)
 public class SessionRoute {
-    public static final String V1_SESSION = "/v1/session/{sessionId}";
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final RegisterParticipantCommandHandler registerParticipantCommandHandler;

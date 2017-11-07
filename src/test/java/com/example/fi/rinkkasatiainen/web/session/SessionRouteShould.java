@@ -9,6 +9,7 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipant
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.ParticipantDto;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
+import com.example.fi.rinkkasatiainen.web.session.commands.SessionRoute;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
