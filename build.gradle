@@ -36,4 +36,9 @@ dependencies {
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+	// https://mvnrepository.com/artifact/net.serenity-bdd/serenity-screenplay
+	testCompile group: 'net.serenity-bdd', name: 'serenity-screenplay', version: '1.7.0'
+	// https://mvnrepository.com/artifact/net.serenity-bdd/serenity-junit
+	testCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: '1.7.0'
+	testCompile group: 'net.serenity-bdd', name: 'serenity-core', version: '1.7.0'
 }

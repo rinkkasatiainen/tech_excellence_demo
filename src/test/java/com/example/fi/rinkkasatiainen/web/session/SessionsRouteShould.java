@@ -25,7 +25,7 @@ public class SessionsRouteShould {
 
         when( commandHandler.handles( any(AddSessionCommand.class) )).thenReturn( uuid );
 
-        ResponseEntity<SessionsRoute.NewSessionResponse> responseEntity = route.create(new NewSession("title"));
+        ResponseEntity<SessionsRoute.NewSessionResponse> responseEntity = route.create(new NewSession("title", "description"));
 
         assertThat( responseEntity.getHeaders().getLocation(), equalTo( new URI("/v1/sessions/" + uuid)));
     }

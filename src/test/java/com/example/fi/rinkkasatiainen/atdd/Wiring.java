@@ -6,17 +6,16 @@ import com.example.fi.rinkkasatiainen.model.Audience;
 import com.example.fi.rinkkasatiainen.model.EventPublisher;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionsRoute;
 
 public class Wiring {
-    private final WebConfiguration webConfiguration;
-    private final EventStore eventStore;
+    public static final WebConfiguration webConfiguration = new WebConfiguration();
+    public static final EventStore eventStore = new FakeEventStore();
 
     public Wiring() {
-        eventStore = new FakeEventStore();
-        webConfiguration = new WebConfiguration();
     }
 
     public RateSessionCommandHandler getRateSessionCommandHandler() {
@@ -41,5 +40,17 @@ public class Wiring {
 
     public SessionsRoute getSessionsRoute() {
         return new SessionsRoute(webConfiguration.addSessionCommandHandler(getSchedule(), getEventPublisher()));
+    }
+
+    public static Schedule schedule() {
+        return webConfiguration.schedule(eventStore);
+    }
+
+    public static AddSessionCommandHandler addSessionCommandHandler() {
+        return webConfiguration.addSessionCommandHandler(schedule(), eventPublisher());
+    }
+
+    private static EventPublisher eventPublisher() {
+        return webConfiguration.getEventPublisher(eventStore);
     }
 }

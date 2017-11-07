@@ -8,21 +8,25 @@ import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackR
 import com.example.fi.rinkkasatiainen.web.participants.ParticipantsRoute;
 import com.example.fi.rinkkasatiainen.web.session.commands.*;
 import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
+import net.serenitybdd.screenplay.Actor;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
+import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CanGiveAndReceiveFeedback {
 
+    public static final String description = "Description of the talk";
     private Wiring wiring;
 
     @Before
     public void setUp() throws Exception {
         wiring = new Wiring();
     }
+
 
     @Test
     public void can_create_user_and_give_feedback_to_session() throws Exception {
@@ -76,7 +80,7 @@ public class CanGiveAndReceiveFeedback {
 
 
     private SessionUUID given_a_session() {
-        ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity= wiring.getSessionsRoute().create(new NewSession("title"));
+        ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity= wiring.getSessionsRoute().create(new NewSession("title", description));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return SessionUUID.from(uuid);
     }
