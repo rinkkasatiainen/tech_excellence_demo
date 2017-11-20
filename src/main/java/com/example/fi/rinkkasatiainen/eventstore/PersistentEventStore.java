@@ -2,12 +2,12 @@ package com.example.fi.rinkkasatiainen.eventstore;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PersistentEventStore implements EventStore {
@@ -26,6 +26,10 @@ public class PersistentEventStore implements EventStore {
                 streamUuid.getMostSignificantBits()
         );
 
+        return listEvents(events);
+    }
+
+    private List<Event> listEvents(List<StoredEvent> events) {
         return events.stream().map(
                 storedEvent -> deserialize(storedEvent.getData(), storedEvent.getMetadata())
         ).collect(Collectors.toList());
@@ -39,6 +43,27 @@ public class PersistentEventStore implements EventStore {
         ).collect(Collectors.toList());
 
         wrappedEventStore.save( storedEvents );
+    }
+
+    @Override
+    public List<Event> findAllByType(Class klass) {
+        List<StoredEvent> events  = wrappedEventStore.findAllByMetadata( klass.getName() );
+        return listEvents(events);
+    }
+
+    @Override
+    public Map<SessionUUID, List<Event>> findAll(List<SessionUUID> uuids) {
+
+        Map<SessionUUID, List<Event>> bits = new HashMap<>();
+
+        uuids.stream().forEachOrdered( uuid -> {
+            long leastSignificantBits = uuid.getId().getLeastSignificantBits();
+            long mostSignificantBits = uuid.getId().getMostSignificantBits();
+            List<StoredEvent> allForUUid = wrappedEventStore.findAllByLeastSignificantBitsAndMostSignificantBitsOrderByVersionAsc(leastSignificantBits, mostSignificantBits);
+            bits.put( uuid, listEvents(allForUUid));
+        });
+
+        return bits;
     }
 
     private Event deserialize(String dataJson, String metadataJson) {

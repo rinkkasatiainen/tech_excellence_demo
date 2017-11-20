@@ -39,7 +39,7 @@ public class Screenplay {
 
         @Override
         protected boolean matchesSafely(SessionDetails item) {
-            return title.equals(item.title) && description.equals(item.description);
+            return title.equals(item.getTitle()) && description.equals(item.getDescription());
         }
 
         @Override

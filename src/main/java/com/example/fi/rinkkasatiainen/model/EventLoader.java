@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -21,5 +22,9 @@ public class EventLoader {
 
     public int getVersion() {
         return version;
+    }
+
+    public void load(List<Event> events) {
+        events.stream().forEachOrdered(e -> this.apply(e));
     }
 }

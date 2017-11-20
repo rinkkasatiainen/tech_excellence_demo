@@ -2,8 +2,11 @@ package com.example.fi.rinkkasatiainen;
 
 import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
+import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.Session;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FakeEventStore implements EventStore {
 
@@ -23,5 +26,22 @@ public class FakeEventStore implements EventStore {
         List<Event> eventList = findByUuid(random);
         eventList.addAll(uncommittedChanges);
         events.put(random, eventList);
+    }
+
+    @Override
+    public List<Event> findAllByType(Class klass) {
+        return events.values().stream(). //creates List<List<Event>>
+                flatMap( List::stream ).
+                filter( e -> e.getClass().equals(klass)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<SessionUUID, List<Event>> findAll(List<SessionUUID> uuids) {
+        Map<SessionUUID, List<Event>> all = new HashMap<>();
+        uuids.stream().
+                forEachOrdered( uuid -> all.put( uuid, events.getOrDefault(uuid.getId(), new ArrayList<>()) )
+                );
+
+        return all;
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface JpaEventStore extends JpaRepository<StoredEvent, Long> {
     List<StoredEvent> findAllByLeastSignificantBitsAndMostSignificantBitsOrderByVersionAsc(long leastSignificantBits, long mostSignificantBits);
+
+    List<StoredEvent> findAllByMetadata(String klass);
 }

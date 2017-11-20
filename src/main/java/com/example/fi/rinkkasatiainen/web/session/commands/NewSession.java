@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewSession {
     public final String title;
+    public final String description;
 
     public NewSession(@JsonProperty("title") String title, String description) {
          this.title = title;
+        this.description = description;
     }
 }
