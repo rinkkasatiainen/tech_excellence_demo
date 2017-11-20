@@ -47,7 +47,9 @@ public class PersistentEventStore implements EventStore {
 
     @Override
     public List<Event> findAllByType(Class klass) {
-        List<StoredEvent> events  = wrappedEventStore.findAllByMetadata( klass.getName() );
+        EventMetadata metadata = new EventMetadata( klass.getName() );
+
+        List<StoredEvent> events  = wrappedEventStore.findAllByMetadata( serialize( metadata ) );
         return listEvents(events);
     }
 

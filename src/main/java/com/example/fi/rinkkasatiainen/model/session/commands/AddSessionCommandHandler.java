@@ -19,6 +19,7 @@ public class AddSessionCommandHandler implements Handler<AddSessionCommand, Sess
     public SessionUUID handles(AddSessionCommand addSessionCommand) {
         SessionUUID sessionUUID = schedule.newSessionUUID();
         Session session = Session.create(addSessionCommand.title, sessionUUID);
+        session.setDescription(addSessionCommand.description);
 
         eventPublisher.save(sessionUUID, session, 0);
 

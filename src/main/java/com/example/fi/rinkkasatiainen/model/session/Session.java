@@ -3,6 +3,7 @@ package com.example.fi.rinkkasatiainen.model.session;
 import com.example.fi.rinkkasatiainen.model.*;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
 import java.util.*;
@@ -52,6 +53,10 @@ public class Session implements AggregateRoot<SessionUUID> {
 
     private void createSession(String title, SessionUUID uuid) {
         publisher.publish(new SessionCreated(title, uuid));
+    }
+
+    public void setDescription(String description) {
+        publisher.publish(new SessionDescriptionAdded(description, this.getUUID()));
     }
 
     public static Session load(List<Event> events) {

@@ -8,7 +8,7 @@ public class NewSession {
     public final String title;
     public final String description;
 
-    public NewSession(@JsonProperty("title") String title, String description) {
+    public NewSession(@JsonProperty("title") String title, @JsonProperty("description") String description) {
          this.title = title;
         this.description = description;
     }

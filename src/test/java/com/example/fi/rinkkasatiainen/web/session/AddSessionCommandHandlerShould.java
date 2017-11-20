@@ -23,6 +23,7 @@ public class AddSessionCommandHandlerShould {
     public static final SessionUUID UUID = SessionUUID.generate();
     public static final String TITLE = "LIVE Coding: CQRS + ES";
     private EventPublisher eventPublisher;
+    private String description = "DESCRIption of the talk";
 
     @Test
     public void create_a_new_entity_and_return_uuid() throws Exception {
@@ -32,7 +33,7 @@ public class AddSessionCommandHandlerShould {
         when(schedule.newSessionUUID()).thenReturn(UUID);
         AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventPublisher);
 
-        SessionUUID uuid = commandHandler.handles(new AddSessionCommand(TITLE));
+        SessionUUID uuid = commandHandler.handles(new AddSessionCommand(TITLE, description));
 
         assertThat( uuid, equalTo(UUID));
     }
@@ -45,7 +46,7 @@ public class AddSessionCommandHandlerShould {
         when(schedule.newSessionUUID()).thenReturn(UUID);
         AddSessionCommandHandler commandHandler = new AddSessionCommandHandler( schedule, eventPublisher);
 
-        commandHandler.handles(new AddSessionCommand(TITLE));
+        commandHandler.handles(new AddSessionCommand(TITLE, description));
 
         ArgumentCaptor<Session> sessionArgumentCaptor = ArgumentCaptor.forClass(Session.class);
         verify(eventPublisher).save( argThat(equalTo(UUID)), sessionArgumentCaptor.capture(), argThat(equalTo(0)));

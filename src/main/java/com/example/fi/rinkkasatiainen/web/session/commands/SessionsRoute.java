@@ -35,7 +35,7 @@ public class SessionsRoute {
     public ResponseEntity<NewSessionResponse> create(@RequestBody NewSession newSession) {
         log.debug("POST /v1/sessions");
 
-        SessionUUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title));
+        SessionUUID uuid = commandHandler.handles(new AddSessionCommand(newSession.title, newSession.description));
 
         URI uri;
         try {
