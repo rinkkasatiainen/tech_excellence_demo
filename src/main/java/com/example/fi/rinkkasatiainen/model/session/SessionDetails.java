@@ -13,8 +13,18 @@ public class SessionDetails {
 
 
     private SessionDetails(List<Event> events){
+        // Step 1: create EventSourceEntity - internal data structure
+        // to hold the state
+        // Load the history while doing it.
         eventSourceEntity = null;
     }
+
+
+
+
+
+
+
 
     public String getTitle() {
         return "";
@@ -52,6 +62,11 @@ public class SessionDetails {
         private String description;
 
         public EventSourceEntity(List<Event> events) {
+            //Step 1: create EventLoader
+            //Step 2: register events
+               // SessionCreated
+               // SessionDescriptionAdded
+            //Step 3: load the history.
         }
 
 

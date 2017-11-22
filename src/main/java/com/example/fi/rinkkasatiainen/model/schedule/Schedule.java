@@ -61,12 +61,15 @@ public class Schedule {
 
 
     public List<SessionDetails> findAllSessions() {
+        // Step 1: get UUIDs of all the sessions
         List<SessionUUID> allUUIDs = getSessionUUIDS();
 
+        // Step 2: find all UUID -> List<Event> from event store
 //        return new ArrayList<>();
      Map<SessionUUID, List<Event>> all = eventStore.findAll(allUUIDs);
-//         This would be a perfect place to build a reactive stream.
+        // Step 3: map entryset to SessionDetails - load(entry.getValue())
         return all.entrySet().stream().map( entry -> SessionDetails.load(entry.getValue())).collect(Collectors.toList());
+//         This would be a perfect place to build a reactive stream.
     }
 
 
