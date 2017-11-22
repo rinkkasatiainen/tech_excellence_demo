@@ -1,9 +1,9 @@
-package com.example.fi.rinkkasatiainen.atdd;
+package com.example.fi.rinkkasatiainen.atdd.commands;
 
-import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
+import com.example.fi.rinkkasatiainen.atdd.SessionStore;
+import com.example.fi.rinkkasatiainen.atdd.Wiring;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionsRoute;
-import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,7 @@ public class CreateASession implements Performable{
         SessionsRoute sessionsRoute = new SessionsRoute(Wiring.addSessionCommandHandler());
         ResponseEntity<SessionsRoute.NewSessionResponse> response = sessionsRoute.create(new NewSession(title, description));
 
+        SessionStore.storeNewSession(this.title, response);
         assertThat( response.getStatusCodeValue(), equalTo(201));
     }
 

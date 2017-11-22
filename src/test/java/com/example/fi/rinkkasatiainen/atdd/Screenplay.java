@@ -1,6 +1,14 @@
 package com.example.fi.rinkkasatiainen.atdd;
 
+import com.example.fi.rinkkasatiainen.atdd.commands.CreateASession;
+import com.example.fi.rinkkasatiainen.atdd.commands.RateASession;
+import com.example.fi.rinkkasatiainen.atdd.commands.RegisterAsParticipant;
+import com.example.fi.rinkkasatiainen.atdd.commands.RegisterToASession;
+import com.example.fi.rinkkasatiainen.atdd.queries.SessionFeedback;
+import com.example.fi.rinkkasatiainen.atdd.queries.Sessions;
+import com.example.fi.rinkkasatiainen.model.Stars;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
+import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.serenitybdd.screenplay.Actor;
 import org.hamcrest.Description;
@@ -8,7 +16,8 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.example.fi.rinkkasatiainen.atdd.Screenplay.SessionDescribedWith.sessionDescribedAs;
+import static com.example.fi.rinkkasatiainen.atdd.Screenplay.SessionDescribedWith.withTitleAndDescriptionOf;
+import static com.example.fi.rinkkasatiainen.atdd.Screenplay.SessionFeedbackMatcher.hasAverageRatingOf;
 import static net.serenitybdd.screenplay.GivenWhenThen.*;
 import static org.hamcrest.CoreMatchers.hasItem;
 
@@ -16,16 +25,62 @@ import static org.hamcrest.CoreMatchers.hasItem;
 public class Screenplay {
 
     @Test
-    public void screenplay() throws Exception {
-        Actor adrian = Actor.named("Adrian");
-        givenThat(adrian).wasAbleTo( CreateASession.with().title("title").and().description("desc"));
+    public void shouldSeeListOfTalks() throws Exception {
+        Actor aki = Actor.named("Aki");
+        givenThat(aki).wasAbleTo( CreateASession.with().title("title").and().description("desc"));
 
-        when(adrian).attemptsTo(CreateASession.with().title("another").and().description("longer description") );
+        when(aki).attemptsTo(CreateASession.with().title("another").and().description("longer description") );
 
-        then(adrian).should(seeThat( Sessions.allTalks(),
-                hasItem( sessionDescribedAs("title", "desc") ),
-                hasItem( sessionDescribedAs("another", "longer description") ) ));
+        then(aki).should(seeThat( Sessions.allTalks(),
+                hasItem( withTitleAndDescriptionOf("title", "desc") ),
+                hasItem( withTitleAndDescriptionOf("another", "longer description") ) ));
     }
+
+
+    @Test
+    public void shouldGetFeedbackOfASession() throws Exception {
+        Actor aki = Actor.named("Aki");
+        givenThat(aki).wasAbleTo( CreateASession.with().title("title").and().description("desc"));
+
+        Actor rachel = Actor.named("Rachel");
+        givenThat(rachel).wasAbleTo(RegisterAsParticipant.asNew());
+        givenThat(rachel).wasAbleTo(RegisterToASession.withTitle("title"));
+
+        when(rachel).attemptsTo(RateASession.withTitle("title").as(Stars.FIVE));
+
+        then(aki).should(seeThat(SessionFeedback.withTitle("title"),
+                hasAverageRatingOf(5.0) ));
+    }
+
+
+
+
+
+
+
+    static class SessionFeedbackMatcher extends TypeSafeMatcher<SessionFeedbackResult> {
+
+        private final double averageRating;
+
+        private SessionFeedbackMatcher(double averageRating) {
+            this.averageRating = averageRating;
+        }
+
+        @Override
+        protected boolean matchesSafely(SessionFeedbackResult item) {
+            return item.getAverageRating() == averageRating;
+        }
+
+        @Override
+        public void describeTo(Description description) {
+
+        }
+
+        static SessionFeedbackMatcher hasAverageRatingOf(double averageRating){
+            return new SessionFeedbackMatcher(averageRating);
+        }
+    }
+
 
     static class SessionDescribedWith extends TypeSafeMatcher<SessionDetails> {
 
@@ -47,8 +102,12 @@ public class Screenplay {
 
         }
 
-        public static SessionDescribedWith sessionDescribedAs(String title, String description ){
+        public static SessionDescribedWith withTitleAndDescriptionOf(String title, String description ){
             return new SessionDescribedWith(title, description);
         }
     }
+
+
+
 }
+

@@ -11,10 +11,10 @@ import java.util.List;
 
 public class SessionDetails {
 
-    private final EventSourceEntity eventSourceEntity;
 
     private SessionDetails(List<Event> events){
         eventSourceEntity = new EventSourceEntity(events);
+//        eventSourceEntity = new EventSourceEntity(events);
     }
 
     public String getTitle() {
@@ -29,24 +29,20 @@ public class SessionDetails {
         return eventSourceEntity.uuid;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return new Struct.ForClass(eventSourceEntity).equals( ((SessionDetails) o).eventSourceEntity );
-    }
-
-    @Override
-    public int hashCode() {
-        return new Struct.ForClass(this.eventSourceEntity).hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new Struct.ForClass(this.eventSourceEntity).toString();
-    }
-
     public static SessionDetails load(List<Event> events) {
         return new SessionDetails(events);
     }
+
+
+
+
+
+
+
+
+    private final EventSourceEntity eventSourceEntity;
+
+
 
 
 
@@ -71,4 +67,31 @@ public class SessionDetails {
             this.description = t.description;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        return new Struct.ForClass(eventSourceEntity).equals( ((SessionDetails) o).eventSourceEntity );
+    }
+
+    @Override
+    public int hashCode() {
+        return new Struct.ForClass(this.eventSourceEntity).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new Struct.ForClass(this.eventSourceEntity).toString();
+    }
+
+
 }

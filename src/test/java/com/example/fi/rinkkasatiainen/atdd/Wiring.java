@@ -46,11 +46,23 @@ public class Wiring {
         return webConfiguration.schedule(eventStore);
     }
 
+    public static Audience audience() {
+        return webConfiguration.audience(eventStore);
+    }
+
     public static AddSessionCommandHandler addSessionCommandHandler() {
         return webConfiguration.addSessionCommandHandler(schedule(), eventPublisher());
     }
 
     private static EventPublisher eventPublisher() {
         return webConfiguration.getEventPublisher(eventStore);
+    }
+
+    public static RegisterParticipantCommandHandler registerParticipantCommandHandler() {
+        return webConfiguration.registerParticipantCommandHandler( schedule(), audience(), eventPublisher());
+    }
+
+    public static RateSessionCommandHandler rateSessionCommandHandler() {
+        return webConfiguration.rateSessionCommandHandler(schedule(), eventPublisher());
     }
 }

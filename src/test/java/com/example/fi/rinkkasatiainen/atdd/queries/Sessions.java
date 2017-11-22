@@ -1,5 +1,6 @@
-package com.example.fi.rinkkasatiainen.atdd;
+package com.example.fi.rinkkasatiainen.atdd.queries;
 
+import com.example.fi.rinkkasatiainen.atdd.Wiring;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.web.session.queries.AllSessionsRoute;
 import net.serenitybdd.screenplay.Actor;
