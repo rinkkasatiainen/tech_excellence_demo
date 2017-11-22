@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
-public class ParticipantUUID {
+public class ParticipantUUID implements FeedbackerUUID {
 
     private final UUID uuid;
 

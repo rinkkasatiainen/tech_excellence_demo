@@ -8,6 +8,7 @@ import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -28,21 +29,59 @@ public class Schedule {
     }
 
     public Session findSession(SessionUUID uuid) {
+        // Step 1: find all events related to UUID from the EventStore
         List<Event> events = eventStore.findByUuid(uuid.getId());
+        // Step 2: load a new Session
         return Session.load(events);
     }
 
+
+
     public SessionFeedbackResult findSessionFeeback(SessionUUID uuid) {
+        // Step 1: find all events related to UUID from the EventStore
         List<Event> events = eventStore.findByUuid(uuid.getId());
+        // Step 2: create a Projection from the events
         return SessionFeedbackResult.load(events);
     }
 
-    public List<SessionDetails> findAllSessions() {
-        List<SessionCreated> allSessionCreatedEvents = eventStore.findAllByType(SessionCreated.class);
-        List<SessionUUID> allUUIDs = allSessionCreatedEvents.stream().map(e -> e.uuid).collect(Collectors.toList());
 
-        Map<SessionUUID, List<Event>> all = eventStore.findAll(allUUIDs);
-        // This would be a perfect place to build a reactive stream.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public List<SessionDetails> findAllSessions() {
+        List<SessionUUID> allUUIDs = getSessionUUIDS();
+
+//        return new ArrayList<>();
+     Map<SessionUUID, List<Event>> all = eventStore.findAll(allUUIDs);
+//         This would be a perfect place to build a reactive stream.
         return all.entrySet().stream().map( entry -> SessionDetails.load(entry.getValue())).collect(Collectors.toList());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    private List<SessionUUID> getSessionUUIDS() {
+        List<SessionCreated> allSessionCreatedEvents = eventStore.findAllByType(SessionCreated.class);
+        return allSessionCreatedEvents.stream().map(e -> e.uuid).collect(Collectors.toList());
     }
 }

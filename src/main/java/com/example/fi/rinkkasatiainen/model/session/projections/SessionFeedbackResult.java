@@ -10,9 +10,14 @@ public class SessionFeedbackResult {
     private final EventSourceEntity eventSourceEntity;
 
     private SessionFeedbackResult(List<Event> events) {
-
         eventSourceEntity = new EventSourceEntity(events);
     }
+
+    @Override
+    public String toString() {
+        return "SessionFeedbackResult" + eventSourceEntity.toString();
+    }
+
     public double getAverageRating() {
         return eventSourceEntity.getAverageRating();
     }
@@ -28,12 +33,25 @@ public class SessionFeedbackResult {
 
     public static SessionFeedbackResult load(List<Event> events) {
         SessionFeedbackResult result = new SessionFeedbackResult(events);
-
         return result;
     }
 
 
+
+
+
+
+
+
     private class EventSourceEntity{
+        @Override
+        public String toString() {
+            return "{" +
+                    "ratings=" + ratings +
+                    ", uuid=" + uuid +
+                    '}';
+        }
+
         private Map<ParticipantUUID, Integer> ratings = new HashMap<>();
         private SessionUUID uuid;
         private final EventLoader loader;
@@ -52,6 +70,16 @@ public class SessionFeedbackResult {
             return loader.getVersion();
         }
 
+
+
+
+
+
+
+
+
+
+
         EventSourceEntity(List<Event> events) {
             loader = new EventLoader();
             loader.register(SessionCreated.class, this::apply);
@@ -61,14 +89,12 @@ public class SessionFeedbackResult {
             events.forEach(loader::apply);
         }
         private void apply(SessionCreated event) {
-            this.uuid = event.uuid;
+            //Add UUID to the stats.
         }
 
         private void apply(SessionRated event) {
-            if( Stars.ZERO.equals(event.stars)){
-                ratings.remove(event.participantUUID);
-            }
-            this.ratings.put(event.participantUUID, event.stars.ordinal() );
+            // If stars is ZERO, remove the rating
+            // add rating to the has.
         }
     }
 }

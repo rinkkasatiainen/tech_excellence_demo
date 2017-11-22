@@ -7,7 +7,7 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import java.util.List;
 
 public interface AggregateRoot<U extends FeedbackerUUID> {
-    SessionUUID getUUID();
+    U getUUID();
 
     Integer getVersion();
 

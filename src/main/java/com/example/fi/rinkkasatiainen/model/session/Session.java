@@ -5,8 +5,10 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
+import com.example.fi.rinkkasatiainen.web.participants.Participant;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Session implements AggregateRoot<SessionUUID> {
     private final EventSourceEntity eventSourceEntity;
@@ -21,9 +23,20 @@ public class Session implements AggregateRoot<SessionUUID> {
         publisher = new EventPublisher(eventSourceEntity);
     }
 
-    public void registerParticipant(ParticipantUUID participantUUid) {
-        publisher.publish(new ParticipantRegisteredEvent(eventSourceEntity.uuid, participantUUid));
+    public static Session create(String title, SessionUUID uuid) {
+        Session session = new Session();
+        session.createSession(title, uuid);
+        return session;
     }
+
+    public static Session load(List<Event> events) {
+        return new Session(events);
+    }
+
+
+
+
+
 
     @Override
     public SessionUUID getUUID() {
@@ -45,31 +58,37 @@ public class Session implements AggregateRoot<SessionUUID> {
         publisher.markChangesAsCommitted();
     }
 
-    public static Session create(String title, SessionUUID uuid) {
-        Session session = new Session();
-        session.createSession(title, uuid);
-        return session;
+
+
+
+
+
+    public void registerParticipant(ParticipantUUID participantUUid) {
+        publisher.publish(new ParticipantRegisteredEvent(eventSourceEntity.uuid, participantUUid));
     }
 
     private void createSession(String title, SessionUUID uuid) {
         publisher.publish(new SessionCreated(title, uuid));
     }
 
+    public void rate(RateSessionCommand command) {
+        // Using a cool trick to change a query to a command. Instead of
+        // if( isRegisterdParticipant ) - a query
+        // onRegisteredParticipant (... Consumer) - provide a callback
+        eventSourceEntity.onRegisteredParticipant(command.participantUUID, (participantUUID -> {
+            publisher.publish(new SessionRated(command.stars, command.participantUUID));
+        }));
+    }
+
     public void setDescription(String description) {
         publisher.publish(new SessionDescriptionAdded(description, this.getUUID()));
     }
 
-    public static Session load(List<Event> events) {
-        return new Session(events);
-    }
 
-    public static Session load(Event... events) {
-        return new Session(Arrays.asList(events));
-    }
 
-    public void rate(RateSessionCommand command) {
-        publisher.publish(new SessionRated(command.stars, command.participantUUID));
-    }
+
+
+
 
     private class EventPublisher{
         private List<Event> uncommittedChanges;
@@ -95,18 +114,28 @@ public class Session implements AggregateRoot<SessionUUID> {
         }
     }
 
+
+
+
+
+
+
     private class EventSourceEntity{
         private SessionUUID uuid;
         private String title;
         private final EventLoader loader;
+        private String description;
         private List<Stars> ratings;
+        private List<ParticipantUUID> participants;
 
         public EventSourceEntity(List<Event> history) {
             this.ratings = new ArrayList<>();
+            this.participants = new ArrayList<>();
             loader = new EventLoader();
             loader.register(SessionCreated.class, this::apply);
             loader.register(SessionRated.class, this::apply);
-
+            loader.register(ParticipantRegisteredEvent.class, this::apply);
+            loader.register(SessionDescriptionAdded.class, this::apply);
             history.forEach(loader::apply);
         }
 
@@ -115,8 +144,16 @@ public class Session implements AggregateRoot<SessionUUID> {
             this.title = sessionCreated.title;
         }
 
+        private void apply(ParticipantRegisteredEvent participantRegisteredEvent){
+            this.participants.add(participantRegisteredEvent.participantUuid);
+        }
+
         private void apply(SessionRated sessionRated){
             this.ratings.add(sessionRated.stars);
+        }
+
+        private void apply(SessionDescriptionAdded sessionDescriptionAdded){
+            this.description = sessionDescriptionAdded.description;
         }
 
         public SessionUUID getUUID() {
@@ -133,6 +170,10 @@ public class Session implements AggregateRoot<SessionUUID> {
 
         protected void apply(Event event) {
             loader.apply(event);
+        }
+
+        public void onRegisteredParticipant(ParticipantUUID participantUUID, Consumer<ParticipantUUID> consumer) {
+            participants.stream().filter( p -> p.equals(participantUUID)).forEachOrdered( consumer );
         }
     }
 

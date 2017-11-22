@@ -7,6 +7,9 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
@@ -31,12 +34,16 @@ public class RateSessionCommandHandlerShould {
     @Test
     public void save_session() throws Exception {
         ParticipantUUID participantUUID = ParticipantUUID.generate();
-        Session session = Session.load(new SessionCreated("LIVE CQRS+ES", UUID));
+        Session session = Session.load(getSessionCreated());
         int expectedVersion = session.getVersion();
         when(schedule.findSession(UUID)).thenReturn(session);
 
         commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
         verify(eventPublisher).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
+    }
+
+    private List<Event> getSessionCreated() {
+        return Arrays.asList(new SessionCreated("LIVE CQRS+ES", UUID));
     }
 }

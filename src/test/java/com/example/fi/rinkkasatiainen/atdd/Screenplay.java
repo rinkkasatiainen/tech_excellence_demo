@@ -73,7 +73,7 @@ public class Screenplay {
 
         @Override
         public void describeTo(Description description) {
-
+            description.appendText("Feedback with average score of " + averageRating );
         }
 
         static SessionFeedbackMatcher hasAverageRatingOf(double averageRating){
@@ -99,7 +99,7 @@ public class Screenplay {
 
         @Override
         public void describeTo(Description description) {
-
+            description.appendText("Session with title '" + title + "' and descrpition '" + this.description + "'");
         }
 
         public static SessionDescribedWith withTitleAndDescriptionOf(String title, String description ){
