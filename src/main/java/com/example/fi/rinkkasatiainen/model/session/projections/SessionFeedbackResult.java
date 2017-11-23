@@ -10,7 +10,7 @@ public class SessionFeedbackResult {
     private final EventSourceEntity eventSourceEntity;
 
     private SessionFeedbackResult(List<Event> events) {
-        eventSourceEntity = new EventSourceEntity(events);
+        eventSourceEntity = null;
     }
 
     @Override
@@ -57,8 +57,6 @@ public class SessionFeedbackResult {
         private final EventLoader loader;
 
         double getAverageRating() {
-            if(ratings.size() == 0)
-                return 0;
             return ((double)ratings.values().stream().reduce(0, (a, b) -> a+b)) / ratings.size();
         }
 
@@ -81,20 +79,24 @@ public class SessionFeedbackResult {
 
 
         EventSourceEntity(List<Event> events) {
-            loader = new EventLoader();
-            loader.register(SessionCreated.class, this::apply);
-            loader.register(SessionRated.class, this::apply);
-            //register
+            //Step 1: create EventLoader
+            loader = null;
+            //Step 2: register events
+            // SessionCreated
+            // SessionRated
 
-            events.forEach(loader::apply);
+            //Step 3: load the history.
         }
+
+
         private void apply(SessionCreated event) {
-            //Add UUID to the stats.
+            // Step 1: add UUID
         }
 
         private void apply(SessionRated event) {
             // If stars is ZERO, remove the rating
-            // add rating to the has.
+
+            // Step 1: add rating to the has.
         }
     }
 }

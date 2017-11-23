@@ -68,16 +68,17 @@ public class Session implements AggregateRoot<SessionUUID> {
     }
 
     private void createSession(String title, SessionUUID uuid) {
-        publisher.publish(new SessionCreated(title, uuid));
+        //Step 1: publish an event 'SessionCreated'
     }
 
     public void rate(RateSessionCommand command) {
         // Using a cool trick to change a query to a command. Instead of
         // if( isRegisterdParticipant ) - a query
         // onRegisteredParticipant (... Consumer) - provide a callback
-        eventSourceEntity.onRegisteredParticipant(command.participantUUID, (participantUUID -> {
-            publisher.publish(new SessionRated(command.stars, command.participantUUID));
-        }));
+
+        //Step 1: publish an event 'SessionRated'
+
+        //Step2: make a bit of validation - only registeredParticipant can rate
     }
 
     public void setDescription(String description) {

@@ -18,15 +18,10 @@ public class RateSessionCommandHandler implements CommandHandler<RateSessionComm
     @Override
     public Void handles(RateSessionCommand command) {
         // Step 1: find a session from Schedule
-        SessionUUID uuid = command.uuid;
-        Session session = schedule.findSession(uuid);
-        Integer version = session.getVersion();
 
         // Step 2: execute a command to rate the session
-        session.rate( command );
 
         // Step 3: save to eventStore
-        eventPublisher.save( uuid, session, version);
         return null;
     }
 }

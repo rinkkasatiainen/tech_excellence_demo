@@ -6,6 +6,7 @@ import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
+import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
 import java.util.ArrayList;
@@ -30,18 +31,18 @@ public class Schedule {
 
     public Session findSession(SessionUUID uuid) {
         // Step 1: find all events related to UUID from the EventStore
-        List<Event> events = eventStore.findByUuid(uuid.getId());
+
         // Step 2: load a new Session
-        return Session.load(events);
+        return null;
     }
 
 
 
     public SessionFeedbackResult findSessionFeeback(SessionUUID uuid) {
         // Step 1: find all events related to UUID from the EventStore
-        List<Event> events = eventStore.findByUuid(uuid.getId());
+
         // Step 2: create a Projection from the events
-        return SessionFeedbackResult.load(events);
+        return null;
     }
 
 
@@ -62,14 +63,13 @@ public class Schedule {
 
     public List<SessionDetails> findAllSessions() {
         // Step 1: get UUIDs of all the sessions
-        List<SessionUUID> allUUIDs = getSessionUUIDS();
-
+        getSessionUUIDS();
         // Step 2: find all UUID -> List<Event> from event store
-//        return new ArrayList<>();
-     Map<SessionUUID, List<Event>> all = eventStore.findAll(allUUIDs);
+
         // Step 3: map entryset to SessionDetails - load(entry.getValue())
-        return all.entrySet().stream().map( entry -> SessionDetails.load(entry.getValue())).collect(Collectors.toList());
+
 //         This would be a perfect place to build a reactive stream.
+        return new ArrayList<>();
     }
 
 
@@ -81,6 +81,7 @@ public class Schedule {
 
 
 
+//        return all.entrySet().stream().map( entry -> SessionDetails.load(entry.getValue())).collect(Collectors.toList());
 
 
     private List<SessionUUID> getSessionUUIDS() {

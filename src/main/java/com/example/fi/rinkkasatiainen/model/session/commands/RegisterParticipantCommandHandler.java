@@ -20,22 +20,16 @@ public class RegisterParticipantCommandHandler implements Handler<RegisterPartic
     @Override
     public Void handles(RegisterParticipantCommand command) {
         // Step 1: get a session from Schedule
-        SessionUUID sessionId = command.sessionId;
-        Session session = schedule.findSession(sessionId);
-        Integer sessionVersion = session.getVersion();
-
+        Session session = schedule.findSession(command.sessionId);
+        Integer expectedVersion = session.getVersion();
         // Step 2: register participant to the Session
-        ParticipantUUID participantId = command.participantId;
-        session.registerParticipant(participantId);
-        eventPublisher.save(sessionId, session, sessionVersion);
+        session.registerParticipant( command.participantId );
+        eventPublisher.save( command.sessionId, session, expectedVersion);
+
 
         // Step 3 (optional): get a Participant from the audience
-        Participant participant = audience.findParticipant(participantId);
-        Integer participantVersion = participant.getVersion();
 
         // Step 4: store to participant that session is registerd to
-        participant.registerToEvent(sessionId);
-        eventPublisher.save(participantId, participant, participantVersion);
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.Event;
+import com.example.fi.rinkkasatiainen.model.EventLoader;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
@@ -35,7 +36,7 @@ public class SessionDetails {
     }
 
     public SessionUUID getUuid() {
-        return SessionUUID.from( UUID.randomUUID().toString() );
+        return SessionUUID.generate();
     }
 
     public static SessionDetails load(List<Event> events) {
@@ -63,10 +64,13 @@ public class SessionDetails {
 
         public EventSourceEntity(List<Event> events) {
             //Step 1: create EventLoader
+
             //Step 2: register events
                // SessionCreated
                // SessionDescriptionAdded
+
             //Step 3: load the history.
+
         }
 
 
