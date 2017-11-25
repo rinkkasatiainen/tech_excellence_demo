@@ -13,11 +13,12 @@ import java.util.UUID;
 public class SessionDetails {
 
 
-    private SessionDetails(List<Event> events){
+    private SessionDetails(List<Event> history){
         // Step 1: create EventSourceEntity - internal data structure
+
         // to hold the state
         // Load the history while doing it.
-        eventSourceEntity = null;
+        eventSourceEntity = new EventSourceEntity(history);
     }
 
 
@@ -28,15 +29,15 @@ public class SessionDetails {
 
 
     public String getTitle() {
-        return "";
+        return eventSourceEntity.title;
     }
 
     public String getDescription() {
-        return "";
+        return eventSourceEntity.description;
     }
 
     public SessionUUID getUuid() {
-        return SessionUUID.generate();
+        return eventSourceEntity.uuid;
     }
 
     public static SessionDetails load(List<Event> events) {
@@ -64,13 +65,14 @@ public class SessionDetails {
 
         public EventSourceEntity(List<Event> events) {
             //Step 1: create EventLoader
-
+            EventLoader eventLoader = new EventLoader();
             //Step 2: register events
                // SessionCreated
                // SessionDescriptionAdded
-
+            eventLoader.register(SessionCreated.class, this::apply);
+            eventLoader.register(SessionDescriptionAdded.class, this::apply);
             //Step 3: load the history.
-
+            events.stream().forEach(eventLoader::apply);
         }
 
 

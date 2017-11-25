@@ -18,14 +18,14 @@ public class AddSessionCommandHandler implements Handler<AddSessionCommand, Sess
     @Override
     public SessionUUID handles(AddSessionCommand addSessionCommand) {
         //Step 1: Generate UUID
-
+        SessionUUID uuid = SessionUUID.generate();
         //Step 2: Generate Session Entity.
-
+        Session session = Session.create(addSessionCommand.title, uuid);
         //Step 3: add Description to the session
-
+        session.setDescription(addSessionCommand.description);
         //Step 4: save events to eventPublisher
-
+        eventPublisher.save(uuid, session, 0);
         //Step 5: return sessionUuid
-        return null;
+        return uuid;
     }
 }
