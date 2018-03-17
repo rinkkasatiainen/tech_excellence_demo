@@ -1,6 +1,5 @@
 .gradle
 /build/
-!gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -24,6 +23,4 @@ dist/
 nbdist/
 .nb-gradle/
 out
-gradle/
-gradlew*
 target
