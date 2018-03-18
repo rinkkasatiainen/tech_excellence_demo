@@ -21,7 +21,7 @@
    a proper error is displayed.
  * when rating a session, can give written feedback
  
-##maybe later
+## maybe later
 
  * session is stored to own DB table
  * speaker is stored to own DB table
