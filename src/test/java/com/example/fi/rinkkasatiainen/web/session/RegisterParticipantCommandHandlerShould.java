@@ -15,7 +15,6 @@ import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
 
 public class RegisterParticipantCommandHandlerShould {

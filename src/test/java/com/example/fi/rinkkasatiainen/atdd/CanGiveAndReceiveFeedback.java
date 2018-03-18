@@ -8,12 +8,10 @@ import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackR
 import com.example.fi.rinkkasatiainen.web.participants.ParticipantsRoute;
 import com.example.fi.rinkkasatiainen.web.session.commands.*;
 import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
-import net.serenitybdd.screenplay.Actor;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 
-import static net.serenitybdd.screenplay.GivenWhenThen.givenThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -96,12 +94,12 @@ public class CanGiveAndReceiveFeedback {
     }
 
     @FunctionalInterface
-    public static interface RateSession {
+    public interface RateSession {
         Rate rates(SessionUUID sessionUUID);
     }
 
     @FunctionalInterface
-    public static interface SessionResponse {
+    public interface SessionResponse {
 
         void should_have_average_rating_of(Double rating);
     }

@@ -6,8 +6,6 @@ import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackR
 import com.example.fi.rinkkasatiainen.web.session.queries.SessionFeedbackRoute;
 import org.junit.Test;
 
-import java.util.UUID;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;

@@ -1,7 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session.commands;
 
 import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.web.participants.Participant;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ParticipantDto {

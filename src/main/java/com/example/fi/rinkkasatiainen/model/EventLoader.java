@@ -25,6 +25,6 @@ public class EventLoader {
     }
 
     public void load(List<Event> events) {
-        events.stream().forEachOrdered(e -> this.apply(e));
+        events.stream().forEachOrdered(this::apply);
     }
 }

@@ -1,14 +1,12 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventLoader;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.util.Struct;
 
 import java.util.List;
-import java.util.UUID;
 
 public class SessionDetails {
 

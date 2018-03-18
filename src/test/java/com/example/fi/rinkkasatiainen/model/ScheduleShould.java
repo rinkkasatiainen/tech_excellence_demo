@@ -19,7 +19,6 @@ import java.util.function.Supplier;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 public class ScheduleShould {

@@ -5,7 +5,6 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
-import com.example.fi.rinkkasatiainen.web.participants.Participant;
 
 import java.util.*;
 import java.util.function.Consumer;
