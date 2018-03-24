@@ -1,5 +1,10 @@
 # Things to do
 
+## Setup
+
+ * `gradlew test` - see failing tests
+ * `gradlew eclipse` - import as existing project into Eclipse
+
 ## priority
 
  1) findSessionDetails
