@@ -25,6 +25,7 @@ public class Participant implements AggregateRoot<ParticipantUUID>{
         return this.uuid;
     }
 
+    @Override
     public Integer getVersion() {
         return 1;
     }
