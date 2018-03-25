@@ -8,7 +8,6 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 import static com.example.fi.rinkkasatiainen.web.session.RegisterParticipantCommandHandlerShould.participantUUID;
 import static org.hamcrest.MatcherAssert.assertThat;

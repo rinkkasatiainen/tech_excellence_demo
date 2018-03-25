@@ -16,7 +16,7 @@ public class SessionStore {
 
     public static <T> UUID getUUIDFromLocationHeader(ResponseEntity<T> sessionResponseEntity) {
         return sessionResponseEntity.getHeaders().get("location")
-                .stream().map( str -> str.replaceAll(".*/", "") ).map( u -> UUID.fromString(u)).findFirst().get();
+                .stream().map( str -> str.replaceAll(".*/", "") ).map(UUID::fromString).findFirst().get();
     }
 
     public static void storeNewSession(String title, ResponseEntity<SessionsRoute.NewSessionResponse> response) {

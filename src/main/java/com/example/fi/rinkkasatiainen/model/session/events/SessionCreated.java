@@ -6,8 +6,6 @@ import com.example.fi.rinkkasatiainen.util.Struct;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
-
 public class SessionCreated implements Event {
     public final String title;
     public final SessionUUID uuid;

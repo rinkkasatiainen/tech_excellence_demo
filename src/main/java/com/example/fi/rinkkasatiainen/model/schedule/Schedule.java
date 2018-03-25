@@ -1,18 +1,14 @@
 package com.example.fi.rinkkasatiainen.model.schedule;
 
-import com.example.fi.rinkkasatiainen.model.Event;
 import com.example.fi.rinkkasatiainen.model.EventStore;
 import com.example.fi.rinkkasatiainen.model.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
-import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 

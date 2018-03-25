@@ -4,7 +4,6 @@ import com.example.fi.rinkkasatiainen.util.Struct;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class SessionUUID implements FeedbackerUUID {
