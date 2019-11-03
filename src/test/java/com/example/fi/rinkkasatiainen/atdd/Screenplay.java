@@ -52,12 +52,6 @@ public class Screenplay {
                 hasAverageRatingOf(5.0) ));
     }
 
-
-
-
-
-
-
     static class SessionFeedbackMatcher extends TypeSafeMatcher<SessionFeedbackResult> {
 
         private final double averageRating;

@@ -43,7 +43,7 @@ public class RateSessionCommandHandlerShould {
 
         commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
-        verify(eventPublisher).save( eq(UUID), ArgumentMatchers.any(Session.class), eq(2));
+        verify(eventPublisher).save( eq(UUID), ArgumentMatchers.any(Session.class), eq(expectedVersion));
     }
 
     private List<Event> getSessionCreated() {

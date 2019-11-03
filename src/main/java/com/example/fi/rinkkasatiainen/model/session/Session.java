@@ -77,8 +77,12 @@ public class Session implements AggregateRoot<SessionUUID> {
         // onRegisteredParticipant (... Consumer) - provide a callback
 
         //Step 1: publish an event 'SessionRated'
+        publisher.publish(new SessionRated(command.stars, command.participantUUID));
 
         //Step2: make a bit of validation - only registeredParticipant can rate
+        if( this.eventSourceEntity.participants.contains(command.participantUUID) ){
+
+        }
     }
 
     public void setDescription(String description) {

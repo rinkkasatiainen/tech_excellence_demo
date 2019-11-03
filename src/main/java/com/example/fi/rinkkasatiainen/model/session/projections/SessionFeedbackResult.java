@@ -10,7 +10,7 @@ public class SessionFeedbackResult {
     private final EventSourceEntity eventSourceEntity;
 
     private SessionFeedbackResult(List<Event> events) {
-        eventSourceEntity = null;
+        eventSourceEntity = new EventSourceEntity(events);
     }
 
     @Override
@@ -80,23 +80,28 @@ public class SessionFeedbackResult {
 
         EventSourceEntity(List<Event> events) {
             //Step 1: create EventLoader
-            loader = null;
+            loader = new EventLoader();
             //Step 2: register events
+            loader.register( SessionCreated.class, this::apply);
+            loader.register( SessionRated.class, this::apply);
             // SessionCreated
             // SessionRated
 
             //Step 3: load the history.
+            loader.load(events);
         }
 
 
         private void apply(SessionCreated event) {
             // Step 1: add UUID
+            this.uuid = event.uuid;
         }
 
         private void apply(SessionRated event) {
             // If stars is ZERO, remove the rating
 
             // Step 1: add rating to the has.
+            this.ratings.put(event.participantUUID, event.stars.ordinal());
         }
     }
 }
