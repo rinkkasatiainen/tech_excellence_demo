@@ -68,6 +68,7 @@ public class Session implements AggregateRoot<SessionUUID> {
 
     private void createSession(String title, SessionUUID uuid) {
         //Step 1: publish an event 'SessionCreated'
+        publisher.publish( new SessionCreated(title, uuid));
     }
 
     public void rate(RateSessionCommand command) {
