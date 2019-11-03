@@ -10,12 +10,14 @@ import com.example.fi.rinkkasatiainen.web.participants.Participant;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
+
 
 public class RegisterParticipantCommandHandlerShould {
 
@@ -49,7 +51,7 @@ public class RegisterParticipantCommandHandlerShould {
 
         ArgumentCaptor<Session> sessionArgumentCaptor = ArgumentCaptor.forClass(Session.class);
 
-        verify(eventPublisher).save(argThat(equalTo(sessionUUID)), sessionArgumentCaptor.capture(), argThat(equalTo(1)));
+        verify(eventPublisher).save(eq(sessionUUID), sessionArgumentCaptor.capture(), Mockito.eq(1));
 
         Session modifiedSession = sessionArgumentCaptor.getValue();
         assertThat(modifiedSession.getVersion(), equalTo(2));

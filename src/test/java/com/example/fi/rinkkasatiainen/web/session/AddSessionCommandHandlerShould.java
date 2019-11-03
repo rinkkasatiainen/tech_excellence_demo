@@ -12,7 +12,7 @@ import org.mockito.ArgumentCaptor;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,7 +48,7 @@ public class AddSessionCommandHandlerShould {
         commandHandler.handles(new AddSessionCommand(TITLE, description));
 
         ArgumentCaptor<Session> sessionArgumentCaptor = ArgumentCaptor.forClass(Session.class);
-        verify(eventPublisher).save( argThat(equalTo(UUID)), sessionArgumentCaptor.capture(), argThat(equalTo(0)));
+        verify(eventPublisher).save( eq(UUID), sessionArgumentCaptor.capture(), eq(0));
 
         Session value = sessionArgumentCaptor.getValue();
         assertThat(value.getUncommittedChanges().get(0), equalTo(new SessionCreated(TITLE, UUID)));

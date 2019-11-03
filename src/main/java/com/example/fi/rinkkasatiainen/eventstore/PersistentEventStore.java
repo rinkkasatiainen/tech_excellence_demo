@@ -42,7 +42,7 @@ public class PersistentEventStore implements EventStore {
                 event -> new StoredEvent(streamUUID, serialize(getMetadata(event)), serialize(event), nextVersion[0]++)
         ).collect(Collectors.toList());
 
-        wrappedEventStore.save( storedEvents );
+        wrappedEventStore.saveAll( storedEvents );
     }
 
     @Override

@@ -70,6 +70,6 @@ public class PersistentEventStoreShould {
     public void should_save_a_stored_event() throws Exception {
         eventStore.saveEvents(UUID, Arrays.asList( new TestEvent(TITLE)), 0);
 
-        verify(wrappedEventStore).save( Arrays.asList(STORED_EVENT) );
+        verify(wrappedEventStore).saveAll( Arrays.asList(STORED_EVENT) );
     }
 }

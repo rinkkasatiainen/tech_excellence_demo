@@ -10,13 +10,12 @@ import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipant
 import com.example.fi.rinkkasatiainen.web.session.commands.ParticipantDto;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionRoute;
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
 
 import static com.example.fi.rinkkasatiainen.web.session.SessionRouteShould.MatchingCommand.matchesToCommand;
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -52,7 +51,8 @@ public class SessionRouteShould {
         verify(rateSessionCommandHandler).handles( new RateSessionCommand(UUID, Stars.FIVE, participantUUID));
     }
 
-    public static class MatchingCommand extends TypeSafeMatcher<RegisterParticipantCommand>{
+
+    public static class MatchingCommand implements ArgumentMatcher<RegisterParticipantCommand> {
 
         private final RegisterParticipantCommand expected;
 
@@ -61,13 +61,8 @@ public class SessionRouteShould {
         }
 
         @Override
-        protected boolean matchesSafely(RegisterParticipantCommand item) {
-            return item.participantId.equals( expected.participantId);
-        }
-
-        @Override
-        public void describeTo(Description description) {
-
+        public boolean matches(RegisterParticipantCommand argument) {
+            return argument.participantId.equals( expected.participantId);
         }
 
         public static MatchingCommand matchesToCommand(RegisterParticipantCommand expected){

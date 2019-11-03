@@ -7,12 +7,15 @@ import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.mockito.ArgumentMatchers;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
+//import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -40,7 +43,7 @@ public class RateSessionCommandHandlerShould {
 
         commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
-        verify(eventPublisher).save(argThat(equalTo(UUID)), any(Session.class), argThat(equalTo(expectedVersion)));
+        verify(eventPublisher).save( eq(UUID), ArgumentMatchers.any(Session.class), eq(2));
     }
 
     private List<Event> getSessionCreated() {
