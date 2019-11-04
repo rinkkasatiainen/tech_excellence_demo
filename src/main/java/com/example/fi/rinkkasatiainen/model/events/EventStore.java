@@ -1,4 +1,6 @@
-package com.example.fi.rinkkasatiainen.model;
+package com.example.fi.rinkkasatiainen.model.events;
+
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
 
 import java.util.List;
 import java.util.Map;

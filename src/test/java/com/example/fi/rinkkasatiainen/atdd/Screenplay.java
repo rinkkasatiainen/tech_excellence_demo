@@ -6,7 +6,7 @@ import com.example.fi.rinkkasatiainen.atdd.commands.RegisterAsParticipant;
 import com.example.fi.rinkkasatiainen.atdd.commands.RegisterToASession;
 import com.example.fi.rinkkasatiainen.atdd.queries.SessionFeedback;
 import com.example.fi.rinkkasatiainen.atdd.queries.Sessions;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import net.serenitybdd.junit.runners.SerenityRunner;
@@ -51,12 +51,6 @@ public class Screenplay {
         then(aki).should(seeThat(SessionFeedback.withTitle("title"),
                 hasAverageRatingOf(5.0) ));
     }
-
-
-
-
-
-
 
     static class SessionFeedbackMatcher extends TypeSafeMatcher<SessionFeedbackResult> {
 

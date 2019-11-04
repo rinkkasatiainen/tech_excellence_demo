@@ -1,7 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.queries;
 
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.QueryHandler;
 

@@ -1,14 +1,15 @@
-package com.example.fi.rinkkasatiainen.model.schedule;
+package com.example.fi.rinkkasatiainen.model.session.repositories;
 
-import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventStore;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -27,54 +28,37 @@ public class Schedule {
 
     public Session findSession(SessionUUID uuid) {
         // Step 1: find all events related to UUID from the EventStore
+        final List<Event> byUuid = eventStore.findByUuid(uuid.getId());
 
         // Step 2: load a new Session
-        return null;
+        return Session.load(byUuid);
     }
-
 
 
     public SessionFeedbackResult findSessionFeeback(SessionUUID uuid) {
         // Step 1: find all events related to UUID from the EventStore
+        final List<Event> byUuid = eventStore.findByUuid(uuid.getId());
 
         // Step 2: create a Projection from the events
-        return null;
+        return SessionFeedbackResult.load(byUuid);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public List<SessionDetails> findAllSessions() {
         // Step 1: get UUIDs of all the sessions
-        getSessionUUIDS();
-        // Step 2: find all UUID -> List<Event> from event store
+        List<SessionUUID> sessionUUIDS = getSessionUUIDS();
+        // Step 2: find all to create UUID -> List<Event> from event store
 
+        Map<SessionUUID, List<Event>> all = eventStore.findAll(sessionUUIDS);
         // Step 3: map entryset to SessionDetails - load(entry.getValue())
+        final List<SessionDetails> result = all.entrySet().stream()
+                .map(
+                        entry -> SessionDetails.load(entry.getValue())
+                ).collect(Collectors.toList());
 
 //         This would be a perfect place to build a reactive stream.
-        return new ArrayList<>();
+        return result;
     }
-
-
-
-
-
-
-
-
 
 
 //        return all.entrySet().stream().map( entry -> SessionDetails.load(entry.getValue())).collect(Collectors.toList());

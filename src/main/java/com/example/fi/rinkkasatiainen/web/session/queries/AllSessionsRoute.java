@@ -1,6 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session.queries;
 
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.web.session.SessionRouteConstants;
 import org.springframework.http.MediaType;

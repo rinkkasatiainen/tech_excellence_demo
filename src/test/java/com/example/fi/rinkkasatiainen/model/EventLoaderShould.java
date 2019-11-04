@@ -1,5 +1,7 @@
 package com.example.fi.rinkkasatiainen.model;
 
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventLoader;
 import org.junit.Test;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -50,7 +52,7 @@ public class EventLoaderShould {
         called = true;
     }
 
-    private class TestEvent implements Event{
+    private class TestEvent implements Event {
 
     }
 

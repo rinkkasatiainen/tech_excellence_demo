@@ -1,6 +1,9 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.*;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventLoader;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
@@ -68,6 +71,7 @@ public class Session implements AggregateRoot<SessionUUID> {
 
     private void createSession(String title, SessionUUID uuid) {
         //Step 1: publish an event 'SessionCreated'
+        publisher.publish( new SessionCreated(title, uuid));
     }
 
     public void rate(RateSessionCommand command) {
@@ -76,8 +80,12 @@ public class Session implements AggregateRoot<SessionUUID> {
         // onRegisteredParticipant (... Consumer) - provide a callback
 
         //Step 1: publish an event 'SessionRated'
+        publisher.publish(new SessionRated(command.stars, command.participantUUID));
 
         //Step2: make a bit of validation - only registeredParticipant can rate
+        if( this.eventSourceEntity.participants.contains(command.participantUUID) ){
+
+        }
     }
 
     public void setDescription(String description) {

@@ -1,6 +1,7 @@
-package com.example.fi.rinkkasatiainen.model;
+package com.example.fi.rinkkasatiainen.model.events;
 
-import com.example.fi.rinkkasatiainen.model.session.AggregateRoot;
+import com.example.fi.rinkkasatiainen.model.AggregateRoot;
+import com.example.fi.rinkkasatiainen.model.FeedbackerUUID;
 
 import java.util.List;
 

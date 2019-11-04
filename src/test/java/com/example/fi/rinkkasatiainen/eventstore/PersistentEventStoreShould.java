@@ -1,7 +1,7 @@
 package com.example.fi.rinkkasatiainen.eventstore;
 
 import com.example.fi.rinkkasatiainen.application.config.EventStoreObjectMapper;
-import com.example.fi.rinkkasatiainen.model.Event;
+import com.example.fi.rinkkasatiainen.model.events.Event;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;

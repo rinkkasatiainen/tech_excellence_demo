@@ -1,8 +1,8 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
 import com.example.fi.rinkkasatiainen.util.Struct;
 import com.example.fi.rinkkasatiainen.web.Command;
 

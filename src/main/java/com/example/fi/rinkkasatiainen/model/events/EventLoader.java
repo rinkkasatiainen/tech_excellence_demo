@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.model;
+package com.example.fi.rinkkasatiainen.model.events;
 
 import java.util.HashMap;
 import java.util.List;

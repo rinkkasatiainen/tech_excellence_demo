@@ -2,7 +2,7 @@ package com.example.fi.rinkkasatiainen.atdd.commands;
 
 import com.example.fi.rinkkasatiainen.atdd.SessionStore;
 import com.example.fi.rinkkasatiainen.atdd.Wiring;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionFeedback;
 import com.example.fi.rinkkasatiainen.web.session.commands.SessionRoute;
 import net.serenitybdd.screenplay.Actor;

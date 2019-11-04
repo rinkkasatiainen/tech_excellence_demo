@@ -1,19 +1,20 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
-import com.example.fi.rinkkasatiainen.model.*;
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventPublisher;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.mockito.ArgumentMatchers;
 
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.equalTo;
 //import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -43,7 +44,7 @@ public class RateSessionCommandHandlerShould {
 
         commandHandler.handles( new RateSessionCommand(UUID, Stars.FOUR, participantUUID));
 
-        verify(eventPublisher).save( eq(UUID), ArgumentMatchers.any(Session.class), eq(2));
+        verify(eventPublisher).save( eq(UUID), ArgumentMatchers.any(Session.class), eq(expectedVersion));
     }
 
     private List<Event> getSessionCreated() {

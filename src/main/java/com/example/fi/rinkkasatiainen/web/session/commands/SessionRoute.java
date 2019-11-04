@@ -1,7 +1,7 @@
 package com.example.fi.rinkkasatiainen.web.session.commands;
 
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommand;
@@ -38,13 +38,14 @@ public class SessionRoute {
 
     @RequestMapping(value = "/rate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity<Void> rate(@PathVariable(value = "sessionId") String sessionId, @RequestBody SessionFeedback rating) {
+    public ResponseEntity<Void> rate(
+            @PathVariable(value = "sessionId") String sessionId,
+            @RequestBody SessionFeedback rating
+    ) {
         SessionUUID uuid = SessionUUID.from(sessionId);
         stars = Stars.from(rating.rating);
         rateSessionCommandHandler.handles(new RateSessionCommand(uuid, stars, SessionFeedback.asUUID(rating)));
 
         return ResponseEntity.ok().build();
     }
-
-
 }

@@ -1,7 +1,10 @@
 package com.example.fi.rinkkasatiainen.application.config;
 
-import com.example.fi.rinkkasatiainen.model.*;
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.events.EventPublisher;
+import com.example.fi.rinkkasatiainen.model.events.EventStore;
+import com.example.fi.rinkkasatiainen.model.participants.repositories.Audience;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.RegisterParticipantCommandHandler;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
@@ -72,7 +75,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public AddSessionCommandHandler addSessionCommandHandler(Schedule schedule, EventPublisher eventPublisher) {
+    public AddSessionCommandHandler addSessionCommandHandler
+            (Schedule schedule, EventPublisher eventPublisher) {
         return new AddSessionCommandHandler( schedule, eventPublisher);
     }
 

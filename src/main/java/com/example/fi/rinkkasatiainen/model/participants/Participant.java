@@ -1,9 +1,8 @@
-package com.example.fi.rinkkasatiainen.web.participants;
+package com.example.fi.rinkkasatiainen.model.participants;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.session.AggregateRoot;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.AggregateRoot;
 
 import java.util.ArrayList;
 import java.util.List;

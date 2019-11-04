@@ -13,6 +13,7 @@ public class Sessions implements Question<List<SessionDetails>> {
 
     public static Sessions allTalks() {
         return new Sessions();
+
     }
 
     @Override
