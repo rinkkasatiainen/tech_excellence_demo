@@ -1,6 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session;
 
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.commands.AddSessionCommandHandler;
 import com.example.fi.rinkkasatiainen.web.session.commands.NewSession;

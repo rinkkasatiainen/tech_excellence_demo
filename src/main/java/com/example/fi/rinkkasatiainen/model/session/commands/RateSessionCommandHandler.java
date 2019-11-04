@@ -1,8 +1,7 @@
 package com.example.fi.rinkkasatiainen.model.session.commands;
 
-import com.example.fi.rinkkasatiainen.model.EventPublisher;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.events.EventPublisher;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.web.CommandHandler;
 

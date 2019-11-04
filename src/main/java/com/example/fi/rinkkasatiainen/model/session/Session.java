@@ -1,6 +1,9 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
 import com.example.fi.rinkkasatiainen.model.*;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventLoader;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
 import com.example.fi.rinkkasatiainen.model.session.commands.RateSessionCommand;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;

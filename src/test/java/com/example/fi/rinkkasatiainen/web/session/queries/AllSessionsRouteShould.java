@@ -1,6 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session.queries;
 
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import org.junit.Before;
 import org.junit.Test;

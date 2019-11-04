@@ -1,8 +1,8 @@
 package com.example.fi.rinkkasatiainen;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventStore;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,8 +1,7 @@
 package com.example.fi.rinkkasatiainen.model.session;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventLoader;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventLoader;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionDescriptionAdded;
 import com.example.fi.rinkkasatiainen.util.Struct;
@@ -12,18 +11,12 @@ import java.util.List;
 public class SessionDetails {
 
 
-    private SessionDetails(List<Event> events){
+    private SessionDetails(List<Event> events) {
         // Step 1: create EventSourceEntity - internal data structure
         // to hold the state
         // Load the history while doing it.
         eventSourceEntity = new EventSourceEntity(events);
     }
-
-
-
-
-
-
 
 
     public String getTitle() {
@@ -43,17 +36,7 @@ public class SessionDetails {
     }
 
 
-
-
-
-
-
-
     private final EventSourceEntity eventSourceEntity;
-
-
-
-
 
 
     private class EventSourceEntity {
@@ -68,8 +51,8 @@ public class SessionDetails {
             //Step 2: register events
             eventLoader.register(SessionCreated.class, this::apply);
             eventLoader.register(SessionDescriptionAdded.class, this::apply);
-               // SessionCreated
-               // SessionDescriptionAdded
+            // SessionCreated
+            // SessionDescriptionAdded
 
             //Step 3: load the history.
             eventLoader.load(history);
@@ -77,40 +60,20 @@ public class SessionDetails {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         private void apply(SessionCreated t) {
             this.title = t.title;
             this.uuid = t.uuid;
         }
+
         private void apply(SessionDescriptionAdded t) {
             this.description = t.description;
         }
     }
 
 
-
-
-
-
-
-
-
-
-
     @Override
     public boolean equals(Object o) {
-        return new Struct.ForClass(eventSourceEntity).equals( ((SessionDetails) o).eventSourceEntity );
+        return new Struct.ForClass(eventSourceEntity).equals(((SessionDetails) o).eventSourceEntity);
     }
 
     @Override

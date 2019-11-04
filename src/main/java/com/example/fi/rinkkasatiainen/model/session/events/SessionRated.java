@@ -1,8 +1,8 @@
 package com.example.fi.rinkkasatiainen.model.session.events;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
 import com.example.fi.rinkkasatiainen.util.Struct;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

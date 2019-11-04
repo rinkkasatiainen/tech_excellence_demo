@@ -1,6 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.session.queries;
 
-import com.example.fi.rinkkasatiainen.model.schedule.Schedule;
+import com.example.fi.rinkkasatiainen.model.session.repositories.Schedule;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQuery;
 import com.example.fi.rinkkasatiainen.web.queries.SessionFeedbackQueryHandler;

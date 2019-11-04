@@ -1,6 +1,6 @@
 package com.example.fi.rinkkasatiainen.web.participants;
 
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

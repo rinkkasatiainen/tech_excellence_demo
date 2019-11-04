@@ -1,4 +1,4 @@
-package com.example.fi.rinkkasatiainen.model;
+package com.example.fi.rinkkasatiainen.model.session;
 
 public enum Stars {
     ZERO,

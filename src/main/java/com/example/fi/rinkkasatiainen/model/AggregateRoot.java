@@ -1,7 +1,6 @@
-package com.example.fi.rinkkasatiainen.model.session;
+package com.example.fi.rinkkasatiainen.model;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.FeedbackerUUID;
+import com.example.fi.rinkkasatiainen.model.events.Event;
 
 import java.util.List;
 

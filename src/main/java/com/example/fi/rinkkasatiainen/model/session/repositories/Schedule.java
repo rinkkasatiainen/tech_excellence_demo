@@ -1,19 +1,17 @@
-package com.example.fi.rinkkasatiainen.model.schedule;
+package com.example.fi.rinkkasatiainen.model.session.repositories;
 
-import com.example.fi.rinkkasatiainen.model.Event;
-import com.example.fi.rinkkasatiainen.model.EventStore;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventStore;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.Session;
 import com.example.fi.rinkkasatiainen.model.session.SessionDetails;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Schedule {
     private final Supplier<SessionUUID> supplier;

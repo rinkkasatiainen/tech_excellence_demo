@@ -1,6 +1,9 @@
 package com.example.fi.rinkkasatiainen.model.session.projections;
 
-import com.example.fi.rinkkasatiainen.model.*;
+import com.example.fi.rinkkasatiainen.model.events.Event;
+import com.example.fi.rinkkasatiainen.model.events.EventLoader;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionCreated;
 import com.example.fi.rinkkasatiainen.model.session.events.SessionRated;
 
@@ -37,13 +40,7 @@ public class SessionFeedbackResult {
     }
 
 
-
-
-
-
-
-
-    private class EventSourceEntity{
+    private class EventSourceEntity {
         @Override
         public String toString() {
             return "{" +
@@ -57,7 +54,7 @@ public class SessionFeedbackResult {
         private final EventLoader loader;
 
         double getAverageRating() {
-            return ((double)ratings.values().stream().reduce(0, (a, b) -> a+b)) / ratings.size();
+            return ((double) ratings.values().stream().reduce(0, (a, b) -> a + b)) / ratings.size();
         }
 
         SessionUUID getUuid() {
@@ -69,21 +66,12 @@ public class SessionFeedbackResult {
         }
 
 
-
-
-
-
-
-
-
-
-
         EventSourceEntity(List<Event> events) {
             //Step 1: create EventLoader
             loader = new EventLoader();
             //Step 2: register events
-            loader.register( SessionCreated.class, this::apply);
-            loader.register( SessionRated.class, this::apply);
+            loader.register(SessionCreated.class, this::apply);
+            loader.register(SessionRated.class, this::apply);
             // SessionCreated
             // SessionRated
 

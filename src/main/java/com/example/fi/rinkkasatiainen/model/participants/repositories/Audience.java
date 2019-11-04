@@ -1,6 +1,8 @@
-package com.example.fi.rinkkasatiainen.model;
+package com.example.fi.rinkkasatiainen.model.participants.repositories;
 
-import com.example.fi.rinkkasatiainen.web.participants.Participant;
+import com.example.fi.rinkkasatiainen.model.events.EventStore;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.participants.Participant;
 
 public class Audience {
     public Audience(EventStore eventStore) {

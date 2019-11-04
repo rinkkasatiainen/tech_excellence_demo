@@ -1,9 +1,9 @@
 package com.example.fi.rinkkasatiainen.atdd;
 
 
-import com.example.fi.rinkkasatiainen.model.ParticipantUUID;
-import com.example.fi.rinkkasatiainen.model.SessionUUID;
-import com.example.fi.rinkkasatiainen.model.Stars;
+import com.example.fi.rinkkasatiainen.model.participants.ParticipantUUID;
+import com.example.fi.rinkkasatiainen.model.session.SessionUUID;
+import com.example.fi.rinkkasatiainen.model.session.Stars;
 import com.example.fi.rinkkasatiainen.model.session.projections.SessionFeedbackResult;
 import com.example.fi.rinkkasatiainen.web.participants.ParticipantsRoute;
 import com.example.fi.rinkkasatiainen.web.session.commands.*;
@@ -78,7 +78,8 @@ public class CanGiveAndReceiveFeedback {
 
 
     private SessionUUID given_a_session() {
-        ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity= wiring.getSessionsRoute().create(new NewSession("title", description));
+        ResponseEntity<SessionsRoute.NewSessionResponse> sessionResponseEntity=
+                wiring.getSessionsRoute().create(new NewSession("title", description));
         String uuid = getUUIDFromLocationHeader(sessionResponseEntity);
         return SessionUUID.from(uuid);
     }
